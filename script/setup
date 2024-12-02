@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Define project paths
+BASE_DIR="$HOME/Projects/vim"
+CONFIG_DIR="$BASE_DIR/src"
+PLUGGED_DIR="$BASE_DIR/plugins"
+PLUG_VIM="$BASE_DIR/vim-plug/plug.vim"
+
+# Ensure necessary directories exist
+echo "Creating necessary directories..."
+mkdir -p "$BASE_DIR"
+mkdir -p "$PLUGGED_DIR"
+
+# Check if Vim is installed
+if ! command -v vim &> /dev/null; then
+    echo "Vim not found. Installing..."
+    sudo pacman -S vim
+else
+    echo "Vim is already installed."
+fi
+
+# Create symlink for .vimrc
+echo "Setting up symbolic link for .vimrc..."
+if [ -L "$HOME/.vimrc" ]; then
+    echo "Existing .vimrc symlink found. Removing..."
+    rm "$HOME/.vimrc"
+fi
+ln -s "$CONFIG_DIR/.vimrc" "$HOME/.vimrc"
+
+# Install vim-plug if not already installed
+if [ ! -f "$PLUG_VIM" ]; then
+    echo "Installing vim-plug..."
+    curl -fLo "$PLUG_VIM" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+else
+    echo "vim-plug is already installed."
+fi
+
+# Configure permissions for setup.sh
+echo "Setting executable permissions for setup.sh..."
+chmod +x "$0"
+
+# Install plugins using vim-plug
+echo "Installing plugins..."
+vim +PlugInstall +qall
+
+echo "Setup complete! Launch Vim to start using your custom configuration."
