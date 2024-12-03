@@ -15,27 +15,16 @@ set smartcase                   " Enable smart case sensitivity
 set incsearch                   " Show matches as you type
 set hlsearch                    " Highlight search matches
 set cursorline                  " Highlight the current line
+set laststatus=0                " Hide status line
+set showcmd                     " Display incomplete commands in the corner
+set cmdheight=1                 " Set command line height to 1
+set nofoldenable                " Disable folding by default
+set mouse=a                     " Enable mouse support for selecting code
+set noruler                     " Disable the ruler (right-side status line)
 
+" Source Files
+source ~/Projects/vim/src/keys.vim
 source ~/Projects/vim/src/appearance.vim
-" Source Plugin Configuration
 source ~/Projects/vim/vim-plug/plug.vim
 source ~/Projects/vim/src/plugins/install.vim
 source ~/Projects/vim/src/plugins/settings.vim
-
-" Source Appearance Settings
-source ~/Projects/vim/src/appearance.vim
-
-" Key Mappings
-nnoremap <C-c> "+y                  " Copy to system clipboard
-vnoremap <C-c> "+y                  " Visual selection copy
-nnoremap <C-v> "+p                  " Paste from system clipboard
-nnoremap <C-z> :undo<CR>            " Undo with Ctrl+z
-nnoremap <C-y> :redo<CR>            " Redo with Ctrl+y
-
-" Minimal Status Line
-set laststatus=2                    " Always show the status line
-set statusline=%f%m%r%h%w\ [%{&ff}]\ [%l/%L]\ [%p%%]
-
-" Performance Improvements
-set lazyredraw                     " Faster scrolling
-set ttyfast                        " Speed up terminal output
