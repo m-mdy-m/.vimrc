@@ -1,4 +1,4 @@
-# # Vim Config
+# Vim Config
 
 ![VIM CONFIG](./vim.png)
 
