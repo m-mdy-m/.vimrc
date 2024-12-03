@@ -27,3 +27,14 @@ let g:NERDTreeShowRoot=0               " Disable showing the full path at the to
 " Change the color of the path text to avoid yellow
 highlight NERDTreeDir ctermfg=8 guifg=#616E88  " Dim the directory color
 highlight NERDTreeFile ctermfg=8 guifg=#B2B8B5  " Dim the file color
+" ========================
+" Prettify Code
+" ========================
+" Format on save
+let g:prettier#autoformat = 1
+
+" Ensure Prettier runs for all supported languages (e.g., C, JavaScript, Go, etc.)
+autocmd FileType * let g:prettier#autoformat = 1  " Ensure autoformatting on all file types
+
+" You can also add a mapping to manually trigger Prettier formatting:
+nnoremap <leader>p :Prettier<CR>  " Press <leader>p to manually run Prettier
