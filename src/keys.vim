@@ -154,3 +154,17 @@ nnoremap <leader>z :foldreset<CR>                " Reset fold
 " ==================================
 
 set mouse=a    " Enable mouse support for selecting text
+
+" ==================================
+"  Keybinding for clang-format
+" ==================================
+nmap <leader>cf :ClangFormat<CR>
+vmap <leader>cf :ClangFormat<CR>
+autocmd BufWritePre *.c,*.h ClangFormat
+
+" ==================================
+"   Keybinding for Prettier
+" ==================================
+nmap <leader>p :Prettier<CR>
+vmap <leader>p :Prettier<CR>
+autocmd BufWritePre *.c,*.h Prettier
