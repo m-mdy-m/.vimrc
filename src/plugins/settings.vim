@@ -38,3 +38,14 @@ autocmd FileType * let g:prettier#autoformat = 1  " Ensure autoformatting on all
 
 " You can also add a mapping to manually trigger Prettier formatting:
 nnoremap <leader>p :Prettier<CR>  " Press <leader>p to manually run Prettier
+" Lightline configuration
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [ ['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified'] ]
+\ },
+\ 'component_function': {
+\   'gitbranch': 'FugitiveHead',
+\ }
+\}
+
