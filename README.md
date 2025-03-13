@@ -1,50 +1,47 @@
-# Vim Config
+# vex — My Personal Vim Sanctuary
 
-![VIM CONFIG](./vim.png)
+![HomePage](./screenshots/home.jpg)
 
-A personal configuration for Vim, optimized for a modern coding experience with a dark, minimalist theme. This setup includes useful plugins, settings for code editing, and custom keybindings to improve productivity and streamline your workflow.
+Welcome to my personal Vim configuration setup! VEX (Vim Ecosystem Extension) is a minimal, Vim setup designed to streamline coding experience. It’s optimized for a clean, dark theme with useful plugins and custom keybindings, making your workflow faster and more intuitive. This configuration is built around my personal needs, but feel free to use or adapt it as you like.
 
-## Installation
+---
 
-### Prerequisites
+## What’s Inside?
 
-- Vim 8 or higher with support for [plugins](https://vimhelp.org/).
-- [Vim-plug](https://github.com/junegunn/vim-plug) for managing plugins.
+- **Plugins**: Handpicked plugins for improved productivity.
+- **Settings**: Tweaked Vim settings for optimal coding and editing.
+- **Keybindings**: Custom key combinations to save time and reduce effort.
 
-### Steps
+### Quickstart:
 
-1. **Clone this repository** to your Vim configuration directory.
+```bash
+git clone https://github.com/m-mdy-m/.vimrc.git && cd .vimrc && ./script/setup  # Let the magic happen!
+```
 
-   ```bash
-   git clone https://github.com/m-mdy-m/vim-config.git ~/.vim
-   ```
+**What the script does**:
 
-2. **Install plugins** using Vim-plug.
+1. Checks/installs Vim
+2. Links your `.vimrc` to mine
+3. Sets up [vim-plug](https://github.com/junegunn/vim-plug)
+4. Installs plugins automatically
 
-   Open Vim and run the following command:
+---
 
-   ```vim
-   :PlugInstall
-   ```
+## Structured Config:
 
-   This will install all the plugins specified in `vim-config`.
+```
+├── appearance.vim    # Colors & UI tweaks
+├── keys.vim          # Custom shortcuts
+├── plugins/install.vim  # Plugin declarations
+└── plugins/settings.vim # Plugin configurations
+```
 
-3. **Install Prettier globally** (if not already installed):
+## Code Example:
 
-   ```bash
-   npm install -g prettier
-   ```
+Check out how your code will look with this setup!
 
-4. **Customize your `.vimrc`** by linking or copying the `vimrc` settings from the repository.
-
-   Example:
-
-   ```bash
-   ln -s ~/.vim/vimrc ~/.vimrc
-   ```
-
-   Or copy the `.vimrc` manually into your home directory.
+![Code](./screenshots/code.jpg)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT](LICENSE)
