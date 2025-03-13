@@ -1,4 +1,4 @@
-# vex — My Personal Vim Sanctuary
+# vex — My Personal Vim Configuration
 
 ![HomePage](./screenshots/home.png)
 
