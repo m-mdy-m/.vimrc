@@ -1,71 +1,111 @@
-" General Appearance Settings
-syntax on                       " Enable syntax highlighting
-set termguicolors               " Enable 24-bit RGB colors
-set background=dark             " Use a dark theme
-" Base Background and Text
-highlight Normal ctermbg=NONE ctermfg=15 guibg=#1A1C1F guifg=#D3D7CF  " Dark neutral background, light gray text
-highlight NonText ctermbg=NONE ctermfg=8 guibg=#1A1C1F guifg=#33353A  " Dim for non-text elements
-highlight EndOfBuffer ctermbg=NONE ctermfg=8 guibg=#1A1C1F guifg=#1A1C1F " Hide trailing ~
+" Vim Configuration
+syntax enable
+syntax on
+set termguicolors
+set laststatus=2
+set noshowmode
+set background=dark
+set cursorline
+set number
+set scrolloff=8
+set signcolumn=yes
 
-" Line Numbers
-highlight LineNr ctermbg=NONE ctermfg=8 guibg=#1A1C1F guifg=#555A60   " Muted gray line numbers
-highlight CursorLineNr cterm=NONE ctermfg=11 guibg=#25282E guifg=#A3D4F7  " Soft highlight for current line number
+" Theme Name
+let g:colors_name="midnight_azure"
 
-" Cursor and Line Highlights
-set cursorline                  " Highlight the current line
-highlight CursorLine cterm=NONE ctermbg=0 guibg=#25282E              " Subtle gray for the cursor line
-highlight CursorColumn ctermbg=NONE guibg=#2C3037                    " Slightly dim column
+" Basic UI Elements
+highlight Normal           guibg=#0A0A0F  guifg=#D8DFEC
+highlight NonText          guibg=#0A0A0F  guifg=#1C2635
+highlight EndOfBuffer      guibg=#0A0A0F  guifg=#111419
 
-" Syntax Elements
-highlight Comment cterm=italic ctermfg=8 guifg=#6C7075 gui=italic      " Dim gray for comments
-highlight Constant ctermfg=6 guifg=#87C2DC                             " Light blue for constants
-highlight String ctermfg=2 guifg=#A6D189                              " Green for strings
-highlight Function ctermfg=4 guifg=#7AA6B6                            " Soft blue for functions
-highlight Keyword ctermfg=5 guifg=#CBA6E3                             " Purple for keywords
-highlight Identifier ctermfg=3 guifg=#E8BF6A                          " Warm amber for identifiers
+" Line Numbers and Cursor
+highlight LineNr           guibg=#0A0A0F  guifg=#2A3547
+highlight CursorLineNr     guibg=#101318  guifg=#36C3FF gui=bold
+highlight CursorLine       guibg=#101318
+highlight CursorColumn     guibg=#101318
 
-" Status Line
-highlight StatusLine cterm=NONE ctermbg=0 ctermfg=15 guibg=#21252B guifg=#E5E9F0
-highlight StatusLineNC cterm=NONE ctermbg=0 ctermfg=8 guibg=#1A1C1F guifg=#616E88
+" Syntax Highlighting
+highlight Comment          guifg=#5D718C  gui=italic
+highlight Constant         guifg=#FF9EB4
+highlight String           guifg=#AEFF78
+highlight Character        guifg=#FFB8D9
+highlight Number           guifg=#FF9C67
+highlight Boolean          guifg=#FF7AB2
+highlight Float            guifg=#FF9C67
+highlight Function         guifg=#56C6FF  gui=bold
+highlight Statement        guifg=#FF7AB2
+highlight Conditional      guifg=#FF7AB2  gui=italic
+highlight Repeat           guifg=#FF7AB2  gui=italic
+highlight Label            guifg=#FFB86C
+highlight Operator         guifg=#E2E2E2
+highlight Keyword          guifg=#FF7AB2  gui=italic
+highlight Exception        guifg=#FF7AB2  gui=bold,italic
+highlight Identifier       guifg=#C5D3FF
+highlight Type             guifg=#56FFFF  gui=italic
+highlight StorageClass     guifg=#FFB86C
+highlight Structure        guifg=#56FFFF  gui=bold
+highlight Typedef          guifg=#56FFFF
+highlight Special          guifg=#FF9C67
+highlight SpecialChar      guifg=#FFB86C
+highlight Tag              guifg=#56C6FF
+highlight Delimiter        guifg=#A0A0A0
+highlight SpecialComment   guifg=#7089A8  gui=italic,bold
+highlight Debug            guifg=#FF7AB2
+highlight PreProc          guifg=#FFB86C
+highlight PreCondit        guifg=#FFB86C  gui=italic
+highlight Include          guifg=#FF9C67  gui=bold
+highlight Define           guifg=#FFB86C
+highlight Macro            guifg=#FFB86C
+highlight Todo             guibg=#16223B  guifg=#FFB86C  gui=bold,italic
 
-" Visual Mode
-highlight Visual ctermbg=0 guibg=#3A414A                              " Calm blue-gray for selections
-highlight VisualNOS ctermbg=0 guibg=#50575F                           " Muted dark gray for non-overlapping selections
+" UI Components
+highlight StatusLine       guibg=#050508  guifg=#7EC9FF
+highlight StatusLineNC     guibg=#101318  guifg=#3D5573
+highlight Visual           guibg=#17283F  guifg=NONE
+highlight Search           guibg=#004F8A  guifg=#D8DFEC
+highlight IncSearch        guibg=#0087E5  guifg=#FFFFFF  gui=bold
 
-" Search Highlights
-highlight Search cterm=NONE ctermbg=3 ctermfg=0 guibg=#B3A06D guifg=#2E3440
-highlight IncSearch cterm=NONE ctermbg=1 ctermfg=15 guibg=#E06C75 guifg=#1A1C1F
+" Matching Parentheses
+highlight MatchParen       guibg=#004F8A  guifg=#D8DFEC  gui=bold
 
-" Match Parentheses
-highlight MatchParen cterm=NONE ctermbg=4 guibg=#37424E guifg=#FFD27F " Amber and dark blue background
+" Menu Elements
+highlight Pmenu            guibg=#101520  guifg=#D8DFEC
+highlight PmenuSel         guibg=#004F8A  guifg=#FFFFFF  gui=bold
+highlight PmenuSbar        guibg=#152030
+highlight PmenuThumb       guibg=#004F8A
 
-" Popup Menus
-highlight Pmenu ctermbg=0 ctermfg=15 guibg=#23272E guifg=#D3D7CF
-highlight PmenuSel ctermbg=4 ctermfg=15 guibg=#3A4250 guifg=#E8F2FE
-highlight PmenuSbar ctermbg=8 guibg=#383D44
-highlight PmenuThumb ctermbg=4 guibg=#87C2DC
+" Messages and Errors
+highlight Error            guibg=#0A0A0F  guifg=#FF4D8A  gui=undercurl,bold
+highlight WarningMsg       guifg=#FFB540  gui=italic
+highlight ErrorMsg         guibg=#271420  guifg=#FF4D8A  gui=bold
 
-" Error and Warning Messages
-highlight ErrorMsg cterm=bold ctermfg=1 guibg=#2E3440 guifg=#F44747
-highlight WarningMsg cterm=NONE ctermbg=0 ctermfg=3 guifg=#FFC66D
+" Tabs and Folds
+highlight Folded           guibg=#101318  guifg=#3D5573  gui=italic
+highlight TabLine          guibg=#101318  guifg=#3D5573
+highlight TabLineSel       guibg=#004F8A  guifg=#FFFFFF  gui=bold
+highlight Title            guifg=#00A1FF  gui=bold
 
-" Fold Appearance
-highlight Folded cterm=italic ctermbg=0 ctermfg=8 guibg=#23272E guifg=#7E8B94
-highlight FoldColumn ctermbg=NONE ctermfg=8 guifg=#616E88
+" Diff View
+highlight DiffAdd          guibg=#0A2C2A  guifg=#28FFBB
+highlight DiffDelete       guibg=#2A111A  guifg=#FF4D8A
+highlight DiffChange       guibg=#1A2A3F  guifg=#36C3FF
+highlight DiffText         guibg=#004F8A  guifg=#FFFFFF  gui=bold
 
-" Tabline and Titles
-highlight TabLine cterm=NONE ctermbg=0 ctermfg=8 guibg=#1A1C1F guifg=#7C8C94
-highlight TabLineSel cterm=NONE ctermbg=4 ctermfg=15 guibg=#37424E guifg=#D3D7CF
-highlight TabLineFill cterm=NONE ctermbg=0 guibg=#1A1C1F guifg=#33353A
-highlight Title cterm=bold ctermfg=4 guifg=#87C2DC                    " Cool blue for titles
+" Window Separators
+highlight WinSeparator     guibg=#050508  guifg=#050508
+highlight VertSplit        guibg=#050508  guifg=#050508
 
-" Additional Highlights
-highlight Directory ctermfg=6 guifg=#8CABB8                          " Cyan for directory names
-highlight DiffAdd cterm=NONE ctermbg=2 guibg=#273C28 guifg=#A6D189    " Green for additions
-highlight DiffDelete cterm=NONE ctermbg=1 guibg=#3C282C guifg=#E06C75 " Red for deletions
-highlight DiffChange cterm=NONE ctermbg=3 guibg=#4A4030 guifg=#B3A06D " Yellow for changes
-highlight DiffText cterm=bold ctermbg=4 guibg=#364E68 guifg=#CBA6E3   " Blue-purple for changed text
+" Miscellaneous
+highlight Underlined       guifg=#00A1FF  gui=underline
+highlight ColorColumn      guibg=#101318
+highlight SignColumn       guibg=#0A0A0F  guifg=#00A1FF
 
-" Remove Extra Borders and Visual Noise
-highlight WinSeparator cterm=NONE guibg=#1B1D20 guifg=#1B1D20        " Make window borders blend with background
-highlight VertSplit guibg=#1B1D20 guifg=#1B1D20                     " Remove vertical split line
+" Special Text Formatting
+highlight htmlItalic       gui=italic
+highlight htmlBold         gui=bold
+highlight htmlBoldItalic   gui=bold,italic
+
+" LSP References
+highlight! link LspReferenceText   Visual
+highlight! link LspReferenceRead   Visual
+highlight! link LspReferenceWrite  Visual
