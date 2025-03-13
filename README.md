@@ -1,6 +1,6 @@
 # vex — My Personal Vim Sanctuary
 
-![HomePage](./screenshots/home.jpg)
+![HomePage](./screenshots/home.png)
 
 Welcome to my personal Vim configuration setup! VEX (Vim Ecosystem Extension) is a minimal, Vim setup designed to streamline coding experience. It’s optimized for a clean, dark theme with useful plugins and custom keybindings, making your workflow faster and more intuitive. This configuration is built around my personal needs, but feel free to use or adapt it as you like.
 
@@ -40,7 +40,7 @@ git clone https://github.com/m-mdy-m/.vimrc.git && cd .vimrc && ./script/setup  
 
 Check out how your code will look with this setup!
 
-![Code](./screenshots/code.jpg)
+![Code](./screenshots/code.png)
 
 ## License
 
