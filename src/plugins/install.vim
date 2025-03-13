@@ -1,8 +1,3 @@
-" ========================================================================
-" Comprehensive Vim Plugin Configuration
-" A versatile setup for general purpose development and text editing
-" ========================================================================
-
 " Plugin Manager Initialization
 call plug#begin('~/.vim/plugged')
 

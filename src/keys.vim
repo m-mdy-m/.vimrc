@@ -1,7 +1,6 @@
 " ==================================
-" Basic Editing Commands
+" Basic 
 " ==================================
-
 " Undo/Redo
 nnoremap <C-z> u              " Undo
 nnoremap <C-r> <C-r>          " Redo
@@ -18,153 +17,188 @@ nnoremap <C-S-v> P            " Paste before cursor
 inoremap <C-x> <Esc>ddi       " Cut line in insert mode
 inoremap <C-c> <Esc>yy        " Copy line in insert mode
 inoremap <C-v> <Esc>p         " Paste in insert mode
+" Select all (Ctrl+A)
+nnoremap <C-a> gg0vG$
+inoremap <C-a> <Esc>gg0vG$
+vnoremap <C-a> <Esc>gg0vG$
 
-" ==================================
-" Window Management
-" ==================================
+" Save file (Ctrl+S)
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>a
+vnoremap <C-s> <Esc>:w<CR>
 
-" Split Windows
-nnoremap <C-w>s :split<CR>        " Horizontal split
-nnoremap <C-w>v :vsplit<CR>       " Vertical split
+" Home/End navigation (beginning/end of line)
+nnoremap <Home> 0
+nnoremap <End> $
+inoremap <Home> <Esc>0i
+inoremap <End> <Esc>$a
+vnoremap <Home> 0
+vnoremap <End> $
 
-" Navigate between splits
-nnoremap <C-w>h <C-w>h            " Move to left window
-nnoremap <C-w>j <C-w>j            " Move to bottom window
-nnoremap <C-w>k <C-w>k            " Move to top window
-nnoremap <C-w>l <C-w>l            " Move to right window
+" Shift+Home/End for selection
+nnoremap <S-Home> v0
+nnoremap <S-End> v$
+inoremap <S-Home> <Esc>v0
+inoremap <S-End> <Esc>v$
+vnoremap <S-Home> 0
+vnoremap <S-End> $
 
-" Resize Windows
-nnoremap <C-w>> :vertical resize +5<CR>  " Resize right window
-nnoremap <C-w>< :vertical resize -5<CR>  " Resize left window
-nnoremap <C-w>+ :resize +5<CR>           " Resize bottom window
-nnoremap <C-w>- :resize -5<CR>           " Resize top window
+" Delete word (Ctrl+Delete, Ctrl+Backspace)
+nnoremap <C-Delete> dw
+nnoremap <C-BS> db
+inoremap <C-Delete> <Esc>dwi
+inoremap <C-BS> <C-w>
 
-" Close Windows
-nnoremap <C-w>q :close<CR>         " Close current window
+" Navigate by word (Ctrl+Left/Right)
+nnoremap <C-Left> b
+nnoremap <C-Right> w
+inoremap <C-Left> <Esc>bi
+inoremap <C-Right> <Esc>wi
+vnoremap <C-Left> b
+vnoremap <C-Right> w
 
-" Close all windows except the last one
-nnoremap <leader>ca :tabnew<CR>:q<CR>  " Create new tab to reset, then quit
+" Shift+Arrows for selection
+nnoremap <S-Left> vh
+nnoremap <S-Right> vl
+nnoremap <S-Up> vk
+nnoremap <S-Down> vj
+inoremap <S-Left> <Esc>vhi
+inoremap <S-Right> <Esc>vli
+inoremap <S-Up> <Esc>vki
+inoremap <S-Down> <Esc>vji
+vnoremap <S-Left> h
+vnoremap <S-Right> l
+vnoremap <S-Up> k
+vnoremap <S-Down> j
 
-" Close multiple windows, e.g. close 4 means close 4 windows from the current
-nnoremap <leader>c4 :execute 'normal! 4<C-w>c'<CR>  " Close 4 windows (if you specify the number)
+" Ctrl+Shift+Arrows for word selection
+nnoremap <C-S-Left> vb
+nnoremap <C-S-Right> vw
+inoremap <C-S-Left> <Esc>vbi
+inoremap <C-S-Right> <Esc>vwi
+vnoremap <C-S-Left> b
+vnoremap <C-S-Right> w
 
-" Close n windows (generic number)
-nnoremap <leader>cn :execute 'normal! ' . input('Close how many windows? ') . '<C-w>c'<CR> " Close n windows
-
-" Close n windows with custom input
-nnoremap <leader>n :let n = input('Close how many windows? ')<CR> :execute 'normal! ' . n . ' <C-w>c'<CR>
-" ==================================
-" Navigation
-" ==================================
-
-" Move between buffers
-nnoremap <leader>h :bprevious<CR>   " Previous buffer
-nnoremap <leader>l :bnext<CR>       " Next buffer
-
-" Move between splits
-nnoremap <leader>h <C-w>h          " Move to left window
-nnoremap <leader>j <C-w>j          " Move to bottom window
-nnoremap <leader>k <C-w>k          " Move to top window
-nnoremap <leader>l <C-w>l          " Move to right window
-
-" Jump to the beginning/end of a line
-nnoremap <C-a> 0                  " Jump to the beginning of the line
-nnoremap <C-e> $                  " Jump to the end of the line
-
-" Scroll
-nnoremap <C-d> <C-d>              " Scroll down
-nnoremap <C-u> <C-u>              " Scroll up
-
-" ==================================
-" Text Editing
-" ==================================
-
-" Delete Line
-nnoremap <C-d> dd                  " Delete current line
-inoremap <C-d> <Esc>ddi            " Delete current line in insert mode
-
-" Delete Word
-nnoremap <C-w> dw                  " Delete word under cursor
-inoremap <C-w> <Esc>dw             " Delete word in insert mode
-
-" Duplicate Line
-nnoremap <leader>d yyp             " Duplicate current line
+" Line operations
+nnoremap <C-l> 0v$
+inoremap <C-l> <Esc>0v$
+" Duplicate line (Alt+Shift+Down in VSCode)
+nnoremap <A-S-Down> yyp
+inoremap <A-S-Down> <Esc>yypi
+" Move line up/down (Alt+Up/Down in VSCode)
+nnoremap <A-Up> ddkP
+nnoremap <A-Down> ddp
+inoremap <A-Up> <Esc>ddkPi
+inoremap <A-Down> <Esc>ddpi
 
 " Indentation
-nnoremap <C-t> >>                  " Indent line
-nnoremap <C-d> <<                  " Dedent line
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+inoremap <S-Tab> <Esc><<i
+
+" Multi-cursor simulation (not perfect but helps)
+" Use vim-multiple-cursors plugin for better experience
+nmap <C-d> <Plug>(VM-Find-Under)
+xmap <C-d> <Plug>(VM-Find-Subword-Under)
 
 " ==================================
-" Search and Replace
+" Search and Replace (VSCode Style)
 " ==================================
 
-" Incremental search
-nnoremap / /<C-r>=input("Search: ")<CR><CR> " Custom search prompt
-nnoremap ? ?<C-r>=input("Search: ")<CR><CR> " Custom reverse search prompt
-
-" Find word under cursor
-nnoremap * *N                     " Search for the word under cursor
-nnoremap # #N                     " Reverse search for the word under cursor
-
-" Replace text
-nnoremap <leader>r :%s///g<Left><Left><Left>  " Search & replace
-inoremap <leader>r <Esc>:%s///g<Left><Left><Left> " Replace in insert mode
-
-" ==================================
-" File Operations
-" ==================================
-
-" Save and quit
-nnoremap <C-s> :w<CR>              " Save file
-nnoremap <C-q> :q<CR>              " Quit file
-nnoremap <C-S-q> :wq<CR>           " Save and quit file
-
-" Open new file
-nnoremap <leader>n :e<Space>       " Open new file
+" Find
+nnoremap <C-f> /
+inoremap <C-f> <Esc>/
+" Find next/previous
+nnoremap <F3> n
+nnoremap <S-F3> N
+inoremap <F3> <Esc>ni
+inoremap <S-F3> <Esc>Ni
+" Find and replace
+nnoremap <C-h> :%s///gc<Left><Left><Left><Left>
+inoremap <C-h> <Esc>:%s///gc<Left><Left><Left><Left>
+" Find in selection
+vnoremap <C-f> <Esc>/\%V
 
 " ==================================
-" Miscellaneous
+" Window Management (VSCode Style)
 " ==================================
 
-" Toggle line numbers
-nnoremap <leader>ln :set number!<CR>   " Toggle line numbers
-
-" Show line in the middle of the screen
-nnoremap <leader>l :set cursorline!<CR>   " Toggle cursor line highlight
-
-" Show relative line numbers
-nnoremap <leader>rn :set relativenumber!<CR>   " Toggle relative numbers
-
-" Toggle relative line numbers
-nnoremap <leader>tn :set relativenumber!<CR>   " Toggle relative numbers
-
-" ==================================
-" Code Folding
-" ==================================
-
-" Enable/Disable folding
-nnoremap <leader>f :set foldmethod=syntax<CR>  " Fold by syntax
-nnoremap <leader>F :set foldmethod=manual<CR>   " Disable folding
-nnoremap <leader>o :foldopen<CR>                 " Open fold
-nnoremap <leader>c :foldclose<CR>                " Close fold
-nnoremap <leader>z :foldreset<CR>                " Reset fold
+" Split window
+nnoremap <C-\> :vsplit<CR>
+nnoremap <C-S-\> :split<CR>
+" Close current window/tab
+nnoremap <C-w> :close<CR>
+inoremap <C-w> <Esc>:close<CR>
+" Navigate between splits
+nnoremap <C-S-h> <C-w>h
+nnoremap <C-S-j> <C-w>j
+nnoremap <C-S-k> <C-w>k
+nnoremap <C-S-l> <C-w>l
+" Resize splits
+nnoremap <C-S-Left> :vertical resize -5<CR>
+nnoremap <C-S-Right> :vertical resize +5<CR>
+nnoremap <C-S-Up> :resize -5<CR>
+nnoremap <C-S-Down> :resize +5<CR>
 
 " ==================================
-" Activate Mouse
+" Tab Management
 " ==================================
 
-set mouse=a    " Enable mouse support for selecting text
+" New tab
+nnoremap <C-t> :tabnew<CR>
+inoremap <C-t> <Esc>:tabnew<CR>
+" Close tab
+nnoremap <C-w> :tabclose<CR>
+" Next/previous tab
+nnoremap <C-Tab> :tabnext<CR>
+nnoremap <C-S-Tab> :tabprevious<CR>
+inoremap <C-Tab> <Esc>:tabnext<CR>
+inoremap <C-S-Tab> <Esc>:tabprevious<CR>
+" Go to specific tab
+nnoremap <A-1> 1gt
+nnoremap <A-2> 2gt
+nnoremap <A-3> 3gt
+nnoremap <A-4> 4gt
+nnoremap <A-5> 5gt
+nnoremap <A-6> 6gt
+nnoremap <A-7> 7gt
+nnoremap <A-8> 8gt
+nnoremap <A-9> 9gt
 
-" ==================================
-"  Keybinding for clang-format
-" ==================================
-nmap <leader>cf :ClangFormat<CR>
-vmap <leader>cf :ClangFormat<CR>
-autocmd BufWritePre *.c,*.h ClangFormat
+" Go to definition
+nnoremap <F12> :call CocAction('jumpDefinition')<CR>
+" Show references
+nnoremap <S-F12> :call CocAction('jumpReferences')<CR>
+" Rename symbol
+nnoremap <F2> :call CocAction('rename')<CR>
+" Show documentation
+nnoremap <C-k><C-i> :call CocAction('doHover')<CR>
+" Code actions
+nnoremap <leader>ca :call CocAction('codeAction')<CR>
+" Quick Fix
+nnoremap <leader>qf :call CocAction('doQuickfix')<CR>
+" Format document
+nnoremap <S-A-f> :call CocAction('format')<CR>
+inoremap <S-A-f> <Esc>:call CocAction('format')<CR>i
 
-" ==================================
-"   Keybinding for Prettier
-" ==================================
-nmap <leader>p :Prettier<CR>
-vmap <leader>p :Prettier<CR>
-autocmd BufWritePre *.c,*.h Prettier
+" Toggle terminal
+nnoremap <C-`> :terminal<CR>
+" Exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+
+" Toggle comment
+nnoremap <C-/> :call NERDComment(0, "toggle")<CR>
+vnoremap <C-/> :call NERDComment(0, "toggle")<CR>
+inoremap <C-/> <Esc>:call NERDComment(0, "toggle")<CR>i
+
+" Fold/Unfold
+nnoremap <C-k><C-0> zM  " Fold all
+nnoremap <C-k><C-j> zo  " Unfold current
+nnoremap <C-k><C-l> zc  " Fold current
+
+" Multi-file search
+nnoremap <C-S-f> :vim // **/*<left><left><left><left><left><left>
+nnoremap <C-p> :find 
+nnoremap <C-S-p> :

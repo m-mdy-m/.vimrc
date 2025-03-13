@@ -10,6 +10,7 @@ let g:NERDTreeDirArrowCollapsible="-"
 let g:NERDTreeShowFullPath=0
 let g:NERDTreeShowRoot=0
 let g:NERDTreeChDirMode=2
+
 " Auto open NERDTree when vim starts up on a directory
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -22,6 +23,10 @@ autocmd vimenter * if !argc() | NERDTree | wincmd p | endif
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :NERDTreeFocus<CR>
 nnoremap <leader>n :NERDTreeFind<CR>
+nnoremap <C-e> :NERDTreeToggle<CR>
+inoremap <C-e> <Esc>:NERDTreeToggle<CR>
+nnoremap <leader>e :NERDTreeFocus<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
 
 " NERDTree Colors
 highlight NvimTreeNormal guibg=#101318 guifg=#D8DFEC

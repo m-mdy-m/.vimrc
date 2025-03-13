@@ -11,7 +11,6 @@ nnoremap <F12> :so $MYVIMRC<CR>
 " Enable local .vimrc config
 set exrc
 set secure
-
 " Lines of memory to remember
 set history=10000
 
@@ -31,7 +30,6 @@ inoremap <C-c> <Esc>
 " No need for Ex mode
 nnoremap Q <NOP>
 
-" Set inc/dec
 set nrformats-=octal
 set number relativenumber      " Show hybrid line numbers
 set tabstop=4 shiftwidth=4     " Tab settings
@@ -40,8 +38,10 @@ set smartindent                " Smart indentation
 set wrap scrolloff=5           " Wrap lines and keep context visible
 set clipboard=unnamedplus      " Use system clipboard
 set undofile                   " Enable persistent undo history
-
-" Search settings
+set ttyfast
+set updatetime=300
+set synmaxcol=50
+set lazyredraw
 set ignorecase smartcase       " Smart case sensitivity in searches
 set incsearch hlsearch         " Incremental search with highlighting
 
