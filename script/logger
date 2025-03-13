@@ -1,0 +1,15 @@
+log_step() {
+    echo -e "\n${CYAN}${BOLD}[SETUP]${RESET} ${BOLD}$1${RESET}"
+}
+
+log_success() {
+    echo -e "${GREEN}✓ $1${RESET}"
+}
+
+log_warning() {
+    echo -e "${YELLOW}⚠ $1${RESET}"
+}
+
+log_error() {
+    echo -e "${RED}✗ $1${RESET}"
+}

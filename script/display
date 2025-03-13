@@ -1,0 +1,27 @@
+#!/bin/bash
+BLUE='\033[0;34m'
+DARK_BLUE='\033[0;24m'
+CYAN='\033[0;36m'
+RESET='\033[0m'
+
+display_banner() {
+    clear
+    local delay=0.08
+
+    local lines=(
+        "                    "
+        "      \\     /      "
+        "       \\   /       "
+        "        \\ /        "
+        "         V         "
+        "        vex        "
+    )
+
+    for ((i=0; i<${#lines[@]}; i++)); do
+        echo -e "${BLUE}${lines[$i]}${RESET}"
+        sleep $delay
+    done
+
+    sleep 0.3
+    echo
+}
