@@ -1,5 +1,5 @@
 " ==================================
-" Basic 
+" Basic
 " ==================================
 " Undo/Redo
 nnoremap <C-z> u              " Undo
@@ -10,13 +10,15 @@ inoremap <C-r> <Esc><C-r>     " Redo in insert mode
 " Cut, Copy, Paste
 nnoremap <C-x> dd             " Cut line
 nnoremap <C-c> yy             " Copy line
+vnoremap <C-c> y              " Copy selection in visual mode
 nnoremap <C-v> p              " Paste after cursor
 nnoremap <C-S-v> P            " Paste before cursor
 
 " Copy, Cut, Paste in Insert Mode
 inoremap <C-x> <Esc>ddi       " Cut line in insert mode
-inoremap <C-c> <Esc>yy        " Copy line in insert mode
-inoremap <C-v> <Esc>p         " Paste in insert mode
+inoremap <C-c> <Esc>yyi       " Copy line in insert mode
+inoremap <C-v> <Esc>pi        " Paste in insert mode
+
 " Select all (Ctrl+A)
 nnoremap <C-a> gg0vG$
 inoremap <C-a> <Esc>gg0vG$
@@ -200,5 +202,5 @@ nnoremap <C-k><C-l> zc  " Fold current
 
 " Multi-file search
 nnoremap <C-S-f> :vim // **/*<left><left><left><left><left><left>
-nnoremap <C-p> :find 
+nnoremap <C-p> :find
 nnoremap <C-S-p> :

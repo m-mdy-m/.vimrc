@@ -24,12 +24,6 @@ set timeoutlen=3000 ttimeoutlen=100
 " Update time
 set updatetime=250
 
-" Trigger InsertLeave autocmd
-inoremap <C-c> <Esc>
-
-" No need for Ex mode
-nnoremap Q <NOP>
-
 set nrformats-=octal
 set number relativenumber      " Show hybrid line numbers
 set tabstop=4 shiftwidth=4     " Tab settings
