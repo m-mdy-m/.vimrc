@@ -15,8 +15,7 @@ set secure
 set history=10000
 
 " Leader key to add extra key combinations
-let mapleader = ','
-let g:mapleader = ','
+let mapleader = '\'
 
 " Time delay on <Leader> key
 set timeoutlen=3000 ttimeoutlen=100
