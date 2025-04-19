@@ -71,7 +71,6 @@ Plug 'dense-analysis/ale'                           " Async linting
 Plug 'fatih/vim-go'                                 " Go support
 Plug 'rust-lang/rust.vim'                           " Rust support
 Plug 'pangloss/vim-javascript'                      " JavaScript support
-Plug 'maxmellon/vim-jsx-pretty'                     " JSX support
 Plug 'HerringtonDarkholme/yats.vim'                 " TypeScript support
 Plug 'jparise/vim-graphql'                          " GraphQL support
 
