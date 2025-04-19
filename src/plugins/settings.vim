@@ -528,34 +528,6 @@ nnoremap <leader>df :DBUIFindBuffer<CR>
 nnoremap <leader>dr :DBUIRenameBuffer<CR>
 nnoremap <leader>dl :DBUILastQueryInfo<CR>
 
-" Performance Optimizations
-" ===================================
-set lazyredraw
-set regexpengine=1
-set ttyfast
-
-" Handle Large Files
-" ===================================
-let g:LargeFile = 1024 * 1024 * 10
-augroup LargeFile
-  autocmd!
-  autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
-augroup END
-
-function! LargeFile()
-  set eventignore+=FileType
-  setlocal bufhidden=unload
-  setlocal buftype=nowrite
-  setlocal undolevels=-1
-  setlocal syntax=off
-  setlocal swapfile!
-  setlocal nofoldenable
-  setlocal foldmethod=manual
-  setlocal nomodifiable
-  set filetype=
-  set eventignore-=FileType
-endfunction
-
 " Colorscheme Tweaks
 " ===================================
 " ALE signs
