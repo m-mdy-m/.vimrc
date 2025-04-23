@@ -10,8 +10,6 @@ let g:NERDTreeDirArrowCollapsible="-"
 let g:NERDTreeShowFullPath=0
 let g:NERDTreeShowRoot=0
 let g:NERDTreeChDirMode=2
-let g:NERDTreeLimitedSyntax = 1
-let g:NERDTreeHighlightCursorline = 0
 
 " Auto open NERDTree when vim starts up on a directory
 autocmd StdinReadPre * let s:std_in=1
@@ -74,11 +72,9 @@ nnoremap <leader>gp :Git push<CR>
 nnoremap <Leader>gg :call <SID>GrepWrapper('Gclog', '-i -G', '--')<CR>
 
 " Session Management
-let g:session_directory = '~/.vim/sessions/'
-let g:session_autosave = 'yes'
-let g:session_autosave_periodic = 5
-let g:session_autosave_silent = 1
-let g:session_autoload = 'no'
+let g:session_autosave  = 'no'
+ let g:session_autoload  = 'no'
+ let g:session_directory = '~/.vim/sessions/'
 " ----- Startify Configuration -----
 let g:startify_session_dir = '~/.vim/sessions'
 
@@ -292,8 +288,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <leader>rn <Plug>(coc-rename)
-let g:coc_snippet_next = '<tab>'
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver']
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
