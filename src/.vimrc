@@ -33,8 +33,14 @@ set clipboard=unnamedplus      " Use system clipboard
 set undofile                   " Enable persistent undo history
 set ttyfast
 set updatetime=300
-set synmaxcol=50
+set regexpengine=1
+set synmaxcol=200
 set lazyredraw
+set shortmess+=c
+set belloff=all
+let g:matchparen_timeout = 20
+let g:matchparen_insert_timeout = 20
+set nobackup nowritebackup
 set ignorecase smartcase       " Smart case sensitivity in searches
 set incsearch hlsearch         " Incremental search with highlighting
 
