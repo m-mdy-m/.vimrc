@@ -125,8 +125,34 @@ highlight htmlBold         gui=bold
 highlight htmlBoldItalic   gui=bold,italic
 
 " JavaScript/TypeScript
-highlight jsArrowFunction  guifg=#E5E7EB  gui=NONE
-highlight jsThis           guifg=#F472B6  gui=italic
-highlight jsClassKeyword   guifg=#F472B6  gui=italic
-highlight jsObjectKey      guifg=#BAC8FF  gui=NONE
-highlight jsTemplateString guifg=#A5F3B5  gui=NONE
+highlight jsArrowFunction  guifg=#E6EDF3  gui=NONE
+highlight jsThis           guifg=#F97EBD  gui=italic
+highlight jsClassKeyword   guifg=#F97EBD  gui=italic
+highlight jsObjectKey      guifg=#C1CAFF  gui=NONE
+highlight jsTemplateString guifg=#ADFFC4  gui=NONE
+
+" Python
+highlight pythonFunction      guifg=#7EE8FA  gui=bold
+highlight pythonBuiltin       guifg=#F97EBD  gui=italic
+highlight pythonClass         guifg=#7EE8FA  gui=bold
+highlight pythonDecorator     guifg=#FFA657  gui=bold
+highlight pythonDecoratorName guifg=#FFA657  gui=bold,italic
+highlight pythonDottedName    guifg=#C1CAFF  gui=NONE
+
+" Go
+highlight goDirective      guifg=#F97EBD  gui=italic
+highlight goDeclaration    guifg=#F97EBD  gui=italic
+highlight goDeclType       guifg=#7EE8FA  gui=italic
+highlight goStatement      guifg=#F97EBD  gui=NONE
+highlight goConditional    guifg=#F97EBD  gui=italic
+highlight goFunction       guifg=#7EE8FA  gui=bold
+highlight goMethod         guifg=#7EE8FA  gui=bold
+highlight goField          guifg=#C1CAFF  gui=NONE
+
+" Rust
+highlight rustKeyword      guifg=#F97EBD  gui=italic
+highlight rustModPath      guifg=#C1CAFF  gui=NONE
+highlight rustFuncName     guifg=#7EE8FA  gui=bold
+highlight rustAttribute    guifg=#FFA657  gui=italic
+highlight rustDerive       guifg=#FFA657  gui=italic
+highlight rustDeriveTrait  guifg=#7EE8FA  gui=italic
