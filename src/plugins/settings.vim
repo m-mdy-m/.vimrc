@@ -213,23 +213,6 @@ let g:prettier#config#trailing_comma = 'none'
 let g:prettier#config#arrow_parens = 'always'
 let g:prettier#config#parser = 'babel'
 
-" ----- Multiple Cursors Configuration -----
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key      = '<C-n>'
-let g:multi_cursor_select_all_word_key = '<A-n>'
-let g:multi_cursor_start_key           = 'g<C-n>'
-let g:multi_cursor_select_all_key      = 'g<A-n>'
-let g:multi_cursor_next_key            = '<C-n>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-
-" ----- Ack.vim Configuration -----
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
 
 " ----- Far.vim Configuration -----
 let g:far#source = 'agnvim'
@@ -262,218 +245,6 @@ nnoremap <leader>h :History<CR>
 nnoremap <leader>t :BTags<CR>
 nnoremap <leader>T :Tags<CR>
 
-" CoC Settings
-" ===================================
-let g:coc_global_extensions = [
-  \ 'coc-tsserver',
-  \ 'coc-json',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-prettier',
-  \ 'coc-eslint',
-  \ 'coc-python',
-  \ 'coc-java',
-  \ 'coc-snippets',
-  \ 'coc-yaml',
-  \ 'coc-xml',
-  \ 'coc-git',
-  \ 'coc-highlight'
-  \ ]
-
-" CoC Key mappings
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <leader>rn <Plug>(coc-rename)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Make <CR> auto-select the first completion item
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" ALE Settings
-" ===================================
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠'
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_fix_on_save = 1
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'typescript': ['eslint', 'tsserver'],
-\   'python': ['flake8', 'pylint'],
-\   'go': ['gofmt', 'golint'],
-\   'rust': ['analyzer'],
-\}
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'eslint'],
-\   'python': ['black', 'isort'],
-\   'go': ['gofmt', 'goimports'],
-\   'rust': ['rustfmt'],
-\}
-
-" Tagbar Settings
-" ===================================
-let g:tagbar_autofocus = 1
-let g:tagbar_compact = 1
-let g:tagbar_sort = 0
-let g:tagbar_width = 40
-nnoremap <F8> :TagbarToggle<CR>
-
-" Vista Settings
-" ===================================
-let g:vista_default_executive = 'coc'
-let g:vista_sidebar_width = 40
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista#renderer#enable_icon = 0
-nnoremap <F9> :Vista!!<CR>
-
-" Gutentags Settings
-" ===================================
-let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_ctags_exclude = [
-      \ '*.git', '*.svg', '*.hg',
-      \ '*/tests/*',
-      \ 'build',
-      \ 'dist',
-      \ '*sites/*/files/*',
-      \ 'bin',
-      \ 'node_modules',
-      \ 'bower_components',
-      \ 'cache',
-      \ 'compiled',
-      \ 'docs',
-      \ 'example',
-      \ 'bundle',
-      \ 'vendor',
-      \ '*.md',
-      \ '*-lock.json',
-      \ '*.lock',
-      \ '*bundle*.js',
-      \ '*build*.js',
-      \ '.*rc*',
-      \ '*.json',
-      \ '*.min.*',
-      \ '*.map',
-      \ '*.bak',
-      \ '*.zip',
-      \ '*.pyc',
-      \ '*.class',
-      \ '*.sln',
-      \ '*.Master',
-      \ '*.csproj',
-      \ '*.tmp',
-      \ '*.csproj.user',
-      \ '*.cache',
-      \ '*.pdb',
-      \ 'tags*',
-      \ 'cscope.*',
-      \ '*.css',
-      \ '*.less',
-      \ '*.scss',
-      \ '*.exe', '*.dll',
-      \ '*.mp3', '*.ogg', '*.flac',
-      \ '*.swp', '*.swo',
-      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
-      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
-      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
-      \ ]
-
-" Floaterm Settings
-" ===================================
-let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_keymap_new    = '<leader><F12>'
-let g:floaterm_keymap_prev   = '<F10>'
-let g:floaterm_keymap_next   = '<F11>'
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
-let g:floaterm_position = 'center'
-let g:floaterm_title = 'Terminal $1/$2'
-nnoremap <silent> <C-`> :FloatermToggle<CR>
-tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
-
-" Vim Test Settings
-" ===================================
-let g:test#strategy = 'floaterm'
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tg :TestVisit<CR>
-
-" Vimspector Settings
-" ===================================
-let g:vimspector_enable_mappings = 'HUMAN'
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-node-debug2' ]
-nnoremap <leader>dd :call vimspector#Launch()<CR>
-nnoremap <leader>de :call vimspector#Reset()<CR>
-nnoremap <leader>dc :call vimspector#Continue()<CR>
-nnoremap <leader>dt :call vimspector#ToggleBreakpoint()<CR>
-nnoremap <leader>dT :call vimspector#ClearBreakpoints()<CR>
-nmap <leader>dl <Plug>VimspectorStepInto
-nmap <leader>dj <Plug>VimspectorStepOver
-nmap <leader>dk <Plug>VimspectorStepOut
-nmap <leader>dr <Plug>VimspectorRestart
-nnoremap <leader>d? :help vimspector<CR>
-
-" CtrlSF Settings
-" ===================================
-let g:ctrlsf_backend = 'rg'
-let g:ctrlsf_auto_focus = { "at": "start" }
-let g:ctrlsf_auto_close = { "normal": 0, "compact": 0 }
-let g:ctrlsf_confirm_save = 0
-let g:ctrlsf_default_view_mode = 'compact'
-let g:ctrlsf_search_mode = 'async'
-let g:ctrlsf_position = 'right'
-let g:ctrlsf_winsize = '30%'
-nmap <leader>s <Plug>CtrlSFPrompt
-nmap <leader>sw <Plug>CtrlSFCwordPath
-nmap <leader>sf <Plug>CtrlSFCwordExec
-vmap <leader>s <Plug>CtrlSFVwordPath
-vmap <leader>sv <Plug>CtrlSFVwordExec
-
-" Emmet Settings
-" ===================================
-let g:user_emmet_leader_key='<C-Z>'
-let g:user_emmet_mode='a'
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascriptreact,typescriptreact EmmetInstall
-
-" CloseTag Settings
-" ===================================
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
-let g:closetag_emptyTags_caseSensitive = 1
-let g:closetag_shortcut = '>'
-let g:closetag_close_shortcut = '<leader>>'
-
-" Markdown Preview Settings
-" ===================================
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-
 " Undotree Settings
 " ===================================
 let g:undotree_WindowLayout = 2
@@ -483,19 +254,6 @@ let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" Indent Guide Settings
-" ===================================
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#0E121A
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#0A0D14
-
-" Rooter Settings
-" ===================================
-let g:rooter_patterns = ['.git', 'Makefile', 'package.json', 'setup.py', 'requirements.txt']
-let g:rooter_silent_chdir = 1
 
 " Git Messenger Settings
 " ===================================
@@ -515,29 +273,8 @@ highlight ConflictMarkerOurs guibg=#2e5049
 highlight ConflictMarkerTheirs guibg=#344f69
 highlight ConflictMarkerEnd guibg=#2f628e
 
-" DadBod Settings
-" ===================================
-let g:db_ui_use_nerd_fonts = 0
-let g:db_ui_show_database_icon = 0
-let g:db_ui_force_echo_notifications = 1
-let g:db_ui_win_position = 'left'
-let g:db_ui_winwidth = 30
-nnoremap <leader>db :DBUIToggle<CR>
-nnoremap <leader>df :DBUIFindBuffer<CR>
-nnoremap <leader>dr :DBUIRenameBuffer<CR>
-nnoremap <leader>dl :DBUILastQueryInfo<CR>
-
 " Colorscheme Tweaks
 " ===================================
-" ALE signs
-highlight ALEErrorSign guifg=#FF4D8A guibg=#0A0A0F
-highlight ALEWarningSign guifg=#FFB540 guibg=#0A0A0F
-highlight ALEInfoSign guifg=#36C3FF guibg=#0A0A0F
-
-" Vimspector
-highlight debugPC guibg=#0E2E3D
-highlight debugBreakpoint guifg=#FF0000 guibg=#141414
-
 " VSCode-like indent guides
 highlight IndentGuidesOdd guibg=#0E121A
 highlight IndentGuidesEven guibg=#0A0D14
