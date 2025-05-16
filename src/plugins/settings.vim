@@ -213,17 +213,6 @@ let g:prettier#config#trailing_comma = 'none'
 let g:prettier#config#arrow_parens = 'always'
 let g:prettier#config#parser = 'babel'
 
-" ----- Multiple Cursors Configuration -----
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key      = '<C-n>'
-let g:multi_cursor_select_all_word_key = '<A-n>'
-let g:multi_cursor_start_key           = 'g<C-n>'
-let g:multi_cursor_select_all_key      = 'g<A-n>'
-let g:multi_cursor_next_key            = '<C-n>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-
 " ----- Ack.vim Configuration -----
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -236,11 +225,6 @@ let g:far#source = 'agnvim'
 let g:far#file_mask_favorites = ['%', '**/*.*', '**/*.js', '**/*.py', '**/*.java', '**/*.css', '**/*.html', '**/*.vim', '**/*.cpp', '**/*.c', '**/*.h']
 let g:far#window_width = 60
 let g:far#enable_undo = 1
-
-" ===================================
-" Additional Plugin Settings
-" ===================================
-
 " FZF Settings
 " ===================================
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
@@ -267,17 +251,10 @@ nnoremap <leader>T :Tags<CR>
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-json',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-prettier',
-  \ 'coc-eslint',
-  \ 'coc-python',
-  \ 'coc-java',
+  \ 'coc-clangd',
   \ 'coc-snippets',
-  \ 'coc-yaml',
-  \ 'coc-xml',
-  \ 'coc-git',
-  \ 'coc-highlight'
+  \ 'coc-highlight',
+  \ 'coc-git'
   \ ]
 
 " CoC Key mappings
@@ -344,135 +321,6 @@ let g:vista_sidebar_width = 40
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista#renderer#enable_icon = 0
 nnoremap <F9> :Vista!!<CR>
-
-" Gutentags Settings
-" ===================================
-let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_ctags_exclude = [
-      \ '*.git', '*.svg', '*.hg',
-      \ '*/tests/*',
-      \ 'build',
-      \ 'dist',
-      \ '*sites/*/files/*',
-      \ 'bin',
-      \ 'node_modules',
-      \ 'bower_components',
-      \ 'cache',
-      \ 'compiled',
-      \ 'docs',
-      \ 'example',
-      \ 'bundle',
-      \ 'vendor',
-      \ '*.md',
-      \ '*-lock.json',
-      \ '*.lock',
-      \ '*bundle*.js',
-      \ '*build*.js',
-      \ '.*rc*',
-      \ '*.json',
-      \ '*.min.*',
-      \ '*.map',
-      \ '*.bak',
-      \ '*.zip',
-      \ '*.pyc',
-      \ '*.class',
-      \ '*.sln',
-      \ '*.Master',
-      \ '*.csproj',
-      \ '*.tmp',
-      \ '*.csproj.user',
-      \ '*.cache',
-      \ '*.pdb',
-      \ 'tags*',
-      \ 'cscope.*',
-      \ '*.css',
-      \ '*.less',
-      \ '*.scss',
-      \ '*.exe', '*.dll',
-      \ '*.mp3', '*.ogg', '*.flac',
-      \ '*.swp', '*.swo',
-      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
-      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
-      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
-      \ ]
-
-" Floaterm Settings
-" ===================================
-let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_keymap_new    = '<leader><F12>'
-let g:floaterm_keymap_prev   = '<F10>'
-let g:floaterm_keymap_next   = '<F11>'
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
-let g:floaterm_position = 'center'
-let g:floaterm_title = 'Terminal $1/$2'
-nnoremap <silent> <C-`> :FloatermToggle<CR>
-tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
-
-" Vim Test Settings
-" ===================================
-let g:test#strategy = 'floaterm'
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tg :TestVisit<CR>
-
-" Vimspector Settings
-" ===================================
-let g:vimspector_enable_mappings = 'HUMAN'
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-node-debug2' ]
-nnoremap <leader>dd :call vimspector#Launch()<CR>
-nnoremap <leader>de :call vimspector#Reset()<CR>
-nnoremap <leader>dc :call vimspector#Continue()<CR>
-nnoremap <leader>dt :call vimspector#ToggleBreakpoint()<CR>
-nnoremap <leader>dT :call vimspector#ClearBreakpoints()<CR>
-nmap <leader>dl <Plug>VimspectorStepInto
-nmap <leader>dj <Plug>VimspectorStepOver
-nmap <leader>dk <Plug>VimspectorStepOut
-nmap <leader>dr <Plug>VimspectorRestart
-nnoremap <leader>d? :help vimspector<CR>
-
-" CtrlSF Settings
-" ===================================
-let g:ctrlsf_backend = 'rg'
-let g:ctrlsf_auto_focus = { "at": "start" }
-let g:ctrlsf_auto_close = { "normal": 0, "compact": 0 }
-let g:ctrlsf_confirm_save = 0
-let g:ctrlsf_default_view_mode = 'compact'
-let g:ctrlsf_search_mode = 'async'
-let g:ctrlsf_position = 'right'
-let g:ctrlsf_winsize = '30%'
-nmap <leader>s <Plug>CtrlSFPrompt
-nmap <leader>sw <Plug>CtrlSFCwordPath
-nmap <leader>sf <Plug>CtrlSFCwordExec
-vmap <leader>s <Plug>CtrlSFVwordPath
-vmap <leader>sv <Plug>CtrlSFVwordExec
-
-" Emmet Settings
-" ===================================
-let g:user_emmet_leader_key='<C-Z>'
-let g:user_emmet_mode='a'
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascriptreact,typescriptreact EmmetInstall
-
-" CloseTag Settings
-" ===================================
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.tsx'
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
-let g:closetag_emptyTags_caseSensitive = 1
-let g:closetag_shortcut = '>'
-let g:closetag_close_shortcut = '<leader>>'
-
-" Markdown Preview Settings
-" ===================================
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
 
 " Undotree Settings
 " ===================================
