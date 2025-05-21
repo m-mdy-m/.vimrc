@@ -194,13 +194,3 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <C-/> :call NERDComment(0, "toggle")<CR>
 vnoremap <C-/> :call NERDComment(0, "toggle")<CR>
 inoremap <C-/> <Esc>:call NERDComment(0, "toggle")<CR>i
-
-" Fold/Unfold
-nnoremap <C-k><C-0> zM  " Fold all
-nnoremap <C-k><C-j> zo  " Unfold current
-nnoremap <C-k><C-l> zc  " Fold current
-
-" Multi-file search
-nnoremap <C-S-f> :vim // **/*<left><left><left><left><left><left>
-nnoremap <C-p> :find
-nnoremap <C-S-p> :

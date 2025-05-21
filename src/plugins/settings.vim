@@ -41,40 +41,6 @@ highlight NERDTreeClosable guifg=#007FD6 guibg=NONE gui=bold
 " Status Bar in NERDTree
 autocmd FileType nerdtree setlocal laststatus=0 showtabline=0
 
-" Git Tools Configuration
-" Gitgutter settings
-let g:gitgutter_max_signs             = 5000
-let g:gitgutter_map_keys              = 0
-let g:gitgutter_diff_args             = '--ignore-space-at-eol'
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_removed_first_line = '‾'
-let g:gitgutter_sign_modified_removed = '≃'
-
-
-" Git Key Mappings
-nmap <Leader>j <Plug>(GitGutterNextHunk)zz
-nmap <Leader>k <Plug>(GitGutterPrevHunk)zz
-nnoremap <silent> <C-g> :call <SID>ToggleGGPrev()<CR>zz
-nnoremap <Leader>ga :GitGutterStageHunk<CR>
-nnoremap <Leader>gu :GitGutterUndoHunk<CR>
-
-" Fugitive settings
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gp :Git push<CR>
-
-" Git Grep
-nnoremap <Leader>gg :call <SID>GrepWrapper('Gclog', '-i -G', '--')<CR>
-
-" Session Management
-let g:session_autosave  = 'no'
- let g:session_autoload  = 'no'
- let g:session_directory = '~/.vim/sessions/'
 " ----- Startify Configuration -----
 let g:startify_session_dir = '~/.vim/sessions'
 
@@ -192,98 +158,7 @@ augroup startify_auto_session
     autocmd VimLeavePre * if exists('g:this_obsession') && v:dying == 0 | exe 'SSave! ' . g:this_obsession | endif
 augroup END
 
-
-" GitGutter Colors
-highlight GitGutterAdd guifg=#28FFBB guibg=#0A0A0F
-highlight GitGutterChange guifg=#36C3FF guibg=#0A0A0F
-highlight GitGutterDelete guifg=#FF4D8A guibg=#0A0A0F
-highlight GitGutterChangeDelete guifg=#FFB540 guibg=#0A0A0F
-
-" ----- Prettier Configuration -----
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-let g:prettier#config#print_width = 88
-let g:prettier#config#tab_width = 2
-let g:prettier#config#use_tabs = 'false'
-let g:prettier#config#semi = 'true'
-let g:prettier#config#single_quote = 'false'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
-let g:prettier#config#trailing_comma = 'none'
-let g:prettier#config#arrow_parens = 'always'
-let g:prettier#config#parser = 'babel'
-
-
-" ----- Far.vim Configuration -----
-let g:far#source = 'agnvim'
-let g:far#file_mask_favorites = ['%', '**/*.*', '**/*.js', '**/*.py', '**/*.java', '**/*.css', '**/*.html', '**/*.vim', '**/*.cpp', '**/*.c', '**/*.h']
-let g:far#window_width = 60
-let g:far#enable_undo = 1
-
-" ===================================
-" Additional Plugin Settings
-" ===================================
-
-" FZF Settings
-" ===================================
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" FZF Custom commands
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
-
-" FZF Key mappings
-nnoremap <C-p> :Files<CR>
-nnoremap <C-f> :Rg<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>h :History<CR>
-nnoremap <leader>t :BTags<CR>
-nnoremap <leader>T :Tags<CR>
-
-" Undotree Settings
-" ===================================
-let g:undotree_WindowLayout = 2
-let g:undotree_ShortIndicators = 1
-let g:undotree_SetFocusWhenToggle = 1
-let g:undotree_DiffpanelHeight = 8
-let g:undotree_SplitWidth = 24
-nnoremap <leader>u :UndotreeToggle<CR>
-
-
-" Git Messenger Settings
-" ===================================
-let g:git_messenger_include_diff = "current"
-let g:git_messenger_always_into_popup = v:true
-let g:git_messenger_max_popup_height = 30
-nmap <leader>gm <Plug>(git-messenger)
-
-" Conflict Marker Settings
-" ===================================
-let g:conflict_marker_begin = '^<<<<<<< .*$'
-let g:conflict_marker_end   = '^>>>>>>> .*$'
-let g:conflict_marker_enable_highlight = 1
-let g:conflict_marker_enable_matchit = 1
-highlight ConflictMarkerBegin guibg=#2f7366
-highlight ConflictMarkerOurs guibg=#2e5049
-highlight ConflictMarkerTheirs guibg=#344f69
-highlight ConflictMarkerEnd guibg=#2f628e
-
-" Colorscheme Tweaks
-" ===================================
-" VSCode-like indent guides
-highlight IndentGuidesOdd guibg=#0E121A
-highlight IndentGuidesEven guibg=#0A0D14
-
-" VSCode-like search highlight
-highlight Search guibg=#075985 guifg=#E2E8F0 gui=NONE
-highlight IncSearch guibg=#0284C7 guifg=#FFFFFF gui=bold
-
-" Ensure good visibility with our theme
-highlight SignColumn guibg=#0B0E14
-highlight LineNr guifg=#334155 guibg=#0B0E14
-highlight CursorLineNr guifg=#38BDF8 guibg=#111827 gui=bold
+" Session Management
+let g:session_autosave  = 'no'
+let g:session_autoload  = 'no'
+let g:session_directory = '~/.vim/sessions/'

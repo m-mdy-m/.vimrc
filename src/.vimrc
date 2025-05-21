@@ -1,5 +1,3 @@
-" Basic editor behavior
-
 " Disable vi compatibility
 if !has("nvim")
 	set nocompatible
@@ -33,7 +31,6 @@ set clipboard=unnamedplus      " Use system clipboard
 set undofile                   " Enable persistent undo history
 set ttyfast
 set updatetime=300
-set synmaxcol=50
 set lazyredraw
 set ignorecase smartcase       " Smart case sensitivity in searches
 set incsearch hlsearch         " Incremental search with highlighting
