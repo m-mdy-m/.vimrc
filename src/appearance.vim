@@ -12,16 +12,13 @@ set showmatch
 set ruler
 set clipboard=unnamedplus
 
-" Theme Name
-let g:colors_name="dark_modern"
-
 " ===================================
 " Core UI Colors
 " ===================================
-highlight Normal           guibg=#1E1E1E  guifg=#D4D4D4
+highlight Normal           guibg=#0a0a0a  guifg=#D4D4D4
 highlight NonText          guibg=#1E1E1E  guifg=#3C3C3C
-highlight EndOfBuffer      guibg=#1E1E1E  guifg=#2D2D30
-highlight LineNr           guibg=#1E1E1E  guifg=#858585
+highlight EndOfBuffer      guibg=#0a0a0a  guifg=#2D2D30
+highlight LineNr           guibg=#0a0a0a  guifg=#858585
 highlight CursorLineNr     guibg=#252526  guifg=#CCCCCC  gui=bold
 highlight CursorLine       guibg=#252526
 highlight CursorColumn     guibg=#252526
@@ -84,9 +81,9 @@ highlight StatusLine       guibg=#007ACC  guifg=#FFFFFF  gui=NONE
 highlight StatusLineNC     guibg=#2D2D30  guifg=#CCCCCC  gui=NONE
 
 " Selection and Search
-highlight Visual           guibg=#264F78  guifg=NONE
-highlight Search           guibg=#613315  guifg=#FFFFFF
-highlight IncSearch        guibg=#E8A317  guifg=#000000  gui=bold
+highlight Visual           guibg=#1E3A5F  guifg=NONE
+highlight Search           guibg=#075985  guifg=#E2E8F0
+highlight IncSearch        guibg=#0284C7  guifg=#FFFFFF  gui=bold
 
 " Matching Parentheses
 highlight MatchParen       guibg=#0E639C  guifg=#FFFFFF  gui=bold
@@ -98,17 +95,17 @@ highlight PmenuSbar        guibg=#2D2D30
 highlight PmenuThumb       guibg=#424242
 
 " Messages and Errors
-highlight Error            guibg=#1E1E1E  guifg=#F44747  gui=undercurl,bold
+highlight Error            guibg=#0a0a0a  guifg=#F44747  gui=undercurl,bold
 highlight WarningMsg       guifg=#FFCC02  gui=NONE
-highlight ErrorMsg         guibg=#1E1E1E  guifg=#F44747  gui=bold
+highlight ErrorMsg         guibg=#0a0a0a  guifg=#F44747  gui=bold
 highlight ModeMsg          guifg=#D4D4D4
 
 " Tabs and Folds
 highlight Folded           guibg=#262626  guifg=#808080  gui=italic
-highlight FoldColumn       guibg=#1E1E1E  guifg=#858585
+highlight FoldColumn       guibg=#0a0a0a  guifg=#858585
 highlight TabLine          guibg=#2D2D30  guifg=#969696
 highlight TabLineFill      guibg=#2D2D30
-highlight TabLineSel       guibg=#1E1E1E  guifg=#FFFFFF  gui=bold
+highlight TabLineSel       guibg=#0a0a0a  guifg=#FFFFFF  gui=bold
 highlight Title            guifg=#569CD6  gui=bold
 
 " Diff View
@@ -118,11 +115,11 @@ highlight DiffChange       guibg=#2D4D4D  guifg=#FFD700
 highlight DiffText         guibg=#4D4D00  guifg=#FFFFFF  gui=bold
 
 " Window Separators
-highlight WinSeparator     guibg=#2D2D30  guifg=#2D2D30
-highlight VertSplit        guibg=#2D2D30  guifg=#2D2D30
+highlight WinSeparator     guibg=#0a0a0a  guifg=#0a0a0a
+highlight VertSplit        guibg=#0a0a0a  guifg=#0a0a0a
 
 " Sign Column
-highlight SignColumn       guibg=#1E1E1E  guifg=#858585
+highlight SignColumn       guibg=#0a0a0a  guifg=#858585
 
 " Miscellaneous
 highlight Underlined       guifg=#4FC1FF  gui=underline
@@ -142,7 +139,7 @@ highlight NERDTreeDirSlash guifg=#858585
 highlight NERDTreeOpenable guifg=#D7BA7D
 highlight NERDTreeClosable guifg=#D7BA7D
 highlight NERDTreeUp       guifg=#858585
-highlight NERDTreeCWD      guifg=#4FC1FF  gui=bold
+highlight NERDTreeCWD guifg=#4FC1FF guibg=#050508 gui=bold,italic
 highlight NERDTreeHelp     guifg=#6A9955  gui=italic
 highlight NERDTreeToggleOn guifg=#4CAF50
 highlight NERDTreeToggleOff guifg=#F44747
