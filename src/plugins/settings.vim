@@ -5,8 +5,8 @@ let g:NERDTreeShowLineNumbers = 0
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeWinSize = 30
 let g:NERDTreeStatusline = 0
-let g:NERDTreeDirArrowExpandable="+"
-let g:NERDTreeDirArrowCollapsible="-"
+let g:NERDTreeDirArrowExpandable="▸"
+let g:NERDTreeDirArrowCollapsible="▾"
 let g:NERDTreeShowFullPath=0
 let g:NERDTreeShowRoot=0
 let g:NERDTreeChDirMode=2
@@ -27,16 +27,6 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 inoremap <C-e> <Esc>:NERDTreeToggle<CR>
 nnoremap <leader>e :NERDTreeFocus<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-
-" NERDTree Colors
-highlight NvimTreeNormal guibg=#101318 guifg=#D8DFEC
-highlight NERDTreeDir guifg=#36C3FF gui=bold
-highlight NERDTreeFile guifg=#7E9CBF
-highlight NERDTreeDirSlash guifg=#00A1FF guibg=NONE
-highlight NERDTreeCWD guifg=#00CCFF guibg=#050508 gui=bold,italic
-highlight NERDTreeRoot guifg=#00CCFF guibg=NONE gui=italic
-highlight NERDTreeOpenable guifg=#52B4FF guibg=NONE gui=bold
-highlight NERDTreeClosable guifg=#007FD6 guibg=NONE gui=bold
 
 " Status Bar in NERDTree
 autocmd FileType nerdtree setlocal laststatus=0 showtabline=0
@@ -162,3 +152,41 @@ augroup END
 let g:session_autosave  = 'no'
 let g:session_autoload  = 'no'
 let g:session_directory = '~/.vim/sessions/'
+
+" Airline Configuration (if using airline)
+if exists('g:loaded_airline')
+    let g:airline_theme = 'dark'
+    let g:airline_powerline_fonts = 1
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#formatter = 'unique_tail'
+    let g:airline_left_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_left_alt_sep = '│'
+    let g:airline_right_alt_sep = '│'
+endif
+
+" Multiple Cursors Configuration
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_start_word_key      = '<C-d>'
+let g:multi_cursor_select_all_word_key = '<A-d>'
+let g:multi_cursor_start_key           = 'g<C-d>'
+let g:multi_cursor_select_all_key      = 'g<A-d>'
+let g:multi_cursor_next_key            = '<C-d>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+
+" Auto-pairs Configuration
+let g:AutoPairsFlyCursor = 1
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+" Syntastic Configuration
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'

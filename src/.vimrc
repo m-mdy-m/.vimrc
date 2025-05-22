@@ -40,7 +40,11 @@ set cursorline                 " Highlight current line
 set cmdheight=1                " Command line height
 set showcmd                    " Show incomplete commands
 set nofoldenable               " Disable folding by default
-set mouse=a                    " Enable mouse support
+" Mouse support
+set mouse=a
+if has('mouse_sgr')
+    set ttymouse=sgr
+endif
 set noruler laststatus=0       " Hide ruler and status line
 
 let g:config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
