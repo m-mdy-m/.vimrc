@@ -46,6 +46,9 @@ if has('mouse_sgr')
     set ttymouse=sgr
 endif
 set noruler laststatus=0       " Hide ruler and status line
+set nobackup
+set nowritebackup
+set noswapfile
 
 let g:config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
