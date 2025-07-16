@@ -12,6 +12,24 @@ set showmatch
 set ruler
 set clipboard=unnamedplus
 
+
+" Cursor settings
+if exists('&guicursor')
+    set guicursor=n-v-c:block-Cursor
+    set guicursor+=i:ver25-Cursor
+    set guicursor+=r-cr:hor20-Cursor
+    set guicursor+=o:hor50-Cursor
+    set guicursor+=a:blinkwait700-blinkoff400-blinkon250-Cursor
+endif
+
+" Terminal cursor settings
+if &term =~ "xterm\\|rxvt"
+    " Use a thin cursor in insert mode
+    let &t_SI = "\<Esc>[6 q"
+    let &t_SR = "\<Esc>[4 q"
+    let &t_EI = "\<Esc>[2 q"
+endif
+
 " ===================================
 " Core UI Colors
 " ===================================
@@ -20,10 +38,14 @@ highlight NonText          guibg=#141414  guifg=#2a2a2a
 highlight EndOfBuffer      guibg=#0f0f0f  guifg=#1a1a1a
 highlight LineNr           guibg=#0f0f0f  guifg=#4a4a4a
 highlight CursorLineNr     guibg=#1a1a1a  guifg=#808080  gui=bold
-highlight CursorLine       guibg=#1a1a1a
-highlight CursorColumn     guibg=#1a1a1a
+highlight CursorLine       guibg=#1a1a1a  gui=NONE
+highlight CursorColumn     guibg=#1a1a1a  gui=NONE
 highlight ColorColumn      guibg=#1f1f1f
 
+highlight Cursor           guibg=#ffffff  guifg=#000000
+highlight iCursor          guibg=#ffffff  guifg=#000000
+highlight vCursor          guibg=#ffffff  guifg=#000000
+highlight lCursor          guibg=#ffffff  guifg=#000000
 " ===================================
 " Syntax Highlighting
 " ===================================

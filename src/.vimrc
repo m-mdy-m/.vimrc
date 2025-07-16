@@ -40,6 +40,13 @@ set cursorline                 " Highlight current line
 set cmdheight=1                " Command line height
 set showcmd                    " Show incomplete commands
 set nofoldenable               " Disable folding by default
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver25-Cursor
+set guicursor+=r-cr:hor20-Cursor
+set guicursor+=o:hor50-Cursor
+set guicursor+=a:blinkwait700-blinkoff400-blinkon250-Cursor
+
+
 " Mouse support
 set mouse=a
 if has('mouse_sgr')
