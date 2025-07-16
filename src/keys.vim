@@ -100,11 +100,6 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 inoremap <S-Tab> <Esc><<i
 
-" Multi-cursor simulation (not perfect but helps)
-" Use vim-multiple-cursors plugin for better experience
-nmap <C-d> <Plug>(VM-Find-Under)
-xmap <C-d> <Plug>(VM-Find-Subword-Under)
-
 " ==================================
 " Search and Replace (VSCode Style)
 " ==================================
@@ -131,8 +126,8 @@ vnoremap <C-f> <Esc>/\%V
 nnoremap <C-\> :vsplit<CR>
 nnoremap <C-S-\> :split<CR>
 " Close current window/tab
-nnoremap <C-w> :close<CR>
-inoremap <C-w> <Esc>:close<CR>
+nnoremap <C-S-w> :close<CR>
+inoremap <C-S-w> <Esc>:close<CR>
 " Navigate between splits
 nnoremap <C-S-h> <C-w>h
 nnoremap <C-S-j> <C-w>j
