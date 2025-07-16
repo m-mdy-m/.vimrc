@@ -15,14 +15,14 @@ set clipboard=unnamedplus
 " ===================================
 " Core UI Colors
 " ===================================
-highlight Normal           guibg=#0a0a0a  guifg=#D4D4D4
-highlight NonText          guibg=#1E1E1E  guifg=#3C3C3C
-highlight EndOfBuffer      guibg=#0a0a0a  guifg=#2D2D30
-highlight LineNr           guibg=#0a0a0a  guifg=#858585
-highlight CursorLineNr     guibg=#252526  guifg=#CCCCCC  gui=bold
-highlight CursorLine       guibg=#252526
-highlight CursorColumn     guibg=#252526
-highlight ColorColumn      guibg=#2F2F2F
+highlight Normal           guibg=#0f0f0f  guifg=#c0c0c0
+highlight NonText          guibg=#141414  guifg=#2a2a2a
+highlight EndOfBuffer      guibg=#0f0f0f  guifg=#1a1a1a
+highlight LineNr           guibg=#0f0f0f  guifg=#4a4a4a
+highlight CursorLineNr     guibg=#1a1a1a  guifg=#808080  gui=bold
+highlight CursorLine       guibg=#1a1a1a
+highlight CursorColumn     guibg=#1a1a1a
+highlight ColorColumn      guibg=#1f1f1f
 
 " ===================================
 " Syntax Highlighting
@@ -30,141 +30,141 @@ highlight ColorColumn      guibg=#2F2F2F
 " Comments - Gray/Green
 highlight Comment          guifg=#6A9955  gui=italic
 highlight SpecialComment   guifg=#6A9955  gui=italic,bold
-highlight Todo             guibg=#252526  guifg=#FFD700  gui=bold,italic
+highlight Todo             guibg=#1a1a1a  guifg=#888888  gui=bold,italic
 
-" Variables and Identifiers - Light Blue
-highlight Identifier       guifg=#9CDCFE  gui=NONE
-highlight Function         guifg=#DCDCAA  gui=NONE
+" Variables and Identifiers - Muted Light Gray
+highlight Identifier       guifg=#a0a0a0  gui=NONE
+highlight Function         guifg=#b8b8b8  gui=NONE
 
-" Constants and Literals
-highlight Constant         guifg=#B5CEA8
-highlight String           guifg=#CE9178  gui=NONE
-highlight Character        guifg=#CE9178
-highlight Number           guifg=#B5CEA8
-highlight Boolean          guifg=#569CD6  gui=bold
-highlight Float            guifg=#B5CEA8
+" Constants and Literals - Subtle Gray Tones
+highlight Constant         guifg=#909090
+highlight String           guifg=#888888  gui=NONE
+highlight Character        guifg=#888888
+highlight Number           guifg=#909090
+highlight Boolean          guifg=#999999  gui=bold
+highlight Float            guifg=#909090
 
-" Keywords and Control Flow - Blue
-highlight Statement        guifg=#569CD6  gui=NONE
-highlight Conditional      guifg=#C586C0  gui=NONE
-highlight Repeat           guifg=#C586C0  gui=NONE
-highlight Label            guifg=#569CD6
-highlight Operator         guifg=#D4D4D4  gui=NONE
-highlight Keyword          guifg=#569CD6  gui=NONE
-highlight Exception        guifg=#C586C0  gui=NONE
+" Keywords and Control Flow - Slightly Brighter Gray
+highlight Statement        guifg=#b0b0b0  gui=NONE
+highlight Conditional      guifg=#a8a8a8  gui=NONE
+highlight Repeat           guifg=#a8a8a8  gui=NONE
+highlight Label            guifg=#b0b0b0
+highlight Operator         guifg=#c0c0c0  gui=NONE
+highlight Keyword          guifg=#b0b0b0  gui=NONE
+highlight Exception        guifg=#a8a8a8  gui=NONE
 
-" Types and Structures - Light Green/Cyan
-highlight Type             guifg=#4EC9B0  gui=NONE
-highlight StorageClass     guifg=#569CD6
-highlight Structure        guifg=#4EC9B0  gui=NONE
-highlight Typedef          guifg=#4EC9B0
+" Types and Structures - Light Gray
+highlight Type             guifg=#c8c8c8  gui=NONE
+highlight StorageClass     guifg=#b0b0b0
+highlight Structure        guifg=#c8c8c8  gui=NONE
+highlight Typedef          guifg=#c8c8c8
 
-" Special Elements
-highlight Special          guifg=#CE9178
-highlight SpecialChar      guifg=#D7BA7D
-highlight Tag              guifg=#92C5F8
-highlight Delimiter        guifg=#D4D4D4
-highlight Debug            guifg=#C586C0
+" Special Elements - Muted
+highlight Special          guifg=#888888
+highlight SpecialChar      guifg=#999999
+highlight Tag              guifg=#aaaaaa
+highlight Delimiter        guifg=#c0c0c0
+highlight Debug            guifg=#a8a8a8
 
-" Preprocessor - Yellow/Orange
-highlight PreProc          guifg=#D7BA7D
-highlight PreCondit        guifg=#C586C0
-highlight Include          guifg=#C586C0
-highlight Define           guifg=#569CD6
-highlight Macro            guifg=#D7BA7D
+" Preprocessor - Subtle
+highlight PreProc          guifg=#999999
+highlight PreCondit        guifg=#a8a8a8
+highlight Include          guifg=#a8a8a8
+highlight Define           guifg=#b0b0b0
+highlight Macro            guifg=#999999
 
 " ===================================
 " Editor UI Elements
 " ===================================
-" Status Line
-highlight StatusLine       guibg=#007ACC  guifg=#FFFFFF  gui=NONE
-highlight StatusLineNC     guibg=#2D2D30  guifg=#CCCCCC  gui=NONE
+" Status Line - Dark Gray
+highlight StatusLine       guibg=#2a2a2a  guifg=#d0d0d0  gui=NONE
+highlight StatusLineNC     guibg=#1a1a1a  guifg=#808080  gui=NONE
 
-" Selection and Search
-highlight Visual           guibg=#1E3A5F  guifg=NONE
-highlight Search           guibg=#075985  guifg=#E2E8F0
-highlight IncSearch        guibg=#0284C7  guifg=#FFFFFF  gui=bold
+" Selection and Search - Subtle
+highlight Visual           guibg=#2a2a2a  guifg=NONE
+highlight Search           guibg=#3a3a3a  guifg=#d0d0d0
+highlight IncSearch        guibg=#4a4a4a  guifg=#ffffff  gui=bold
 
-" Matching Parentheses
-highlight MatchParen       guibg=#0E639C  guifg=#FFFFFF  gui=bold
+" Matching Parentheses - Subtle
+highlight MatchParen       guibg=#333333  guifg=#ffffff  gui=bold
 
-" Popup Menu (Autocomplete)
-highlight Pmenu            guibg=#252526  guifg=#CCCCCC
-highlight PmenuSel         guibg=#094771  guifg=#FFFFFF  gui=bold
-highlight PmenuSbar        guibg=#2D2D30
-highlight PmenuThumb       guibg=#424242
+" Popup Menu (Autocomplete) - Dark
+highlight Pmenu            guibg=#1a1a1a  guifg=#b0b0b0
+highlight PmenuSel         guibg=#333333  guifg=#ffffff  gui=bold
+highlight PmenuSbar        guibg=#1a1a1a
+highlight PmenuThumb       guibg=#404040
 
-" Messages and Errors
-highlight Error            guibg=#0a0a0a  guifg=#F44747  gui=undercurl,bold
-highlight WarningMsg       guifg=#FFCC02  gui=NONE
-highlight ErrorMsg         guibg=#0a0a0a  guifg=#F44747  gui=bold
-highlight ModeMsg          guifg=#D4D4D4
+" Messages and Errors - Muted
+highlight Error            guibg=#0f0f0f  guifg=#cc6666  gui=undercurl,bold
+highlight WarningMsg       guifg=#999999  gui=NONE
+highlight ErrorMsg         guibg=#0f0f0f  guifg=#cc6666  gui=bold
+highlight ModeMsg          guifg=#c0c0c0
 
-" Tabs and Folds
-highlight Folded           guibg=#262626  guifg=#808080  gui=italic
-highlight FoldColumn       guibg=#0a0a0a  guifg=#858585
-highlight TabLine          guibg=#2D2D30  guifg=#969696
-highlight TabLineFill      guibg=#2D2D30
-highlight TabLineSel       guibg=#0a0a0a  guifg=#FFFFFF  gui=bold
-highlight Title            guifg=#569CD6  gui=bold
+" Tabs and Folds - Dark
+highlight Folded           guibg=#1a1a1a  guifg=#666666  gui=italic
+highlight FoldColumn       guibg=#0f0f0f  guifg=#4a4a4a
+highlight TabLine          guibg=#1a1a1a  guifg=#808080
+highlight TabLineFill      guibg=#1a1a1a
+highlight TabLineSel       guibg=#0f0f0f  guifg=#d0d0d0  gui=bold
+highlight Title            guifg=#b0b0b0  gui=bold
 
-" Diff View
-highlight DiffAdd          guibg=#0A4D0A  guifg=#4CAF50
-highlight DiffDelete       guibg=#4D0A0A  guifg=#F44747
-highlight DiffChange       guibg=#2D4D4D  guifg=#FFD700
-highlight DiffText         guibg=#4D4D00  guifg=#FFFFFF  gui=bold
+" Diff View - Subtle
+highlight DiffAdd          guibg=#1a2a1a  guifg=#80a080
+highlight DiffDelete       guibg=#2a1a1a  guifg=#cc6666
+highlight DiffChange       guibg=#252525  guifg=#cccc80
+highlight DiffText         guibg=#353535  guifg=#ffffff  gui=bold
 
-" Window Separators
-highlight WinSeparator     guibg=#0a0a0a  guifg=#0a0a0a
-highlight VertSplit        guibg=#0a0a0a  guifg=#0a0a0a
+" Window Separators - Invisible
+highlight WinSeparator     guibg=#0f0f0f  guifg=#0f0f0f
+highlight VertSplit        guibg=#0f0f0f  guifg=#0f0f0f
 
-" Sign Column
-highlight SignColumn       guibg=#0a0a0a  guifg=#858585
+" Sign Column - Dark
+highlight SignColumn       guibg=#0f0f0f  guifg=#4a4a4a
 
-" Miscellaneous
-highlight Underlined       guifg=#4FC1FF  gui=underline
-highlight Directory        guifg=#569CD6  gui=bold
-highlight Question         guifg=#4FC1FF
-highlight MoreMsg          guifg=#4FC1FF
-highlight WildMenu         guibg=#094771  guifg=#FFFFFF
+" Miscellaneous - Muted
+highlight Underlined       guifg=#aaaaaa  gui=underline
+highlight Directory        guifg=#b0b0b0  gui=bold
+highlight Question         guifg=#aaaaaa
+highlight MoreMsg          guifg=#aaaaaa
+highlight WildMenu         guibg=#333333  guifg=#ffffff
 
 " ===================================
 " Plugin-specific highlights
 " ===================================
-" NERDTree Colors
-highlight NERDTreeDir      guifg=#569CD6  gui=bold
-highlight NERDTreeFile     guifg=#D4D4D4
-highlight NERDTreeExecFile guifg=#4EC9B0
-highlight NERDTreeDirSlash guifg=#858585
-highlight NERDTreeOpenable guifg=#D7BA7D
-highlight NERDTreeClosable guifg=#D7BA7D
-highlight NERDTreeUp       guifg=#858585
-highlight NERDTreeCWD guifg=#4FC1FF guibg=#050508 gui=bold,italic
+" NERDTree Colors - Dark Theme
+highlight NERDTreeDir      guifg=#b0b0b0  gui=bold
+highlight NERDTreeFile     guifg=#c0c0c0
+highlight NERDTreeExecFile guifg=#c8c8c8
+highlight NERDTreeDirSlash guifg=#4a4a4a
+highlight NERDTreeOpenable guifg=#999999
+highlight NERDTreeClosable guifg=#999999
+highlight NERDTreeUp       guifg=#4a4a4a
+highlight NERDTreeCWD guifg=#aaaaaa guibg=#111111 gui=bold,italic
 highlight NERDTreeHelp     guifg=#6A9955  gui=italic
-highlight NERDTreeToggleOn guifg=#4CAF50
-highlight NERDTreeToggleOff guifg=#F44747
+highlight NERDTreeToggleOn guifg=#80a080
+highlight NERDTreeToggleOff guifg=#cc6666
 
-" Startify Colors
-highlight StartifyBracket  guifg=#858585
-highlight StartifyFile     guifg=#4FC1FF
+" Startify Colors - Hell Gray Theme
+highlight StartifyBracket  guifg=#4a4a4a
+highlight StartifyFile     guifg=#aaaaaa
 highlight StartifyFooter   guifg=#6A9955
-highlight StartifyHeader   guifg=#569CD6  gui=bold
-highlight StartifyNumber   guifg=#D7BA7D
-highlight StartifyPath     guifg=#858585
-highlight StartifySection  guifg=#C586C0  gui=bold
-highlight StartifySelect   guifg=#4EC9B0
-highlight StartifySlash    guifg=#858585
-highlight StartifySpecial  guifg=#CE9178
-highlight StartifyVar      guifg=#9CDCFE
+highlight StartifyHeader   guifg=#b0b0b0  gui=bold
+highlight StartifyNumber   guifg=#999999
+highlight StartifyPath     guifg=#4a4a4a
+highlight StartifySection  guifg=#a8a8a8  gui=bold
+highlight StartifySelect   guifg=#c8c8c8
+highlight StartifySlash    guifg=#4a4a4a
+highlight StartifySpecial  guifg=#888888
+highlight StartifyVar      guifg=#a0a0a0
 
-" Airline/Status Line Colors
-highlight User1            guibg=#007ACC  guifg=#FFFFFF  gui=bold
-highlight User2            guibg=#2D2D30  guifg=#CCCCCC
-highlight User3            guibg=#F44747  guifg=#FFFFFF  gui=bold
-highlight User4            guibg=#4CAF50  guifg=#000000  gui=bold
-highlight User5            guifg=#FFD700  gui=bold
+" Airline/Status Line Colors - Dark
+highlight User1            guibg=#2a2a2a  guifg=#d0d0d0  gui=bold
+highlight User2            guibg=#1a1a1a  guifg=#b0b0b0
+highlight User3            guibg=#cc6666  guifg=#ffffff  gui=bold
+highlight User4            guibg=#80a080  guifg=#000000  gui=bold
+highlight User5            guifg=#cccc80  gui=bold
 
-" Git/VCS Colors
-highlight GitGutterAdd     guifg=#4CAF50  guibg=#1E1E1E
-highlight GitGutterChange  guifg=#FFD700  guibg=#1E1E1E
-highlight GitGutterDelete  guifg=#F44747  guibg=#1E1E1E
+" Git/VCS Colors - Subtle
+highlight GitGutterAdd     guifg=#80a080  guibg=#141414
+highlight GitGutterChange  guifg=#cccc80  guibg=#141414
+highlight GitGutterDelete  guifg=#cc6666  guibg=#141414
