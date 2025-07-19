@@ -3,6 +3,7 @@ if !has("nvim")
 	set nocompatible
 endif
 
+" Disable vi compatibility
 " Reload .vimrc
 nnoremap <F12> :so $MYVIMRC<CR>
 
@@ -27,8 +28,21 @@ set tabstop=4 shiftwidth=4     " Tab settings
 set expandtab autoindent       " Use spaces for tabs and auto indent
 set smartindent                " Smart indentation
 set wrap scrolloff=5           " Wrap lines and keep context visible
-set clipboard=unnamedplus      " Use system clipboard
+set clipboard+=unnamedplus
 set undofile                   " Enable persistent undo history
+" Create undo directory if it doesn't exist
+if !isdirectory($HOME.'/.vim/undo')
+    call mkdir($HOME.'/.vim/undo', 'p')
+endif
+set undodir=$HOME/.vim/undo    " Set undo directory
+
+" ===================================
+" Backup and swap files
+" ===================================
+set nobackup
+set nowritebackup
+set noswapfile
+
 set ttyfast
 set updatetime=300
 set lazyredraw

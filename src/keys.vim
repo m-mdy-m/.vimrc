@@ -3,20 +3,20 @@
 " ==================================
 " Undo/Redo
 nnoremap <C-z> u              " Undo
-nnoremap <C-r> <C-r>          " Redo
+nnoremap <C-y> <C-r>          " Redo
 inoremap <C-z> <Esc>u         " Undo in insert mode
 inoremap <C-r> <Esc><C-r>     " Redo in insert mode
 
 " Cut, Copy, Paste
 nnoremap <C-x> dd             " Cut line
-nnoremap <C-c> yy             " Copy line
-vnoremap <C-c> y              " Copy selection in visual mode
+nnoremap <C-c> yy           " Copy line
+vnoremap <C-c> y            " Copy selection in visual mode
 nnoremap <C-v> p              " Paste after cursor
 nnoremap <C-S-v> P            " Paste before cursor
 
 " Copy, Cut, Paste in Insert Mode
 inoremap <C-x> <Esc>ddi       " Cut line in insert mode
-inoremap <C-c> <Esc>yyi       " Copy line in insert mode
+inoremap <C-c> <Esc>yyi     " Copy line in insert mode
 inoremap <C-v> <Esc>pi        " Paste in insert mode
 
 " Select all (Ctrl+A)
