@@ -185,3 +185,51 @@ highlight User2            guibg=#151518  guifg=#d4d4d8
 highlight User3            guibg=#ef4444  guifg=#ffffff  gui=bold
 highlight User4            guibg=#86efac  guifg=#0a0a0a  gui=bold
 highlight User5            guifg=#fbbf24  gui=bold
+
+" ===================================
+" Git & Terminal Theme Colors
+" ===================================
+
+" GitGutter Signs (Matching Your Dark Theme)
+highlight GitGutterAdd          guifg=#86efac  guibg=#0a0a0a  gui=NONE
+highlight GitGutterChange       guifg=#fbbf24  guibg=#0a0a0a  gui=NONE  
+highlight GitGutterDelete       guifg=#ef4444  guibg=#0a0a0a  gui=NONE
+highlight GitGutterChangeDelete guifg=#f97316  guibg=#0a0a0a  gui=NONE
+
+" GitGutter Line Numbers
+highlight GitGutterAddLineNr          guifg=#86efac  guibg=#0a0a0a
+highlight GitGutterChangeLineNr       guifg=#fbbf24  guibg=#0a0a0a
+highlight GitGutterDeleteLineNr       guifg=#ef4444  guibg=#0a0a0a
+highlight GitGutterChangeDeleteLineNr guifg=#f97316  guibg=#0a0a0a
+
+" Git Commit Browser (GV)
+highlight GvAdd     guifg=#86efac  gui=bold
+highlight GvDelete  guifg=#ef4444  gui=bold
+highlight GvHash    guifg=#9ca3af  gui=NONE
+highlight GvAuthor  guifg=#cbd5e1  gui=italic
+highlight GvDate    guifg=#6b7280  gui=NONE
+highlight GvMessage guifg=#d4d4d8  gui=NONE
+
+" FloaTerm Colors (Terminal)
+highlight Floaterm         guibg=#0a0a0a  guifg=#d4d4d8
+highlight FloatermBorder   guibg=#0a0a0a  guifg=#3f3f46
+highlight FloatermNC       guibg=#0f0f0f  guifg=#71717a
+
+" Git Status in Status Line
+highlight User6            guifg=#86efac  guibg=#1c1c1e  gui=bold
+highlight User7            guifg=#fbbf24  guibg=#1c1c1e  gui=bold  
+highlight User8            guifg=#ef4444  guibg=#1c1c1e  gui=bold
+highlight User9            guifg=#cbd5e1  guibg=#1c1c1e  gui=bold
+
+" Merge Conflict Colors
+highlight DiffAdd          guibg=#0f1419  guifg=#86efac  gui=NONE
+highlight DiffDelete       guibg=#1c0f0f  guifg=#ef4444  gui=NONE
+highlight DiffChange       guibg=#1a1a0f  guifg=#fbbf24  gui=NONE
+highlight DiffText         guibg=#27271a  guifg=#fef3c7  gui=bold
+
+" Git Messenger Popup
+highlight gitmessengerPopupNormal    guibg=#151518  guifg=#d4d4d8
+highlight gitmessengerEndOfBuffer    guibg=#151518  guifg=#151518
+highlight gitmessengerHeader         guifg=#cbd5e1  gui=bold
+highlight gitmessengerHash           guifg=#9ca3af  gui=NONE
+highlight gitmessengerHistory        guifg=#6b7280  gui=italic

@@ -30,8 +30,14 @@ Plug 'godlygeek/tabular'                 " Text alignment
 Plug 'xolox/vim-session'                 " Session management
 Plug 'xolox/vim-misc'                    " Required for vim-session
 
-" Git Integration
-Plug 'tpope/vim-fugitive'                 " Git commands
+" Git Integration 
+Plug 'tpope/vim-fugitive'                " Git commands
 Plug 'airblade/vim-gitgutter'             " Git diff in gutter
+Plug 'junegunn/gv.vim'                   " Git commit browser
+Plug 'rhysd/git-messenger.vim'           " Git blame popup
+Plug 'samoshkin/vim-mergetool'           " Git merge conflicts
+
+" Terminal Integration
+Plug 'voldikss/vim-floaterm'             " Floating terminal
 
 call plug#end()

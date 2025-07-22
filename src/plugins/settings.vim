@@ -191,7 +191,95 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
-" GitGutter
+
+" ===================================
+" Git Configuration - Advanced
+" ===================================
+
+" GitGutter Advanced Settings
 let g:gitgutter_enabled = 1
 let g:gitgutter_max_signs = 500
 let g:gitgutter_preview_win_floating = 1
+let g:gitgutter_sign_priority = 10
+let g:gitgutter_update_time = 100
+let g:gitgutter_terminal_reports_focus = 0
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_highlight_linenrs = 1
+let g:gitgutter_map_keys = 0
+
+" Custom Git Status Symbols (ASCII Art - Clean & Minimal)
+let g:gitgutter_sign_added              = '▌'
+let g:gitgutter_sign_modified           = '▐'
+let g:gitgutter_sign_removed            = '▂'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_modified_removed   = '▞'
+
+" Git Messenger Configuration
+let g:git_messenger_no_default_mappings = v:true
+let g:git_messenger_floating_win_opts = { 'border': 'single' }
+let g:git_messenger_popup_content_margins = v:false
+let g:git_messenger_always_into_popup = v:true
+let g:git_messenger_include_diff = v:true
+let g:git_messenger_max_popup_height = 15
+let g:git_messenger_max_popup_width = 80
+
+" GV (Git Viewer) Settings
+let g:Gitv_OpenHorizontal = 1
+let g:Gitv_WipeAllOnClose = 1
+let g:Gitv_DoNotMapCtrlKey = 1
+
+" Merge Tool Configuration
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
+
+" ===================================
+" Terminal Integration - FloaTerm
+" ===================================
+
+" FloaTerm Configuration
+let g:floaterm_keymap_new    = '<F7>'
+let g:floaterm_keymap_prev   = '<F8>'
+let g:floaterm_keymap_next   = '<F9>'
+let g:floaterm_keymap_toggle = '<C-S-t>'
+let g:floaterm_keymap_kill   = '<F12>'
+
+" Terminal Appearance (Matching Your Dark Theme)
+let g:floaterm_position = 'center'
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.7
+let g:floaterm_winblend = 0
+let g:floaterm_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+let g:floaterm_title = ' Terminal $1/$2 '
+let g:floaterm_autoclose = 2
+let g:floaterm_gitcommit = 'floaterm'
+let g:floaterm_opener = 'edit'
+
+" Custom Git Terminal Commands
+let g:floaterm_gitcommit = 'split'
+command! GitStatus FloatermNew --height=0.6 --width=0.8 --wintype=float --name=git --position=center --autoclose=2 git status
+command! GitLog FloatermNew --height=0.8 --width=0.9 --wintype=float --name=gitlog --position=center git log --oneline --graph --decorate --all
+command! GitDiff FloatermNew --height=0.8 --width=0.9 --wintype=float --name=gitdiff --position=center git diff
+command! GitAdd FloatermNew --height=0.4 --width=0.6 --wintype=float --name=gitadd --position=center git add .
+command! GitCommit FloatermNew --height=0.5 --width=0.7 --wintype=float --name=gitcommit --position=center --autoclose=0
+
+" ===================================
+" Git Status Line Integration
+" ===================================
+
+" Function to get git branch
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+" Function to get git status
+function! GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf(' %s%s%s', a > 0 ? '+'.a : '', m > 0 ? '~'.m : '', r > 0 ? '-'.r : '')
+endfunction
+
+" Auto-update git status
+augroup gitgutter
+  autocmd!
+  autocmd BufWritePost * GitGutter
+  autocmd BufEnter * GitGutter
+augroup END

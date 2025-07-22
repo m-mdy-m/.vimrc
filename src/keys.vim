@@ -189,3 +189,84 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <C-/> :call NERDComment(0, "toggle")<CR>
 vnoremap <C-/> :call NERDComment(0, "toggle")<CR>
 inoremap <C-/> <Esc>:call NERDComment(0, "toggle")<CR>i
+
+
+" ===================================
+" Git Key Mappings - Advanced
+" ===================================
+
+" Git Status & Info
+nnoremap <leader>gs :GitStatus<CR>
+nnoremap <leader>gl :GitLog<CR>
+nnoremap <leader>gd :GitDiff<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gm <Plug>(git-messenger)
+
+" Git Operations (Quick Access)
+nnoremap <leader>ga :GitAdd<CR>
+nnoremap <leader>gc :GitCommit<CR>
+nnoremap <leader>gp :FloatermNew --height=0.4 --width=0.8 --position=center git push<CR>
+nnoremap <leader>gP :FloatermNew --height=0.4 --width=0.8 --position=center git pull<CR>
+
+" Git Staging (Individual Files)
+nnoremap <leader>ga. :FloatermNew --height=0.3 --width=0.6 --position=center git add .<CR>
+nnoremap <leader>gaf :FloatermNew --height=0.3 --width=0.8 --position=center git add %<CR>
+
+" Git Hunk Navigation (GitGutter)
+nnoremap ]h <Plug>(gitgutter-next-hunk)
+nnoremap [h <Plug>(gitgutter-prev-hunk)
+nnoremap <leader>hp <Plug>(gitgutter-preview-hunk)
+nnoremap <leader>hs <Plug>(gitgutter-stage-hunk)
+nnoremap <leader>hu <Plug>(gitgutter-undo-hunk)
+
+" Git Branch Management
+nnoremap <leader>gco :FloatermNew --height=0.4 --width=0.8 --position=center git checkout 
+nnoremap <leader>gnb :FloatermNew --height=0.4 --width=0.8 --position=center git checkout -b 
+
+" Git Commit Types (Semantic)
+nnoremap <leader>gcf :FloatermNew --height=0.5 --width=0.8 --position=center --autoclose=0 git commit -S -m "feat: 
+nnoremap <leader>gcx :FloatermNew --height=0.5 --width=0.8 --position=center --autoclose=0 git commit -S -m "fix: 
+nnoremap <leader>gcd :FloatermNew --height=0.5 --width=0.8 --position=center --autoclose=0 git commit -S -m "docs: 
+nnoremap <leader>gcr :FloatermNew --height=0.5 --width=0.8 --position=center --autoclose=0 git commit -S -m "refactor: 
+
+" Git Stash Operations
+nnoremap <leader>gst :FloatermNew --height=0.4 --width=0.8 --position=center git stash<CR>
+nnoremap <leader>gsp :FloatermNew --height=0.4 --width=0.8 --position=center git stash pop<CR>
+nnoremap <leader>gsl :FloatermNew --height=0.6 --width=0.8 --position=center git stash list<CR>
+
+" Advanced Git Operations
+nnoremap <leader>grb :FloatermNew --height=0.6 --width=0.9 --position=center git rebase -i 
+nnoremap <leader>grs :FloatermNew --height=0.4 --width=0.8 --position=center git reset 
+nnoremap <leader>grh :FloatermNew --height=0.4 --width=0.8 --position=center git reset --hard 
+
+" Git Viewer (GV)
+nnoremap <leader>gv :GV<CR>
+nnoremap <leader>gV :GV!<CR>
+nnoremap <leader>gvf :GV?<CR>
+
+" ===================================
+" Terminal Key Mappings
+" ===================================
+
+" Main Terminal Toggle (Like VS Code)
+nnoremap <C-S-t> :FloatermToggle<CR>
+inoremap <C-S-t> <Esc>:FloatermToggle<CR>
+tnoremap <C-S-t> <C-\><C-n>:FloatermToggle<CR>
+
+" Terminal Management
+nnoremap <leader>tt :FloatermNew<CR>
+nnoremap <leader>th :FloatermToggle<CR>
+nnoremap <leader>tk :FloatermKill<CR>
+nnoremap <leader>tn :FloatermNext<CR>
+nnoremap <leader>tp :FloatermPrev<CR>
+
+" Quick Terminal Commands
+nnoremap <leader>tr :FloatermNew --height=0.4 --width=0.8 --position=center 
+nnoremap <leader>tg :FloatermNew --height=0.6 --width=0.8 --position=center --name=git<CR>
+
+" Terminal Navigation (In Terminal Mode)
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
