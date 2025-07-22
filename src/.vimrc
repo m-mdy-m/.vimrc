@@ -3,6 +3,7 @@ if !has("nvim")
 	set nocompatible
 endif
 
+" Disable vi compatibility
 " Reload .vimrc
 nnoremap <F12> :so $MYVIMRC<CR>
 
@@ -27,8 +28,21 @@ set tabstop=4 shiftwidth=4     " Tab settings
 set expandtab autoindent       " Use spaces for tabs and auto indent
 set smartindent                " Smart indentation
 set wrap scrolloff=5           " Wrap lines and keep context visible
-set clipboard=unnamedplus      " Use system clipboard
+set clipboard+=unnamedplus
 set undofile                   " Enable persistent undo history
+" Create undo directory if it doesn't exist
+if !isdirectory($HOME.'/.vim/undo')
+    call mkdir($HOME.'/.vim/undo', 'p')
+endif
+set undodir=$HOME/.vim/undo    " Set undo directory
+
+" ===================================
+" Backup and swap files
+" ===================================
+set nobackup
+set nowritebackup
+set noswapfile
+
 set ttyfast
 set updatetime=300
 set lazyredraw
@@ -40,12 +54,22 @@ set cursorline                 " Highlight current line
 set cmdheight=1                " Command line height
 set showcmd                    " Show incomplete commands
 set nofoldenable               " Disable folding by default
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver25-Cursor
+set guicursor+=r-cr:hor20-Cursor
+set guicursor+=o:hor50-Cursor
+set guicursor+=a:blinkwait700-blinkoff400-blinkon250-Cursor
+
+
 " Mouse support
 set mouse=a
 if has('mouse_sgr')
     set ttymouse=sgr
 endif
 set noruler laststatus=0       " Hide ruler and status line
+set nobackup
+set nowritebackup
+set noswapfile
 
 let g:config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 

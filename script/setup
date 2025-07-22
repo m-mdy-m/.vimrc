@@ -2,43 +2,275 @@
 
 set -e
 
+# Get script directory
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${BASE_DIR}/../src"
-PLUGGED_DIR="$CONFIG_DIR/plugins"
 PLUG_VIM="$HOME/.vim/autoload/plug.vim"
 
 source "${BASE_DIR}/colors"
 source "${BASE_DIR}/logger"
 source "${BASE_DIR}/display"
-display_banner
 
-if ! command -v vim &> /dev/null; then
-    log_step "Vim not found. Installing..."
-    sudo pacman -S vim
-else
-    log_warning "Vim is already installed."
-fi
+# Detect OS and package manager
+detect_system() {
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if command -v apt &> /dev/null; then
+            echo "debian"
+        elif command -v pacman &> /dev/null; then
+            echo "arch"
+        elif command -v dnf &> /dev/null; then
+            echo "fedora"
+        elif command -v yum &> /dev/null; then
+            echo "rhel"
+        elif command -v zypper &> /dev/null; then
+            echo "opensuse"
+        elif command -v apk &> /dev/null; then
+            echo "alpine"
+        elif command -v xbps-install &> /dev/null; then
+            echo "void"
+        else
+            echo "unknown-linux"
+        fi
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "macos"
+    elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        echo "windows"
+    else
+        echo "unknown"
+    fi
+}
 
-log_success "Setting up symbolic link for .vimrc..."
-if [ -L "$HOME/.vimrc" ]; then
-    log_warning "Existing .vimrc symlink found. Removing..."
-    rm "$HOME/.vimrc"
-fi
-ln -s "$CONFIG_DIR/.vimrc" "$HOME/.vimrc"
+# Install Vim based on system
+install_vim() {
+    local system=$(detect_system)
+    
+    log_step "Detected system: $system"
+    
+    case $system in
+        "debian")
+            log_step "Installing Vim via apt..."
+            sudo apt update && sudo apt install -y vim curl git
+            ;;
+        "arch")
+            log_step "Installing Vim via pacman..."
+            sudo pacman -S --noconfirm vim curl git
+            ;;
+        "fedora")
+            log_step "Installing Vim via dnf..."
+            sudo dnf install -y vim curl git
+            ;;
+        "rhel")
+            log_step "Installing Vim via yum..."
+            sudo yum install -y vim curl git
+            ;;
+        "opensuse")
+            log_step "Installing Vim via zypper..."
+            sudo zypper install -y vim curl git
+            ;;
+        "alpine")
+            log_step "Installing Vim via apk..."
+            sudo apk add --no-cache vim curl git
+            ;;
+        "void")
+            log_step "Installing Vim via xbps..."
+            sudo xbps-install -S vim curl git
+            log_step "Symlinking vim → gvim to get clipboard support in CLI…"
+            sudo xbps-alternatives -s vim /usr/bin/gvim
+            ;;
+        "macos")
+            if command -v brew &> /dev/null; then
+                log_step "Installing Vim via Homebrew..."
+                brew install vim curl git
+            else
+                log_warning "Homebrew not found. Please install Homebrew first or install Vim manually."
+                log_step "Installing Homebrew..."
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                brew install vim curl git
+            fi
+            ;;
+        "windows")
+            log_warning "Windows detected. Please install Vim manually from https://www.vim.org/download.php"
+            log_warning "Or use Windows Subsystem for Linux (WSL) for better compatibility."
+            ;;
+        *)
+            log_warning "Unknown system. Attempting to install via common package managers..."
+            if command -v curl &> /dev/null; then
+                log_success "curl is available"
+            else
+                log_error "curl is not available. Please install curl manually."
+            fi
+            
+            if command -v git &> /dev/null; then
+                log_success "git is available"
+            else
+                log_error "git is not available. Please install git manually."
+            fi
+            ;;
+    esac
+}
 
-if [ ! -f "$PLUG_VIM" ]; then
-    log_step "Installing vim-plug..."
-    curl -fLo "$PLUG_VIM" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-else
-    log_step "vim-plug is already installed."
-fi
+# Backup existing configuration
+backup_existing_config() {
+    if [ -f "$HOME/.vimrc" ]; then
+        log_step "Backing up existing .vimrc..."
+        if [ -L "$HOME/.vimrc" ]; then
+            log_warning "Existing .vimrc is a symlink. Removing..."
+            rm "$HOME/.vimrc"
+        else
+            cp "$HOME/.vimrc" "$HOME/.vimrc.backup.$(date +%Y%m%d_%H%M%S)"
+            log_success "Backed up existing .vimrc"
+        fi
+    fi
 
-log_step "Setting executable permissions for setup.sh..."
-chmod +x "$0"
+    if [ -d "$HOME/.vim" ]; then
+        log_step "Vim directory exists"
+    else
+        log_step "Creating .vim directory..."
+        mkdir -p "$HOME/.vim"
+    fi
+}
 
-log_step "Installing plugins..."
-vim +PlugInstall +qall
+# Create necessary directories
+create_directories() {
+    log_step "Creating necessary directories..."
+    
+    # Create vim directories
+    mkdir -p "$HOME/.vim/autoload"
+    mkdir -p "$HOME/.vim/plugged"
+    mkdir -p "$HOME/.vim/sessions"
+    
+    log_success "Created vim directories"
+}
 
-echo
-echo -e "${CYAN}Your new Vim configuration is ready to use.${RESET}"
-echo
+# Install vim-plug
+install_vim_plug() {
+    if [ ! -f "$PLUG_VIM" ]; then
+        log_step "Installing vim-plug..."
+        
+        # Ensure autoload directory exists
+        mkdir -p "$(dirname "$PLUG_VIM")"
+        
+        if command -v curl &> /dev/null; then
+            curl -fLo "$PLUG_VIM" --create-dirs \
+                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            log_success "vim-plug installed successfully"
+        elif command -v wget &> /dev/null; then
+            wget -O "$PLUG_VIM" --no-check-certificate \
+                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            log_success "vim-plug installed successfully (via wget)"
+        else
+            log_error "Neither curl nor wget is available. Cannot install vim-plug."
+        fi
+    else
+        log_warning "vim-plug is already installed."
+    fi
+}
+
+# Setup configuration symlink
+setup_vimrc() {
+    log_step "Setting up .vimrc symlink..."
+    
+    # Check if config file exists
+    if [ ! -f "$CONFIG_DIR/.vimrc" ]; then
+        log_error "Configuration file not found at: $CONFIG_DIR/.vimrc"
+    fi
+    
+    # Create symlink
+    ln -sf "$(realpath "$CONFIG_DIR/.vimrc")" "$HOME/.vimrc"
+    log_success "Created .vimrc symlink"
+}
+
+# Install plugins
+install_plugins() {
+    log_step "Installing Vim plugins..."
+    vim +PlugInstall +qall
+    
+    if [ $? -eq 0 ]; then
+        log_success "Plugins installed successfully"
+    else
+        log_warning "Some plugins may have failed to install. Run ':PlugInstall' in Vim to retry."
+    fi
+}
+
+# Verify installation
+verify_installation() {
+    log_step "Verifying installation..."
+    
+    # Check vim
+    if command -v vim &> /dev/null; then
+        log_success "Vim is installed and available"
+    else
+        log_error "Vim installation failed"
+    fi
+    
+    # Check .vimrc
+    if [ -L "$HOME/.vimrc" ] && [ -f "$HOME/.vimrc" ]; then
+        log_success ".vimrc symlink is working"
+    else
+        log_error ".vimrc symlink failed"
+    fi
+    
+    # Check vim-plug
+    if [ -f "$PLUG_VIM" ]; then
+        log_success "vim-plug is installed"
+    else
+        log_error "vim-plug installation failed"
+    fi
+    
+    # Check plugin directory
+    if [ -d "$HOME/.vim/plugged" ]; then
+        local plugin_count=$(ls -1 "$HOME/.vim/plugged" 2>/dev/null | wc -l)
+        log_success "Plugin directory exists with $plugin_count plugins"
+    else
+        log_warning "Plugin directory not found"
+    fi
+}
+
+# Set executable permissions
+set_permissions() {
+    log_step "Setting executable permissions..."
+    chmod +x "$0"
+    log_success "Permissions set"
+}
+
+# Main installation process
+main() {
+    display_banner
+    
+    log_step "Starting VEX Vim configuration setup..."
+    
+    # Check if vim is installed, if not install it
+    if ! command -v vim &> /dev/null; then
+        install_vim
+    else
+        log_success "Vim is already installed"
+    fi
+    
+    # Backup existing config
+    backup_existing_config
+    
+    # Create necessary directories
+    create_directories
+    
+    # Install vim-plug
+    install_vim_plug
+    
+    # Setup vimrc
+    setup_vimrc
+    
+    # Set permissions
+    set_permissions
+    
+    # Install plugins
+    install_plugins
+    
+    # Verify installation
+    verify_installation
+
+    echo -e "${GREEN}${BOLD}🎉 VEX Vim configuration setup completed!${RESET}"
+    echo -e "${CYAN}Your new Vim configuration is ready to use.${RESET}"
+    echo
+}
+
+# Run main function
+main "$@"

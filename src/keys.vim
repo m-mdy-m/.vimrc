@@ -3,20 +3,20 @@
 " ==================================
 " Undo/Redo
 nnoremap <C-z> u              " Undo
-nnoremap <C-r> <C-r>          " Redo
+nnoremap <C-y> <C-r>          " Redo
 inoremap <C-z> <Esc>u         " Undo in insert mode
 inoremap <C-r> <Esc><C-r>     " Redo in insert mode
 
 " Cut, Copy, Paste
 nnoremap <C-x> dd             " Cut line
-nnoremap <C-c> yy             " Copy line
-vnoremap <C-c> y              " Copy selection in visual mode
+nnoremap <C-c> yy           " Copy line
+vnoremap <C-c> y            " Copy selection in visual mode
 nnoremap <C-v> p              " Paste after cursor
 nnoremap <C-S-v> P            " Paste before cursor
 
 " Copy, Cut, Paste in Insert Mode
 inoremap <C-x> <Esc>ddi       " Cut line in insert mode
-inoremap <C-c> <Esc>yyi       " Copy line in insert mode
+inoremap <C-c> <Esc>yyi     " Copy line in insert mode
 inoremap <C-v> <Esc>pi        " Paste in insert mode
 
 " Select all (Ctrl+A)
@@ -100,11 +100,6 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 inoremap <S-Tab> <Esc><<i
 
-" Multi-cursor simulation (not perfect but helps)
-" Use vim-multiple-cursors plugin for better experience
-nmap <C-d> <Plug>(VM-Find-Under)
-xmap <C-d> <Plug>(VM-Find-Subword-Under)
-
 " ==================================
 " Search and Replace (VSCode Style)
 " ==================================
@@ -131,8 +126,8 @@ vnoremap <C-f> <Esc>/\%V
 nnoremap <C-\> :vsplit<CR>
 nnoremap <C-S-\> :split<CR>
 " Close current window/tab
-nnoremap <C-w> :close<CR>
-inoremap <C-w> <Esc>:close<CR>
+nnoremap <C-S-w> :close<CR>
+inoremap <C-S-w> <Esc>:close<CR>
 " Navigate between splits
 nnoremap <C-S-h> <C-w>h
 nnoremap <C-S-j> <C-w>j
