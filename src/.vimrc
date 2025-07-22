@@ -10,7 +10,7 @@ nnoremap <F12> :so $MYVIMRC<CR>
 set exrc
 set secure
 " Lines of memory to remember
-set history=10000
+set history=1000
 
 " Leader key to add extra key combinations
 let mapleader = '\'
@@ -19,7 +19,7 @@ let mapleader = '\'
 set timeoutlen=3000 ttimeoutlen=100
 
 " Update time
-set updatetime=250
+set updatetime=300
 
 set nrformats-=octal
 set number relativenumber      " Show hybrid line numbers
