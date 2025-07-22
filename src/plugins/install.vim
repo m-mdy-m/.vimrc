@@ -29,4 +29,9 @@ Plug 'godlygeek/tabular'                 " Text alignment
 " Sessions
 Plug 'xolox/vim-session'                 " Session management
 Plug 'xolox/vim-misc'                    " Required for vim-session
+
+" Git Integration
+Plug 'tpope/vim-fugitive'                 " Git commands
+Plug 'airblade/vim-gitgutter'             " Git diff in gutter
+
 call plug#end()

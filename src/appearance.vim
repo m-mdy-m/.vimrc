@@ -185,8 +185,3 @@ highlight User2            guibg=#151518  guifg=#d4d4d8
 highlight User3            guibg=#ef4444  guifg=#ffffff  gui=bold
 highlight User4            guibg=#86efac  guifg=#0a0a0a  gui=bold
 highlight User5            guifg=#fbbf24  gui=bold
-
-" Git/VCS Colors - Modern muted indicators
-highlight GitGutterAdd     guifg=#86efac  guibg=#0f0f0f
-highlight GitGutterChange  guifg=#fbbf24  guibg=#0f0f0f
-highlight GitGutterDelete  guifg=#ef4444  guibg=#0f0f0f

@@ -190,3 +190,8 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
+
+" GitGutter
+let g:gitgutter_enabled = 1
+let g:gitgutter_max_signs = 500
+let g:gitgutter_preview_win_floating = 1
