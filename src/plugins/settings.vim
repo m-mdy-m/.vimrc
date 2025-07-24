@@ -43,10 +43,10 @@ let g:startify_lists = [
 
 " Define bookmarks for quick access
 let g:startify_bookmarks = [
-          \ { 'v': '~/.vimrc' },
-          \ { 'z': '~/.zshrc' },
+          \ { 'v': '~/vim/' },
+          \ { 'b': '~/.bashrc' },
           \ { 'c': '~/.config' },
-          \ { 'p': '~/projects' },
+          \ { 'p': '~/Projects' },
           \ ]
 
 " Session handling
@@ -76,7 +76,6 @@ let g:startify_relative_path = 0
 let g:startify_transformations = [['.*', function('s:ShortenPath')]]
 
 
-" Custom header with your ASCII art
 let g:ascii = [
     \ '                                        ',
     \ '                                        ',
@@ -90,7 +89,6 @@ let g:ascii = [
     \ ]
 
 
-" Custom footer
 let g:startify_custom_footer = [
     \ '                                        ',
     \ '    ' . strftime('%Y-%m-%d %H:%M'),
@@ -115,7 +113,6 @@ endfunction
 
 let g:startify_custom_header = s:center(g:ascii) + startify#fortune#quote()
 
-" Startify colors matching our midnight_azure theme
 highlight StartifyHeader guifg=#36C3FF
 highlight StartifyFile guifg=#00A1FF gui=bold
 highlight StartifyPath guifg=#3D5573
@@ -126,7 +123,6 @@ highlight StartifySelect guifg=#FFFFFF guibg=#004F8A
 highlight StartifySpecial guifg=#95ECFF
 highlight StartifyFooter guifg=#36C3FF
 
-" Improve NERDTree integration
 let g:startify_skiplist = [
     \ 'COMMIT_EDITMSG',
     \ 'bundle/.*/doc',
@@ -134,7 +130,6 @@ let g:startify_skiplist = [
     \ '/Users/mhi/local/vim/share/vim/vim74/doc',
     \ ]
 
-" Custom commands
 let g:startify_commands = [
     \ {'u': ['Update Plugins', ':PlugUpdate']},
     \ {'c': ['Clean Plugins', ':PlugClean']},
