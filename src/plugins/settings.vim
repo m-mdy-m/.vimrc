@@ -43,7 +43,7 @@ let g:startify_lists = [
 
 " Define bookmarks for quick access
 let g:startify_bookmarks = [
-          \ { 'v': '~/vim/' },
+          \ { 'v': '~/.vimrc' },
           \ { 'b': '~/.bashrc' },
           \ { 'c': '~/.config' },
           \ { 'p': '~/Projects' },
