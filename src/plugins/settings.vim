@@ -28,7 +28,68 @@ inoremap <C-e> <Esc>:NERDTreeToggle<CR>
 nnoremap <leader>e :NERDTreeFocus<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
-" Status Bar in NERDTree
+" ===================================
+" FZF Configuration (NEW)
+" ===================================
+" FZF layout
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.7 } }
+
+" FZF preview window
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+" Customize fzf commands
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
+
+" Ripgrep with preview
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+" ===================================
+" IndentLine Configuration (NEW)
+" ===================================
+let g:indentLine_enabled = 1
+let g:indentLine_char = '┊'
+let g:indentLine_color_gui = '#2a2a3a'
+let g:indentLine_conceallevel = 1
+let g:indentLine_setConceal = 0
+
+" ===================================
+" Neoformat Configuration (NEW)
+" ===================================
+" Enable alignment
+let g:neoformat_basic_format_align = 1
+" Enable trimming of trailing whitespace
+let g:neoformat_basic_format_trim = 1
+" Enable tab to spaces conversion
+let g:neoformat_basic_format_retab = 1
+
+" Auto format on save (optional - uncomment to enable)
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre * undojoin | Neoformat
+" augroup END
+
+" ===================================
+" UndoTree Configuration (NEW)
+" ===================================
+nnoremap <leader>u :UndotreeToggle<CR>
+let g:undotree_WindowLayout = 2
+let g:undotree_ShortIndicators = 1
+let g:undotree_SetFocusWhenToggle = 1
+
+" ===================================
+" Vim Obsession Configuration (NEW)
+" ===================================
+" Auto-track sessions
+" Start with: :Obsess (in your project directory)
+" Stop with: :Obsess!
+
+" ===================================
+" Startify Configuration
+" ===================================
 autocmd FileType nerdtree setlocal laststatus=0 showtabline=0
 
 " ----- Startify Configuration -----
@@ -113,16 +174,6 @@ endfunction
 
 let g:startify_custom_header = s:center(g:ascii) + startify#fortune#quote()
 
-highlight StartifyHeader guifg=#36C3FF
-highlight StartifyFile guifg=#00A1FF gui=bold
-highlight StartifyPath guifg=#3D5573
-highlight StartifySlash guifg=#007FD6
-highlight StartifyBracket guifg=#004F8A
-highlight StartifyNumber guifg=#52B4FF
-highlight StartifySelect guifg=#FFFFFF guibg=#004F8A
-highlight StartifySpecial guifg=#95ECFF
-highlight StartifyFooter guifg=#36C3FF
-
 let g:startify_skiplist = [
     \ 'COMMIT_EDITMSG',
     \ 'bundle/.*/doc',
@@ -137,18 +188,23 @@ let g:startify_commands = [
     \ {'q': ['Quit Vim', ':qa']},
     \ ]
 
+" ===================================
+" Session Management
+" ===================================
 " Auto-update sessions
 augroup startify_auto_session
     autocmd!
     autocmd VimLeavePre * if exists('g:this_obsession') && v:dying == 0 | exe 'SSave! ' . g:this_obsession | endif
 augroup END
-
-" Session Management
 let g:session_autosave  = 'no'
 let g:session_autoload  = 'no'
 let g:session_directory = '~/.vim/sessions/'
 
-" Airline Configuration (if using airline)
+
+
+" ===================================
+" Airline Configuration
+" ===================================
 if exists('g:loaded_airline')
     let g:airline_theme = 'dark'
     let g:airline_powerline_fonts = 1
@@ -160,7 +216,9 @@ if exists('g:loaded_airline')
     let g:airline_right_alt_sep = '│'
 endif
 
+" ===================================
 " Multiple Cursors Configuration
+" ===================================
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_word_key      = '<C-d>'
 let g:multi_cursor_select_all_word_key = '<A-d>'
@@ -171,11 +229,15 @@ let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
+" ===================================
 " Auto-pairs Configuration
+" ===================================
 let g:AutoPairsFlyCursor = 1
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
+" ===================================
 " Syntastic Configuration
+" ===================================
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -186,9 +248,8 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
-
 " ===================================
-" Git Configuration - Advanced
+" Git Configuration
 " ===================================
 
 " GitGutter Advanced Settings
@@ -202,14 +263,7 @@ let g:gitgutter_highlight_lines = 0
 let g:gitgutter_highlight_linenrs = 1
 let g:gitgutter_map_keys = 0
 
-" Custom Git Status Symbols (ASCII Art - Clean & Minimal)
-let g:gitgutter_sign_added              = '▌'
-let g:gitgutter_sign_modified           = '▐'
-let g:gitgutter_sign_removed            = '▂'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_modified_removed   = '▞'
-
-" Git Messenger Configuration
+"Git Messenger Configuration
 let g:git_messenger_no_default_mappings = v:true
 let g:git_messenger_floating_win_opts = { 'border': 'single' }
 let g:git_messenger_popup_content_margins = v:false
@@ -230,15 +284,13 @@ let g:mergetool_prefer_revision = 'local'
 " ===================================
 " Terminal Integration - FloaTerm
 " ===================================
-
-" FloaTerm Configuration
 let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<C-S-t>'
 let g:floaterm_keymap_kill   = '<F12>'
 
-" Terminal Appearance (Matching Your Dark Theme)
+" Terminal Appearance
 let g:floaterm_position = 'center'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.7
@@ -260,7 +312,6 @@ command! GitCommit FloatermNew --height=0.5 --width=0.7 --wintype=float --name=g
 " ===================================
 " Git Status Line Integration
 " ===================================
-
 " Function to get git branch
 function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
