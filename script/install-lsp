@@ -6,161 +6,63 @@ BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${BASE_DIR}/colors"
 source "${BASE_DIR}/logger"
 
-log_step "Installing Language Servers for VEX LSP"
+# ===================================
+# Language Server Configurations
+# ===================================
 
-# Detect available package managers
-has_npm=$(command -v npm &> /dev/null && echo 1 || echo 0)
-has_pip=$(command -v pip3 &> /dev/null && echo 1 || echo 0)
-has_go=$(command -v go &> /dev/null && echo 1 || echo 0)
-has_cargo=$(command -v cargo &> /dev/null && echo 1 || echo 0)
-has_gem=$(command -v gem &> /dev/null && echo 1 || echo 0)
-has_composer=$(command -v composer &> /dev/null && echo 1 || echo 0)
-
-# Function to install via npm
-install_npm_servers() {
-    if [ $has_npm -eq 1 ]; then
-        log_step "Installing Node.js Language Servers..."
-        
-        npm list -g typescript-language-server &> /dev/null || {
-            log_step "Installing TypeScript/JavaScript language server..."
-            npm install -g typescript typescript-language-server
-            log_success "TypeScript/JavaScript LSP installed"
-        }
-        
-        npm list -g vscode-langservers-extracted &> /dev/null || {
-            log_step "Installing HTML/CSS/JSON language servers..."
-            npm install -g vscode-langservers-extracted
-            log_success "HTML/CSS/JSON LSP installed"
-        }
-        
-        npm list -g bash-language-server &> /dev/null || {
-            log_step "Installing Bash language server..."
-            npm install -g bash-language-server
-            log_success "Bash LSP installed"
-        }
-        
-        npm list -g yaml-language-server &> /dev/null || {
-            log_step "Installing YAML language server..."
-            npm install -g yaml-language-server
-            log_success "YAML LSP installed"
-        }
-        
-        npm list -g dockerfile-language-server-nodejs &> /dev/null || {
-            log_step "Installing Dockerfile language server..."
-            npm install -g dockerfile-language-server-nodejs
-            log_success "Dockerfile LSP installed"
-        }
-    else
-        log_warning "npm not found. Skipping Node.js language servers."
-        log_warning "Install Node.js from: https://nodejs.org/"
-    fi
-}
-
-# Function to install Python LSP
-install_python_servers() {
-    if [ $has_pip -eq 1 ]; then
-        log_step "Installing Python Language Server..."
-        pip3 list | grep -q python-lsp-server || {
-            pip3 install --user python-lsp-server python-lsp-ruff pylsp-mypy
-            log_success "Python LSP installed"
-        }
-    else
-        log_warning "pip3 not found. Skipping Python language server."
-    fi
-}
-
-# Function to install Go LSP
-install_go_servers() {
-    if [ $has_go -eq 1 ]; then
-        log_step "Installing Go Language Server..."
-        if ! command -v gopls &> /dev/null; then
-            go install golang.org/x/tools/gopls@latest
-            log_success "Go LSP installed"
-        else
-            log_success "gopls already installed"
-        fi
-    else
-        log_warning "Go not found. Skipping Go language server."
-    fi
-}
-
-# Function to install Rust LSP
-install_rust_servers() {
-    if [ $has_cargo -eq 1 ]; then
-        log_step "Installing Rust Language Server..."
-        if ! command -v rust-analyzer &> /dev/null; then
-            rustup component add rust-analyzer
-            log_success "Rust LSP installed"
-        else
-            log_success "rust-analyzer already installed"
-        fi
-    else
-        log_warning "Cargo not found. Skipping Rust language server."
-        log_warning "Install Rust from: https://rustup.rs/"
-    fi
-}
-
-# Function to install Ruby LSP
-install_ruby_servers() {
-    if [ $has_gem -eq 1 ]; then
-        log_step "Installing Ruby Language Server..."
-        gem list | grep -q solargraph || {
-            gem install solargraph
-            log_success "Ruby LSP installed"
-        }
-    else
-        log_warning "gem not found. Skipping Ruby language server."
-    fi
-}
-
-# Function to install PHP LSP
-install_php_servers() {
-    if [ $has_composer -eq 1 ]; then
-        log_step "Installing PHP Language Server..."
-        composer global show | grep -q intelephense || {
-            composer global require felixfbecker/language-server
-            log_success "PHP LSP installed"
-        }
-    else
-        log_warning "Composer not found. Skipping PHP language server."
-    fi
-}
-
-# Function to install C/C++ LSP
-install_cpp_servers() {
-    log_step "Checking for C/C++ Language Server..."
+declare -A LSP_SERVERS=(
+    # JavaScript/TypeScript
+    ["typescript"]="npm:typescript typescript-language-server"
     
-    if command -v clangd &> /dev/null; then
-        log_success "clangd already installed"
-        return
-    fi
+    # Web Development
+    ["html-css-json"]="npm:vscode-langservers-extracted"
+    ["yaml"]="npm:yaml-language-server"
     
-    local system=$(detect_system)
+    # Shell & Config
+    ["bash"]="npm:bash-language-server"
+    ["dockerfile"]="npm:dockerfile-language-server-nodejs"
     
-    case $system in
-        "debian")
-            sudo apt install -y clangd
-            ;;
-        "arch")
-            sudo pacman -S --noconfirm clang
-            ;;
-        "fedora")
-            sudo dnf install -y clang-tools-extra
-            ;;
-        "macos")
-            brew install llvm
-            ;;
-        *)
-            log_warning "Please install clangd manually for C/C++ support"
-            ;;
-    esac
+    # Python
+    ["python"]="pip:python-lsp-server[all]"
     
-    if command -v clangd &> /dev/null; then
-        log_success "C/C++ LSP installed"
-    fi
-}
+    # Go
+    ["go"]="go:golang.org/x/tools/gopls@latest"
+    
+    # Rust
+    ["rust"]="rustup:rust-analyzer"
+    
+    # C/C++
+    ["cpp"]="system:clangd"
+    
+    # Ruby
+    ["ruby"]="gem:solargraph"
+    
+    # PHP
+    ["php"]="composer:felixfbecker/language-server"
+    
+    # Lua
+    ["lua"]="manual:lua-language-server"
+)
 
-# Detect system function
+declare -A LSP_DESCRIPTIONS=(
+    ["typescript"]="JavaScript, TypeScript, React, Vue"
+    ["html-css-json"]="HTML, CSS, JSON"
+    ["yaml"]="YAML, Docker Compose"
+    ["bash"]="Bash, Shell Scripts"
+    ["dockerfile"]="Docker, Containerfiles"
+    ["python"]="Python 3.x"
+    ["go"]="Go/Golang"
+    ["rust"]="Rust"
+    ["cpp"]="C, C++, Objective-C"
+    ["ruby"]="Ruby, Rails"
+    ["php"]="PHP, Laravel"
+    ["lua"]="Lua, Neovim Config"
+)
+
+# ===================================
+# System Detection
+# ===================================
+
 detect_system() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         if command -v apt &> /dev/null; then
@@ -169,8 +71,10 @@ detect_system() {
             echo "arch"
         elif command -v dnf &> /dev/null; then
             echo "fedora"
+        elif command -v yum &> /dev/null; then
+            echo "rhel"
         else
-            echo "unknown-linux"
+            echo "linux"
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "macos"
@@ -179,46 +83,436 @@ detect_system() {
     fi
 }
 
-# Function to install Lua LSP
-install_lua_servers() {
-    log_step "Lua language server will be installed automatically by vim-lsp-settings"
-    log_success "Lua LSP setup ready"
+# ===================================
+# Package Manager Detection
+# ===================================
+
+check_package_managers() {
+    echo -e "${CYAN}${BOLD}Checking available package managers...${RESET}"
+    echo
+    
+    local managers_found=0
+    
+    if command -v npm &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} npm      ${CYAN}($(npm --version))${RESET}"
+        HAS_NPM=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} npm      ${YELLOW}(install: https://nodejs.org)${RESET}"
+        HAS_NPM=0
+    fi
+    
+    if command -v pip3 &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} pip3     ${CYAN}($(pip3 --version | cut -d' ' -f2))${RESET}"
+        HAS_PIP=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} pip3     ${YELLOW}(install: python3-pip)${RESET}"
+        HAS_PIP=0
+    fi
+    
+    if command -v go &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} go       ${CYAN}($(go version | cut -d' ' -f3))${RESET}"
+        HAS_GO=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} go       ${YELLOW}(install: https://go.dev)${RESET}"
+        HAS_GO=0
+    fi
+    
+    if command -v cargo &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} cargo    ${CYAN}($(cargo --version | cut -d' ' -f2))${RESET}"
+        HAS_CARGO=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} cargo    ${YELLOW}(install: https://rustup.rs)${RESET}"
+        HAS_CARGO=0
+    fi
+    
+    if command -v gem &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} gem      ${CYAN}($(gem --version))${RESET}"
+        HAS_GEM=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} gem      ${YELLOW}(install: ruby)${RESET}"
+        HAS_GEM=0
+    fi
+    
+    if command -v composer &> /dev/null; then
+        echo -e "  ${GREEN}✓${RESET} composer ${CYAN}($(composer --version 2>/dev/null | head -1 | cut -d' ' -f3))${RESET}"
+        HAS_COMPOSER=1
+        managers_found=$((managers_found + 1))
+    else
+        echo -e "  ${RED}✗${RESET} composer ${YELLOW}(install: https://getcomposer.org)${RESET}"
+        HAS_COMPOSER=0
+    fi
+    
+    echo
+    
+    if [ $managers_found -eq 0 ]; then
+        log_error "No package managers found. Cannot install language servers."
+        exit 1
+    fi
+    
+    log_success "Found $managers_found package manager(s)"
+    echo
 }
 
-# Main installation
+# ===================================
+# Individual LSP Installers
+# ===================================
+
+install_typescript_lsp() {
+    if [ $HAS_NPM -eq 0 ]; then return; fi
+    
+    log_step "TypeScript/JavaScript LSP"
+    if npm list -g typescript-language-server &> /dev/null; then
+        log_success "Already installed"
+    else
+        npm install -g typescript typescript-language-server --silent 2>&1 | grep -v "npm WARN" || true
+        log_success "Installed"
+    fi
+}
+
+install_web_lsp() {
+    if [ $HAS_NPM -eq 0 ]; then return; fi
+    
+    log_step "HTML/CSS/JSON LSP"
+    if npm list -g vscode-langservers-extracted &> /dev/null; then
+        log_success "Already installed"
+    else
+        npm install -g vscode-langservers-extracted --silent 2>&1 | grep -v "npm WARN" || true
+        log_success "Installed"
+    fi
+}
+
+install_yaml_lsp() {
+    if [ $HAS_NPM -eq 0 ]; then return; fi
+    
+    log_step "YAML LSP"
+    if npm list -g yaml-language-server &> /dev/null; then
+        log_success "Already installed"
+    else
+        npm install -g yaml-language-server --silent 2>&1 | grep -v "npm WARN" || true
+        log_success "Installed"
+    fi
+}
+
+install_bash_lsp() {
+    if [ $HAS_NPM -eq 0 ]; then return; fi
+    
+    log_step "Bash LSP"
+    if npm list -g bash-language-server &> /dev/null; then
+        log_success "Already installed"
+    else
+        npm install -g bash-language-server --silent 2>&1 | grep -v "npm WARN" || true
+        log_success "Installed"
+    fi
+}
+
+install_dockerfile_lsp() {
+    if [ $HAS_NPM -eq 0 ]; then return; fi
+    
+    log_step "Dockerfile LSP"
+    if npm list -g dockerfile-language-server-nodejs &> /dev/null; then
+        log_success "Already installed"
+    else
+        npm install -g dockerfile-language-server-nodejs --silent 2>&1 | grep -v "npm WARN" || true
+        log_success "Installed"
+    fi
+}
+
+install_python_lsp() {
+    if [ $HAS_PIP -eq 0 ]; then return; fi
+    
+    log_step "Python LSP"
+    if pip3 show python-lsp-server &> /dev/null; then
+        log_success "Already installed"
+    else
+        pip3 install --user python-lsp-server python-lsp-ruff pylsp-mypy &> /dev/null
+        log_success "Installed"
+    fi
+}
+
+install_go_lsp() {
+    if [ $HAS_GO -eq 0 ]; then return; fi
+    
+    log_step "Go LSP"
+    if command -v gopls &> /dev/null; then
+        log_success "Already installed"
+    else
+        go install golang.org/x/tools/gopls@latest &> /dev/null
+        log_success "Installed"
+    fi
+}
+
+install_rust_lsp() {
+    if [ $HAS_CARGO -eq 0 ]; then return; fi
+    
+    log_step "Rust LSP"
+    if command -v rust-analyzer &> /dev/null; then
+        log_success "Already installed"
+    else
+        if command -v rustup &> /dev/null; then
+            rustup component add rust-analyzer &> /dev/null
+            log_success "Installed"
+        else
+            log_warning "rustup not found, skipping"
+        fi
+    fi
+}
+
+install_cpp_lsp() {
+    log_step "C/C++ LSP"
+    
+    if command -v clangd &> /dev/null; then
+        log_success "Already installed"
+        return
+    fi
+    
+    local system=$(detect_system)
+    
+    case $system in
+        "debian")
+            sudo apt install -y clangd &> /dev/null
+            ;;
+        "arch")
+            sudo pacman -S --noconfirm clang &> /dev/null
+            ;;
+        "fedora"|"rhel")
+            sudo dnf install -y clang-tools-extra &> /dev/null
+            ;;
+        "macos")
+            if command -v brew &> /dev/null; then
+                brew install llvm &> /dev/null
+            else
+                log_warning "Homebrew not found"
+                return
+            fi
+            ;;
+        *)
+            log_warning "Please install clangd manually"
+            return
+            ;;
+    esac
+    
+    if command -v clangd &> /dev/null; then
+        log_success "Installed"
+    else
+        log_warning "Installation failed"
+    fi
+}
+
+install_ruby_lsp() {
+    if [ $HAS_GEM -eq 0 ]; then return; fi
+    
+    log_step "Ruby LSP"
+    if gem list solargraph -i &> /dev/null; then
+        log_success "Already installed"
+    else
+        gem install solargraph &> /dev/null
+        log_success "Installed"
+    fi
+}
+
+install_php_lsp() {
+    if [ $HAS_COMPOSER -eq 0 ]; then return; fi
+    
+    log_step "PHP LSP"
+    if composer global show felixfbecker/language-server &> /dev/null 2>&1; then
+        log_success "Already installed"
+    else
+        composer global require felixfbecker/language-server &> /dev/null
+        log_success "Installed"
+    fi
+}
+
+install_lua_lsp() {
+    log_step "Lua LSP"
+    log_success "Will be auto-installed by vim-lsp-settings"
+}
+
+# ===================================
+# Interactive Language Selection
+# ===================================
+
+show_language_menu() {
+    echo -e "${CYAN}${BOLD}Available Language Servers:${RESET}"
+    echo
+    
+    local languages=(
+        "typescript:JavaScript/TypeScript/React"
+        "web:HTML/CSS/JSON"
+        "python:Python"
+        "go:Go/Golang"
+        "rust:Rust"
+        "cpp:C/C++"
+        "bash:Bash/Shell"
+        "yaml:YAML"
+        "dockerfile:Docker"
+        "ruby:Ruby"
+        "php:PHP"
+        "lua:Lua"
+    )
+    
+    local choices=()
+    
+    for lang in "${languages[@]}"; do
+        IFS=':' read -r key desc <<< "$lang"
+        echo -e "  ${YELLOW}[$key]${RESET} $desc"
+    done
+    
+    echo
+    echo -e "${CYAN}Options:${RESET}"
+    echo -e "  ${GREEN}[all]${RESET}  Install all available"
+    echo -e "  ${GREEN}[web]${RESET}  Web development (JS/TS/HTML/CSS/JSON)"
+    echo -e "  ${GREEN}[skip]${RESET} Skip LSP installation"
+    echo
+}
+
+# ===================================
+# Installation Groups
+# ===================================
+
+install_all() {
+    install_typescript_lsp
+    install_web_lsp
+    install_yaml_lsp
+    install_bash_lsp
+    install_dockerfile_lsp
+    install_python_lsp
+    install_go_lsp
+    install_rust_lsp
+    install_cpp_lsp
+    install_ruby_lsp
+    install_php_lsp
+    install_lua_lsp
+}
+
+install_web_group() {
+    install_typescript_lsp
+    install_web_lsp
+    install_yaml_lsp
+    install_dockerfile_lsp
+}
+
+install_by_selection() {
+    local selection=$1
+    
+    case $selection in
+        *typescript*) install_typescript_lsp ;;
+    esac
+    
+    case $selection in
+        *web*) install_web_lsp ;;
+    esac
+    
+    case $selection in
+        *python*) install_python_lsp ;;
+    esac
+    
+    case $selection in
+        *go*) install_go_lsp ;;
+    esac
+    
+    case $selection in
+        *rust*) install_rust_lsp ;;
+    esac
+    
+    case $selection in
+        *cpp*) install_cpp_lsp ;;
+    esac
+    
+    case $selection in
+        *bash*) install_bash_lsp ;;
+    esac
+    
+    case $selection in
+        *yaml*) install_yaml_lsp ;;
+    esac
+    
+    case $selection in
+        *dockerfile*) install_dockerfile_lsp ;;
+    esac
+    
+    case $selection in
+        *ruby*) install_ruby_lsp ;;
+    esac
+    
+    case $selection in
+        *php*) install_php_lsp ;;
+    esac
+    
+    case $selection in
+        *lua*) install_lua_lsp ;;
+    esac
+}
+
+# ===================================
+# Summary Display
+# ===================================
+
+show_installed_summary() {
+    echo
+    echo -e "${CYAN}${BOLD}╔════════════════════════════════════╗${RESET}"
+    echo -e "${CYAN}${BOLD}║     Installed Language Servers     ║${RESET}"
+    echo -e "${CYAN}${BOLD}╚════════════════════════════════════╝${RESET}"
+    echo
+    
+    # Check what's installed
+    command -v typescript-language-server &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} TypeScript/JavaScript"
+    
+    npm list -g vscode-langservers-extracted &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} HTML/CSS/JSON"
+    
+    pip3 show python-lsp-server &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Python"
+    
+    command -v gopls &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Go"
+    
+    command -v rust-analyzer &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Rust"
+    
+    command -v clangd &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} C/C++"
+    
+    npm list -g bash-language-server &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Bash"
+    
+    npm list -g yaml-language-server &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} YAML"
+    
+    npm list -g dockerfile-language-server-nodejs &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Docker"
+    
+    gem list solargraph -i &> /dev/null && \
+        echo -e "  ${GREEN}✓${RESET} Ruby"
+    
+    composer global show felixfbecker/language-server &> /dev/null 2>&1 && \
+        echo -e "  ${GREEN}✓${RESET} PHP"
+    
+    echo
+}
+
+# ===================================
+# Main Installation
+# ===================================
+
 main() {
-    echo -e "${CYAN}${BOLD}╔════════════════════════════════════════╗${RESET}"
-    echo -e "${CYAN}${BOLD}║  LSP Language Servers Installation    ║${RESET}"
-    echo -e "${CYAN}${BOLD}╚════════════════════════════════════════╝${RESET}"
+    echo -e "${CYAN}${BOLD}╔════════════════════════════════════╗${RESET}"
+    echo -e "${CYAN}${BOLD}║   LSP Language Server Installer   ║${RESET}"
+    echo -e "${CYAN}${BOLD}╚════════════════════════════════════╝${RESET}"
     echo
     
-    log_step "Detecting available package managers..."
-    
-    echo -e "${YELLOW}Found package managers:${RESET}"
-    [ $has_npm -eq 1 ] && echo "  ✓ npm"
-    [ $has_pip -eq 1 ] && echo "  ✓ pip3"
-    [ $has_go -eq 1 ] && echo "  ✓ go"
-    [ $has_cargo -eq 1 ] && echo "  ✓ cargo"
-    [ $has_gem -eq 1 ] && echo "  ✓ gem"
-    [ $has_composer -eq 1 ] && echo "  ✓ composer"
+    check_package_managers
+    install_all 
+    show_installed_summary
+    echo -e "${GREEN}${BOLD}✓ LSP installation completed${RESET}"
     echo
-    
-    # Install language servers
-    install_npm_servers
-    install_python_servers
-    install_go_servers
-    install_rust_servers
-    install_ruby_servers
-    install_php_servers
-    install_cpp_servers
-    install_lua_servers
-    
-    echo
-    log_success "LSP installation completed!"
-    echo
-    echo -e "${CYAN}To install additional language servers manually:${RESET}"
-    echo -e "${YELLOW}  Java:${RESET}     Managed automatically by vim-lsp-settings"
-    echo -e "${YELLOW}  More:${RESET}     Check :LspInstallServer in Vim"
+    echo -e "${CYAN}Note: Some servers may require additional configuration.${RESET}"
+    echo -e "${CYAN}Run ${YELLOW}:LspInstallServer${CYAN} in Vim for more options.${RESET}"
     echo
 }
 

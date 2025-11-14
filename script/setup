@@ -2,16 +2,26 @@
 
 set -e
 
-# Get script directory
+# ═══════════════════════════════════════════════════════════════
+# Configuration
+# ═══════════════════════════════════════════════════════════════
+
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${BASE_DIR}/../src"
 PLUG_VIM="$HOME/.vim/autoload/plug.vim"
+BACKUP_DIR="$HOME/.vim/backups"
 
 source "${BASE_DIR}/colors"
 source "${BASE_DIR}/logger"
 source "${BASE_DIR}/display"
 
-# Detect OS and package manager
+# Total setup steps
+TOTAL_STEPS=8
+
+# ═══════════════════════════════════════════════════════════════
+# System Detection
+# ═══════════════════════════════════════════════════════════════
+
 detect_system() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         if command -v apt &> /dev/null; then
@@ -29,7 +39,7 @@ detect_system() {
         elif command -v xbps-install &> /dev/null; then
             echo "void"
         else
-            echo "unknown-linux"
+            echo "linux"
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "macos"
@@ -40,258 +50,421 @@ detect_system() {
     fi
 }
 
-# Install Vim based on system
+# ═══════════════════════════════════════════════════════════════
+# Installation Functions
+# ═══════════════════════════════════════════════════════════════
+
+# Check prerequisites
+check_prerequisites() {
+    display_step 1 $TOTAL_STEPS "Checking system requirements"
+    
+    local system=$(detect_system)
+    display_kv "System" "$system"
+    
+    # Check for essential tools
+    local missing_tools=()
+    
+    if ! command -v curl &> /dev/null && ! command -v wget &> /dev/null; then
+        missing_tools+=("curl or wget")
+    fi
+    
+    if ! command -v git &> /dev/null; then
+        missing_tools+=("git")
+    fi
+    
+    if [ ${#missing_tools[@]} -gt 0 ]; then
+        echo ""
+        display_warning "Missing required tools: ${missing_tools[*]}"
+        return 1
+    fi
+    
+    display_success_item "All prerequisites met"
+    echo ""
+    sleep 0.5
+    return 0
+}
+
+# Install Vim
 install_vim() {
+    display_step 2 $TOTAL_STEPS "Installing Vim"
+    
+    if command -v vim &> /dev/null; then
+        local vim_version=$(vim --version | head -n1)
+        display_success_item "Vim already installed: $vim_version"
+        echo ""
+        sleep 0.5
+        return 0
+    fi
+    
     local system=$(detect_system)
     
-    log_step "Detected system: $system"
+    echo ""
+    display_info "Installing Vim for $system..."
+    echo ""
     
     case $system in
         "debian")
-            log_step "Installing Vim via apt..."
-            sudo apt update && sudo apt install -y vim curl git
+            sudo apt update &> /dev/null
+            sudo apt install -y vim curl git &> /dev/null
             ;;
         "arch")
-            log_step "Installing Vim via pacman..."
-            sudo pacman -S --noconfirm vim curl git
+            sudo pacman -S --noconfirm vim curl git &> /dev/null
             ;;
         "fedora")
-            log_step "Installing Vim via dnf..."
-            sudo dnf install -y vim curl git
+            sudo dnf install -y vim curl git &> /dev/null
             ;;
         "rhel")
-            log_step "Installing Vim via yum..."
-            sudo yum install -y vim curl git
+            sudo yum install -y vim curl git &> /dev/null
             ;;
         "opensuse")
-            log_step "Installing Vim via zypper..."
-            sudo zypper install -y vim curl git
+            sudo zypper install -y vim curl git &> /dev/null
             ;;
         "alpine")
-            log_step "Installing Vim via apk..."
-            sudo apk add --no-cache vim curl git
+            sudo apk add --no-cache vim curl git &> /dev/null
             ;;
         "void")
-            log_step "Installing Vim via xbps..."
-            sudo xbps-install -S vim curl git
-            log_step "Symlinking vim → gvim to get clipboard support in CLI…"
-            sudo xbps-alternatives -s vim /usr/bin/gvim
+            sudo xbps-install -S vim curl git &> /dev/null
             ;;
         "macos")
             if command -v brew &> /dev/null; then
-                log_step "Installing Vim via Homebrew..."
-                brew install vim curl git
+                brew install vim curl git &> /dev/null
             else
-                log_warning "Homebrew not found. Please install Homebrew first or install Vim manually."
-                log_step "Installing Homebrew..."
-                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-                brew install vim curl git
+                display_error "Homebrew not found. Install from https://brew.sh"
+                return 1
             fi
             ;;
         "windows")
-            log_warning "Windows detected. Please install Vim manually from https://www.vim.org/download.php"
-            log_warning "Or use Windows Subsystem for Linux (WSL) for better compatibility."
+            display_error "Windows detected. Please use WSL or install Vim manually"
+            return 1
             ;;
         *)
-            log_warning "Unknown system. Attempting to install via common package managers..."
-            if command -v curl &> /dev/null; then
-                log_success "curl is available"
-            else
-                log_error "curl is not available. Please install curl manually."
-            fi
-            
-            if command -v git &> /dev/null; then
-                log_success "git is available"
-            else
-                log_error "git is not available. Please install git manually."
-            fi
+            display_error "Unknown system. Please install Vim manually"
+            return 1
             ;;
     esac
+    
+    if command -v vim &> /dev/null; then
+        display_success_item "Vim installed successfully"
+        echo ""
+        return 0
+    else
+        display_error "Vim installation failed"
+        return 1
+    fi
 }
 
 # Backup existing configuration
 backup_existing_config() {
+    display_step 3 $TOTAL_STEPS "Backing up existing configuration"
+    
+    local backup_created=false
+    
+    # Create backup directory
+    mkdir -p "$BACKUP_DIR"
+    
+    # Backup .vimrc
     if [ -f "$HOME/.vimrc" ]; then
-        log_step "Backing up existing .vimrc..."
         if [ -L "$HOME/.vimrc" ]; then
-            log_warning "Existing .vimrc is a symlink. Removing..."
+            display_info "Removing existing symlink"
             rm "$HOME/.vimrc"
         else
-            cp "$HOME/.vimrc" "$HOME/.vimrc.backup.$(date +%Y%m%d_%H%M%S)"
-            log_success "Backed up existing .vimrc"
+            local timestamp=$(date +%Y%m%d_%H%M%S)
+            local backup_file="$BACKUP_DIR/.vimrc.backup.$timestamp"
+            cp "$HOME/.vimrc" "$backup_file"
+            display_success_item "Backed up .vimrc → $backup_file"
+            backup_created=true
         fi
     fi
-
-    if [ -d "$HOME/.vim" ]; then
-        log_step "Vim directory exists"
-    else
-        log_step "Creating .vim directory..."
-        mkdir -p "$HOME/.vim"
+    
+    # Backup .vim directory
+    if [ -d "$HOME/.vim" ] && [ ! -L "$HOME/.vim" ]; then
+        local timestamp=$(date +%Y%m%d_%H%M%S)
+        local backup_dir="$BACKUP_DIR/.vim.backup.$timestamp"
+        
+        # Only backup if it's not our VEX installation
+        if [ ! -f "$HOME/.vim/.vex" ]; then
+            cp -r "$HOME/.vim" "$backup_dir"
+            display_success_item "Backed up .vim → $backup_dir"
+            backup_created=true
+        fi
     fi
+    
+    if ! $backup_created; then
+        display_info "No backup needed"
+    fi
+    
+    echo ""
+    sleep 0.5
+    return 0
 }
 
 # Create necessary directories
 create_directories() {
-    log_step "Creating necessary directories..."
+    display_step 4 $TOTAL_STEPS "Creating directory structure"
     
-    # Create vim directories
-    mkdir -p "$HOME/.vim/autoload"
-    mkdir -p "$HOME/.vim/plugged"
-    mkdir -p "$HOME/.vim/sessions"
+    local dirs=(
+        "$HOME/.vim/autoload"
+        "$HOME/.vim/plugged"
+        "$HOME/.vim/sessions"
+        "$HOME/.vim/undo"
+        "$HOME/.vim/backups"
+    )
     
-    log_success "Created vim directories"
+    echo ""
+    
+    for dir in "${dirs[@]}"; do
+        if [ ! -d "$dir" ]; then
+            mkdir -p "$dir"
+            display_success_item "$(basename $dir)"
+        else
+            display_list_item "$(basename $dir) (exists)"
+        fi
+    done
+    
+    # Mark as VEX installation
+    touch "$HOME/.vim/.vex"
+    
+    echo ""
+    sleep 0.5
+    return 0
 }
 
 # Install vim-plug
 install_vim_plug() {
-    if [ ! -f "$PLUG_VIM" ]; then
-        log_step "Installing vim-plug..."
-        
-        # Ensure autoload directory exists
-        mkdir -p "$(dirname "$PLUG_VIM")"
-        
-        if command -v curl &> /dev/null; then
-            curl -fLo "$PLUG_VIM" --create-dirs \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-            log_success "vim-plug installed successfully"
-        elif command -v wget &> /dev/null; then
-            wget -O "$PLUG_VIM" --no-check-certificate \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-            log_success "vim-plug installed successfully (via wget)"
-        else
-            log_error "Neither curl nor wget is available. Cannot install vim-plug."
-        fi
-    else
-        log_warning "vim-plug is already installed."
+    display_step 5 $TOTAL_STEPS "Installing vim-plug"
+    
+    if [ -f "$PLUG_VIM" ]; then
+        display_success_item "vim-plug already installed"
+        echo ""
+        sleep 0.5
+        return 0
     fi
+    
+    echo ""
+    display_info "Downloading vim-plug..."
+    
+    mkdir -p "$(dirname "$PLUG_VIM")"
+    
+    if command -v curl &> /dev/null; then
+        if curl -fLo "$PLUG_VIM" --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &> /dev/null; then
+            display_success_item "vim-plug installed via curl"
+            echo ""
+            sleep 0.5
+            return 0
+        fi
+    elif command -v wget &> /dev/null; then
+        if wget -O "$PLUG_VIM" --no-check-certificate \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &> /dev/null; then
+            display_success_item "vim-plug installed via wget"
+            echo ""
+            sleep 0.5
+            return 0
+        fi
+    fi
+    
+    display_error "Failed to download vim-plug"
+    return 1
 }
 
-# Setup configuration symlink
+# Setup vimrc symlink
 setup_vimrc() {
-    log_step "Setting up .vimrc symlink..."
+    display_step 6 $TOTAL_STEPS "Linking configuration files"
     
-    # Check if config file exists
     if [ ! -f "$CONFIG_DIR/.vimrc" ]; then
-        log_error "Configuration file not found at: $CONFIG_DIR/.vimrc"
+        display_error "Configuration file not found: $CONFIG_DIR/.vimrc"
+        return 1
     fi
+    
+    echo ""
     
     # Create symlink
     ln -sf "$(realpath "$CONFIG_DIR/.vimrc")" "$HOME/.vimrc"
-    log_success "Created .vimrc symlink"
+    display_success_item ".vimrc → $(realpath "$CONFIG_DIR/.vimrc")"
+    
+    # Verify symlink
+    if [ -L "$HOME/.vimrc" ] && [ -f "$HOME/.vimrc" ]; then
+        display_list_item "Symlink verified"
+    else
+        display_error "Symlink creation failed"
+        return 1
+    fi
+    
+    echo ""
+    sleep 0.5
+    return 0
 }
 
 # Install plugins
 install_plugins() {
-    log_step "Installing Vim plugins..."
-    vim +PlugInstall +qall
+    display_step 7 $TOTAL_STEPS "Installing Vim plugins"
     
-    if [ $? -eq 0 ]; then
-        log_success "Plugins installed successfully"
-    else
-        log_warning "Some plugins may have failed to install. Run ':PlugInstall' in Vim to retry."
-    fi
-}
-
-# Verify installation
-verify_installation() {
-    log_step "Verifying installation..."
+    echo ""
+    display_info "This may take a few minutes..."
+    echo ""
     
-    # Check vim
-    if command -v vim &> /dev/null; then
-        log_success "Vim is installed and available"
-    else
-        log_error "Vim installation failed"
-    fi
+    # Run vim in the background to install plugins
+    vim +PlugInstall +qall &> /tmp/vim_plugin_install.log &
+    local vim_pid=$!
     
-    # Check .vimrc
-    if [ -L "$HOME/.vimrc" ] && [ -f "$HOME/.vimrc" ]; then
-        log_success ".vimrc symlink is working"
-    else
-        log_error ".vimrc symlink failed"
-    fi
+    # Show spinner while installing
+    local spin='-\|/'
+    local i=0
+    while kill -0 $vim_pid 2>/dev/null; do
+        i=$(( (i+1) %4 ))
+        printf "\r  ${CYAN}${spin:$i:1}${RESET} Installing plugins..."
+        sleep 0.1
+    done
     
-    # Check vim-plug
-    if [ -f "$PLUG_VIM" ]; then
-        log_success "vim-plug is installed"
-    else
-        log_error "vim-plug installation failed"
-    fi
+    wait $vim_pid
+    local exit_code=$?
     
-    # Check plugin directory
-    if [ -d "$HOME/.vim/plugged" ]; then
-        local plugin_count=$(ls -1 "$HOME/.vim/plugged" 2>/dev/null | wc -l)
-        log_success "Plugin directory exists with $plugin_count plugins"
+    printf "\r"
+    
+    if [ $exit_code -eq 0 ]; then
+        # Count installed plugins
+        local plugin_count=0
+        if [ -d "$HOME/.vim/plugged" ]; then
+            plugin_count=$(ls -1 "$HOME/.vim/plugged" 2>/dev/null | wc -l)
+        fi
+        
+        display_success_item "Installed $plugin_count plugins"
+        echo ""
+        sleep 0.5
+        return 0
     else
-        log_warning "Plugin directory not found"
+        display_warning "Some plugins may have failed"
+        display_info "Run ':PlugInstall' in Vim to retry"
+        echo ""
+        return 1
     fi
-}
-
-# Set executable permissions
-set_permissions() {
-    log_step "Setting executable permissions..."
-    chmod +x "$0"
-    log_success "Permissions set"
 }
 
 # Install LSP servers
 install_lsp_servers() {
-    log_step "Installing LSP Language Servers..."
+    display_step 8 $TOTAL_STEPS "Installing LSP servers"
     
-    if [ -f "${BASE_DIR}/install-lsp" ]; then
+    echo ""
+    
+    if [ ! -f "${BASE_DIR}/install-lsp" ]; then
+        display_warning "LSP install script not found"
+        display_info "You can install language servers later with :LspInstallServer"
+        echo ""
+        return 0
+    fi
+    
+    display_prompt "Install language servers now?" "y"
+    read -r response
+    echo ""
+    
+    if [[ $response =~ ^[Yy]$ ]]; then
         chmod +x "${BASE_DIR}/install-lsp"
         "${BASE_DIR}/install-lsp"
     else
-        log_warning "LSP installation script not found. You can install language servers manually later."
+        display_info "Skipped LSP installation"
+        display_info "Run './script/install-lsp' anytime to install"
+        echo ""
+    fi
+    
+    return 0
+}
+
+# Verify installation
+verify_installation() {
+    display_divider
+    display_header "Verification"
+    
+    local all_ok=true
+    
+    # Check Vim
+    if command -v vim &> /dev/null; then
+        display_success_item "Vim executable"
+    else
+        display_error "Vim not found"
+        all_ok=false
+    fi
+    
+    # Check .vimrc
+    if [ -L "$HOME/.vimrc" ] && [ -f "$HOME/.vimrc" ]; then
+        display_success_item ".vimrc symlink"
+    else
+        display_error ".vimrc symlink"
+        all_ok=false
+    fi
+    
+    # Check vim-plug
+    if [ -f "$PLUG_VIM" ]; then
+        display_success_item "vim-plug"
+    else
+        display_error "vim-plug"
+        all_ok=false
+    fi
+    
+    # Check plugins
+    if [ -d "$HOME/.vim/plugged" ]; then
+        local count=$(ls -1 "$HOME/.vim/plugged" 2>/dev/null | wc -l)
+        display_success_item "Plugins ($count installed)"
+    else
+        display_warning "Plugin directory"
+        all_ok=false
+    fi
+
+    echo ""
+    
+    if $all_ok; then
+        return 0
+    else
+        return 1
     fi
 }
 
-# Main installation process
+# ═══════════════════════════════════════════════════════════════
+# Main Entry Point
+# ═══════════════════════════════════════════════════════════════
+
 main() {
+    # Display banner
     display_banner
     
-    log_step "Starting VEX Vim configuration setup..."
+    display_box "VEX Setup - Vim Ecosystem Extension" "$CYAN"   
+   
+    echo ""
+    display_divider
     
-    # Check if vim is installed, if not install it
-    if ! command -v vim &> /dev/null; then
-        install_vim
-    else
-        log_success "Vim is already installed"
+    # Run installation steps
+    local failed=false
+    
+    check_prerequisites || failed=true
+    
+    if ! $failed; then
+        install_vim || failed=true
     fi
     
-    # Backup existing config
-    backup_existing_config
-    
-    # Create necessary directories
-    create_directories
-    
-    # Install vim-plug
-    install_vim_plug
-    
-    # Setup vimrc
-    setup_vimrc
-    
-    # Set permissions
-    set_permissions
-    
-    # Install plugins
-    install_plugins
-    
-    # iNSTALL lsp SERVERS
-    echo
-    read -p "Do you want to install LSP language servers? (y/n): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        install_lsp_servers
-    else
-        log_warning "Skipping LSP installation. You can run './script/install-lsp' later."
+    if ! $failed; then
+        backup_existing_config || true  # Non-critical
+        create_directories || failed=true
     fi
-
-    # Verify installation
-    verify_installation
-
-    echo -e "${GREEN}${BOLD}🎉 VEX Vim configuration setup completed!${RESET}"
-    echo -e "${CYAN}Your new Vim configuration is ready to use.${RESET}"
-    echo
+    
+    if ! $failed; then
+        install_vim_plug || failed=true
+        setup_vimrc || failed=true
+    fi
+    
+    if ! $failed; then
+        install_plugins || true  # Continue even if some plugins fail
+    fi
+    
+    if ! $failed; then
+        install_lsp_servers || true  # Optional
+    fi
+   
+    if verify_installation; then
+        display_completion "VEX installed successfully!"
+    else
+        display_error "Installation completed with warnings"
+        display_info "Some components may need manual setup"
+        echo ""
+    fi
 }
 
 # Run main function
