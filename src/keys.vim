@@ -270,3 +270,26 @@ tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
+
+" ===================================
+" LSP Key Mappings (Additional)
+" ===================================
+
+" Quick LSP commands (works for both Vim and Neovim)
+nnoremap <leader>li :LspInfo<CR>
+nnoremap <leader>lr :LspRestart<CR>
+nnoremap <leader>ll :LspLog<CR>
+
+" Toggle diagnostics
+nnoremap <leader>ld :lua vim.diagnostic.enable(not vim.diagnostic.is_enabled())<CR>
+
+" Format document quickly
+nnoremap <leader>lf :call v:lua.vim.lsp.buf.format({async = true})<CR>
+vnoremap <leader>lf :call v:lua.vim.lsp.buf.range_formatting()<CR>
+
+" Open diagnostic in floating window
+nnoremap <leader>le :lua vim.diagnostic.open_float()<CR>
+
+" Go to next/previous diagnostic (alternative bindings)
+nnoremap <C-j> :lua vim.diagnostic.goto_next()<CR>
+nnoremap <C-k> :lua vim.diagnostic.goto_prev()<CR>

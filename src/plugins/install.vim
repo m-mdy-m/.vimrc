@@ -2,6 +2,14 @@
 call plug#begin('~/.vim/plugged')
 
 " ===================================
+" LSP Configuration
+" ===================================
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+" ===================================
 " File and Project Management
 " ===================================
 Plug 'preservim/nerdtree'                " File explorer
