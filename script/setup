@@ -233,6 +233,18 @@ set_permissions() {
     log_success "Permissions set"
 }
 
+# Install LSP servers
+install_lsp_servers() {
+    log_step "Installing LSP Language Servers..."
+    
+    if [ -f "${BASE_DIR}/install-lsp" ]; then
+        chmod +x "${BASE_DIR}/install-lsp"
+        "${BASE_DIR}/install-lsp"
+    else
+        log_warning "LSP installation script not found. You can install language servers manually later."
+    fi
+}
+
 # Main installation process
 main() {
     display_banner
@@ -264,6 +276,16 @@ main() {
     # Install plugins
     install_plugins
     
+    # iNSTALL lsp SERVERS
+    echo
+    read -p "Do you want to install LSP language servers? (y/n): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        install_lsp_servers
+    else
+        log_warning "Skipping LSP installation. You can run './script/install-lsp' later."
+    fi
+
     # Verify installation
     verify_installation
 
