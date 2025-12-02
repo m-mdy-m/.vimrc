@@ -7,17 +7,31 @@ nnoremap <C-y> <C-r>          " Redo
 inoremap <C-z> <Esc>u         " Undo in insert mode
 inoremap <C-r> <Esc><C-r>     " Redo in insert mode
 
-" Cut, Copy, Paste
-nnoremap <C-x> dd             " Cut line
-nnoremap <C-c> yy           " Copy line
-vnoremap <C-c> y            " Copy selection in visual mode
-nnoremap <C-v> p              " Paste after cursor
-nnoremap <C-S-v> P            " Paste before cursor
+" Cut, Copy, Paste - FIXED VERSION
+" Normal mode: copy/cut selection or line
+nnoremap <C-x> "+dd           " Cut line to system clipboard
+nnoremap <C-c> "+yy           " Copy line to system clipboard
+nnoremap <C-v> "+p            " Paste from system clipboard after cursor
+nnoremap <C-S-v> "+P          " Paste from system clipboard before cursor
 
-" Copy, Cut, Paste in Insert Mode
-inoremap <C-x> <Esc>ddi       " Cut line in insert mode
-inoremap <C-c> <Esc>yyi     " Copy line in insert mode
-inoremap <C-v> <Esc>pi        " Paste in insert mode
+" Visual mode: copy/cut selection
+vnoremap <C-c> "+y            " Copy selection to system clipboard
+vnoremap <C-x> "+d            " Cut selection to system clipboard
+vnoremap <C-v> "+p            " Paste over selection
+
+" Insert mode: paste from clipboard
+inoremap <C-v> <Esc>"+pa      " Paste in insert mode
+inoremap <C-x> <Esc>"+ddi     " Cut line in insert mode
+inoremap <C-c> <Esc>"+yyi     " Copy line in insert mode
+
+" Additional clipboard mappings for convenience
+" Leader-based clipboard operations (alternative)
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>d "+d
+vnoremap <leader>d "+d
 
 " Select all (Ctrl+A)
 nnoremap <C-a> gg0vG$
@@ -272,10 +286,10 @@ tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 
 " ===================================
-" LSP Key Mappings (Additional)
+" LSP Key Mappings
 " ===================================
 
-" Quick LSP commands (works for both Vim and Neovim)
+" Quick LSP commands 
 nnoremap <leader>li :LspInfo<CR>
 nnoremap <leader>lr :LspRestart<CR>
 nnoremap <leader>ll :LspLog<CR>

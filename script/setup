@@ -10,13 +10,14 @@ BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${BASE_DIR}/../src"
 PLUG_VIM="$HOME/.vim/autoload/plug.vim"
 BACKUP_DIR="$HOME/.vim/backups"
+TEMPLATES_DIR="${BASE_DIR}/../templates"
 
 source "${BASE_DIR}/colors"
 source "${BASE_DIR}/logger"
 source "${BASE_DIR}/display"
 
 # Total setup steps
-TOTAL_STEPS=8
+TOTAL_STEPS=9
 
 # ═══════════════════════════════════════════════════════════════
 # System Detection
@@ -295,9 +296,42 @@ setup_vimrc() {
     return 0
 }
 
+# Setup default EditorConfig and GitAttributes
+setup_default_configs() {
+    display_step 7 $TOTAL_STEPS "Setting up default configuration templates"
+    
+    echo ""
+    
+    # Create templates directory if it doesn't exist
+    mkdir -p "$TEMPLATES_DIR"
+    
+    # Copy default .editorconfig to templates
+    if [ -f "${BASE_DIR}/../.editorconfig.default" ]; then
+        cp "${BASE_DIR}/../.editorconfig.default" "$TEMPLATES_DIR/.editorconfig"
+        display_success_item "EditorConfig template created"
+    else
+        display_warning "Default .editorconfig not found"
+    fi
+    
+    # Copy default .gitattributes to templates
+    if [ -f "${BASE_DIR}/../.gitattributes.default" ]; then
+        cp "${BASE_DIR}/../.gitattributes.default" "$TEMPLATES_DIR/.gitattributes"
+        display_success_item "GitAttributes template created"
+    else
+        display_warning "Default .gitattributes not found"
+    fi
+    
+    display_info "Use :EditorConfigCreate in Vim to create .editorconfig"
+    display_info "Copy $TEMPLATES_DIR/.gitattributes to your project as needed"
+    
+    echo ""
+    sleep 0.5
+    return 0
+}
+
 # Install plugins
 install_plugins() {
-    display_step 7 $TOTAL_STEPS "Installing Vim plugins"
+    display_step 8 $TOTAL_STEPS "Installing Vim plugins"
     
     echo ""
     display_info "This may take a few minutes..."
@@ -342,7 +376,7 @@ install_plugins() {
 
 # Install LSP servers
 install_lsp_servers() {
-    display_step 8 $TOTAL_STEPS "Installing LSP servers"
+    display_step 9 $TOTAL_STEPS "Installing LSP servers"
     
     echo ""
     
@@ -408,6 +442,13 @@ verify_installation() {
         display_warning "Plugin directory"
         all_ok=false
     fi
+    
+    # Check templates
+    if [ -d "$TEMPLATES_DIR" ]; then
+        display_success_item "Configuration templates"
+    else
+        display_warning "Templates directory"
+    fi
 
     echo ""
     
@@ -448,6 +489,7 @@ main() {
     if ! $failed; then
         install_vim_plug || failed=true
         setup_vimrc || failed=true
+        setup_default_configs || true  # Non-critical
     fi
     
     if ! $failed; then
@@ -460,6 +502,7 @@ main() {
    
     if verify_installation; then
         display_completion "VEX installed successfully!"
+        echo ""
     else
         display_error "Installation completed with warnings"
         display_info "Some components may need manual setup"
