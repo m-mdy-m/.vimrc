@@ -129,9 +129,3 @@ VEX builds on excellent vim plugins:
 - [vim-easymotion](https://github.com/easymotion/vim-easymotion) - Fast movement
 
 Full plugin list in [src/plugins/install.vim](src/plugins/install.vim).
-
-## Code Example:
-
-Check out how your code will look with this setup!
-
-![Code](./screenshots/code.png)
