@@ -21,11 +21,8 @@ else
     mkdir -p "$VIM_DIR/autoload"
     
     if has_command curl; then
-        curl -fsSL -o "$PLUG_VIM" \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    elif has_command wget; then
-        wget -q -O "$PLUG_VIM" \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     else
         die "Neither curl nor wget found"
     fi
