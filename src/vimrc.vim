@@ -1,10 +1,6 @@
 " VEX - Vim Ecosystem Extension
 " Copyright (C) 2025 Genix
 " Main Configuration Entry Point
-augroup VexStart
-    autocmd!
-    autocmd VimEnter * call vex#start#Show()
-augroup END
 if exists('<sfile>')
     let g:vex_config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 else
@@ -17,6 +13,10 @@ if index(split(&runtimepath, ','), g:vex_config_dir) < 0
 endif
 call vex#version#LoadVersion()
 call vex#error#SourceIfExists('load-configs.vim')
+augroup VexStart
+    autocmd!
+    autocmd VimEnter * nested call vex#start#Show()
+augroup END
 command! VexReload source $MYVIMRC
 nnoremap <F5> :VexReload<CR>
 command! VexInfo call vex#info#ShowVexInfo()

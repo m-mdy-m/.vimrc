@@ -8,106 +8,96 @@ if exists('&guicursor')
 endif
 
 "" UI 
-highlight Normal           guibg=#0d0d0d  guifg=#e4e4e7
-highlight NonText          guibg=#0d0d0d  guifg=#27272a
-highlight EndOfBuffer      guibg=#0d0d0d  guifg=#18181b
-highlight LineNr           guibg=#0d0d0d  guifg=#52525b
-highlight ColorColumn      guibg=#18181b
+highlight Normal           guibg=#0a0a0a  guifg=#d0d0d0  ctermbg=0    ctermfg=252
+highlight NonText          guibg=#0a0a0a  guifg=#1a1a1a  ctermbg=0    ctermfg=234
+highlight EndOfBuffer      guibg=#0a0a0a  guifg=#141414  ctermbg=0    ctermfg=233
+highlight LineNr           guibg=#0a0a0a  guifg=#3a3a3a  ctermbg=0    ctermfg=237
+highlight ColorColumn      guibg=#141414                 ctermbg=233
 "" Cursor UI
-highlight Cursor           guibg=#fafafa  guifg=#0d0d0d
-highlight CursorLineNr     guibg=#18181b  guifg=#a78bfa  gui=bold
-highlight CursorLine       guibg=#18181b  gui=NONE
-highlight CursorColumn     guibg=#18181b  gui=NONE
+highlight Cursor           guibg=#d0d0d0  guifg=#0a0a0a  ctermbg=252  ctermfg=0
+highlight CursorLineNr     guibg=#141414  guifg=#8b7fc7  ctermbg=233  ctermfg=141  gui=bold  cterm=bold
+highlight CursorLine       guibg=#141414                 ctermbg=233               gui=NONE  cterm=NONE
+highlight CursorColumn     guibg=#141414                 ctermbg=233               gui=NONE  cterm=NONE
 " Syntax Highlighting
-highlight Comment          guifg=#71717a  gui=italic
-highlight SpecialComment   guifg=#a1a1aa  gui=italic,bold
-highlight Todo             guibg=#27272a  guifg=#d4d4d8  gui=bold,italic
-highlight Identifier       guifg=#e4e4e7  gui=NONE
-highlight Function         guifg=#c4b5fd  gui=NONE
-highlight Constant         guifg=#a78bfa
-highlight String           guifg=#94a3b8  gui=NONE
-highlight Character        guifg=#94a3b8
-highlight Number           guifg=#c4b5fd
-highlight Boolean          guifg=#a78bfa  gui=bold
-highlight Float            guifg=#c4b5fd
-highlight Statement        guifg=#e0e7ff  gui=NONE
-highlight Conditional      guifg=#ddd6fe  gui=NONE
-highlight Repeat           guifg=#ddd6fe  gui=NONE
-highlight Label            guifg=#ede9fe
-highlight Operator         guifg=#f4f4f5  gui=NONE
-highlight Keyword          guibg=#18181b  guifg=#c4b5fd  gui=NONE
-highlight Exception        guifg=#ddd6fe  gui=NONE
-highlight Type             guifg=#e0e7ff  gui=NONE
-highlight StorageClass     guifg=#e0e7ff
-highlight Structure        guifg=#f5f3ff  gui=NONE
-highlight Typedef          guifg=#e0e7ff
-highlight Special          guifg=#a1a1aa
-highlight SpecialChar      guifg=#c4b5fd
-highlight Tag              guifg=#ddd6fe
-highlight Delimiter        guifg=#e4e4e7
-highlight Debug            guifg=#e0e7ff
-highlight PreProc          guifg=#c4b5fd
-highlight PreCondit        guifg=#ddd6fe
-highlight Include          guifg=#ddd6fe
-highlight Define           guifg=#e0e7ff
-highlight Macro            guifg=#c4b5fd
-highlight StatusLine       guibg=#18181b  guifg=#e4e4e7  gui=NONE
-highlight StatusLineNC     guibg=#0d0d0d  guifg=#71717a  gui=NONE
-highlight Visual           guibg=#3f3f46  guifg=NONE
-highlight Search           guibg=#52525b  guifg=#fafafa  gui=NONE
-highlight IncSearch        guibg=#71717a  guifg=#ffffff  gui=bold
-highlight MatchParen       guibg=#52525b  guifg=#e0e7ff  gui=bold
-highlight Error            guibg=#27272a  guifg=#f87171  gui=undercurl,bold
-highlight WarningMsg       guifg=#fb923c  gui=NONE
-highlight ErrorMsg         guibg=#27272a  guifg=#f87171  gui=bold
-highlight ModeMsg          guifg=#e4e4e7
-highlight Folded           guibg=#18181b  guifg=#a1a1aa  gui=italic
-highlight FoldColumn       guibg=#0d0d0d  guifg=#52525b
-highlight TabLine          guibg=#18181b  guifg=#a1a1aa  gui=NONE
-highlight TabLineFill      guibg=#0d0d0d
-highlight TabLineSel       guibg=#27272a  guifg=#e4e4e7  gui=bold
-highlight Title            guifg=#e0e7ff  gui=bold
-highlight DiffAdd          guibg=#1a2e1a  guifg=#86efac
-highlight DiffDelete       guibg=#2e1a1a  guifg=#f87171
-highlight DiffChange       guibg=#2e2a1a  guifg=#fbbf24
-highlight DiffText         guibg=#3a361a  guifg=#fde047  gui=bold
-highlight VertSplit        guibg=#0d0d0d  guifg=#27272a
-highlight SignColumn       guibg=#0d0d0d  guifg=#52525b
-highlight Underlined       guifg=#c4b5fd  gui=underline
-highlight Directory        guifg=#a78bfa  gui=bold
-highlight Question         guifg=#e4e4e7
-highlight MoreMsg          guifg=#e4e4e7
-highlight WildMenu         guibg=#3f3f46  guifg=#e4e4e7
-highlight Pmenu            guibg=#18181b  guifg=#e4e4e7
-highlight PmenuSel         guibg=#3f3f46  guifg=#ffffff  gui=bold
-highlight PmenuSbar        guibg=#27272a
-highlight PmenuThumb       guibg=#52525b
+highlight Comment          guifg=#5a5a5a  ctermfg=240  gui=italic  cterm=italic
+highlight SpecialComment   guifg=#6a6a6a  ctermfg=242  gui=italic  cterm=italic
+highlight Todo             guibg=#1a1a1a  guifg=#b0b0b0  ctermbg=234  ctermfg=249  gui=bold  cterm=bold
+highlight Identifier       guifg=#d0d0d0  ctermfg=252  gui=NONE   cterm=NONE
+highlight Function         guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight Constant         guifg=#8b7fc7  ctermfg=104  gui=NONE   cterm=NONE
+highlight String           guifg=#808080  ctermfg=244  gui=NONE   cterm=NONE
+highlight Character        guifg=#808080  ctermfg=244  gui=NONE   cterm=NONE
+highlight Number           guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight Boolean          guifg=#8b7fc7  ctermfg=104  gui=bold   cterm=bold
+highlight Float            guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight Statement        guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight Conditional      guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Repeat           guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Label            guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight Operator         guifg=#c0c0c0  ctermfg=250  gui=NONE   cterm=NONE
+highlight Keyword          guibg=#141414  guifg=#a090c7  ctermbg=233  ctermfg=141  gui=NONE  cterm=NONE
+highlight Exception        guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Type             guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight StorageClass     guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight Structure        guifg=#c0c0c0  ctermfg=250  gui=NONE   cterm=NONE
+highlight Typedef          guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight Special          guifg=#707070  ctermfg=243  gui=NONE   cterm=NONE
+highlight SpecialChar      guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight Tag              guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Delimiter        guifg=#d0d0d0  ctermfg=252  gui=NONE   cterm=NONE
+highlight Debug            guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight PreProc          guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight PreCondit        guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Include          guifg=#a0a0a0  ctermfg=248  gui=NONE   cterm=NONE
+highlight Define           guifg=#b0b0b0  ctermfg=249  gui=NONE   cterm=NONE
+highlight Macro            guifg=#a090c7  ctermfg=141  gui=NONE   cterm=NONE
+highlight StatusLine       guibg=#141414  guifg=#d0d0d0  ctermbg=233  ctermfg=252  gui=NONE  cterm=NONE
+highlight StatusLineNC     guibg=#0a0a0a  guifg=#4a4a4a  ctermbg=0    ctermfg=239  gui=NONE  cterm=NONE
+highlight Visual           guibg=#2a2a2a  ctermbg=235  gui=NONE   cterm=NONE
+highlight Search           guibg=#3a3a3a  guifg=#ffffff  ctermbg=237  ctermfg=15   gui=NONE  cterm=NONE
+highlight IncSearch        guibg=#4a4a4a  guifg=#ffffff  ctermbg=239  ctermfg=15   gui=bold  cterm=bold
+highlight MatchParen       guibg=#3a3a3a  guifg=#b0b0b0  ctermbg=237  ctermfg=249  gui=bold  cterm=bold
+highlight Error            guibg=#1a1a1a  guifg=#e06060  ctermbg=234  ctermfg=167  gui=undercurl  cterm=undercurl
+highlight WarningMsg       guifg=#d08030  ctermfg=173  gui=NONE   cterm=NONE
+highlight ErrorMsg         guibg=#1a1a1a  guifg=#e06060  ctermbg=234  ctermfg=167  gui=bold  cterm=bold
+highlight ModeMsg          guifg=#d0d0d0  ctermfg=252  gui=NONE   cterm=NONE
+highlight Folded           guibg=#141414  guifg=#6a6a6a  ctermbg=233  ctermfg=242  gui=italic  cterm=italic
+highlight FoldColumn       guibg=#0a0a0a  guifg=#3a3a3a  ctermbg=0    ctermfg=237  gui=NONE    cterm=NONE
+highlight TabLine          guibg=#141414  guifg=#6a6a6a  ctermbg=233  ctermfg=242  gui=NONE    cterm=NONE
+highlight TabLineFill      guibg=#0a0a0a                 ctermbg=0                 gui=NONE    cterm=NONE
+highlight TabLineSel       guibg=#1a1a1a  guifg=#d0d0d0  ctermbg=234  ctermfg=252  gui=bold    cterm=bold
+highlight Title            guifg=#b0b0b0  ctermfg=249  gui=bold   cterm=bold
+highlight DiffAdd          guibg=#1a2a1a  guifg=#70c070  ctermbg=22   ctermfg=77   gui=NONE  cterm=NONE
+highlight DiffDelete       guibg=#2a1a1a  guifg=#e06060  ctermbg=52   ctermfg=167  gui=NONE  cterm=NONE
+highlight DiffChange       guibg=#2a2a1a  guifg=#c0a050  ctermbg=58   ctermfg=179  gui=NONE  cterm=NONE
+highlight DiffText         guibg=#3a3a1a  guifg=#d0b060  ctermbg=58   ctermfg=179  gui=bold  cterm=bold
+highlight VertSplit        guibg=#0a0a0a  guifg=#1a1a1a  ctermbg=0    ctermfg=234  gui=NONE  cterm=NONE
+highlight SignColumn       guibg=#0a0a0a  guifg=#3a3a3a  ctermbg=0    ctermfg=237  gui=NONE  cterm=NONE
+highlight Underlined       guifg=#a090c7  ctermfg=141  gui=underline  cterm=underline
+highlight Directory        guifg=#8b7fc7  ctermfg=104  gui=bold       cterm=bold
+highlight Question         guifg=#d0d0d0  ctermfg=252  gui=NONE       cterm=NONE
+highlight MoreMsg          guifg=#d0d0d0  ctermfg=252  gui=NONE       cterm=NONE
+highlight WildMenu         guibg=#2a2a2a  guifg=#d0d0d0  ctermbg=235  ctermfg=252  gui=NONE  cterm=NONE
+highlight Pmenu            guibg=#141414  guifg=#d0d0d0  ctermbg=233  ctermfg=252  gui=NONE  cterm=NONE
+highlight PmenuSel         guibg=#2a2a2a  guifg=#ffffff  ctermbg=235  ctermfg=15   gui=bold  cterm=bold
+highlight PmenuSbar        guibg=#1a1a1a                 ctermbg=234               gui=NONE  cterm=NONE
+highlight PmenuThumb       guibg=#3a3a3a                 ctermbg=237               gui=NONE  cterm=NONE
 " Git 
-highlight GitGutterAdd          guifg=#86efac  guibg=#0d0d0d  gui=NONE
-highlight GitGutterChange       guifg=#fbbf24  guibg=#0d0d0d  gui=NONE  
-highlight GitGutterDelete       guifg=#f87171  guibg=#0d0d0d  gui=NONE
-highlight GitGutterChangeDelete guifg=#fb923c  guibg=#0d0d0d  gui=NONE
-highlight GitGutterAddLineNr          guifg=#86efac  guibg=#0d0d0d
-highlight GitGutterChangeLineNr       guifg=#fbbf24  guibg=#0d0d0d
-highlight GitGutterDeleteLineNr       guifg=#f87171  guibg=#0d0d0d
-highlight GitGutterChangeDeleteLineNr guifg=#fb923c  guibg=#0d0d0d
-highlight GvAdd     guifg=#86efac  gui=bold
-highlight GvDelete  guifg=#f87171  gui=bold
-highlight GvHash    guifg=#a78bfa  gui=NONE
-highlight GvAuthor  guifg=#e0e7ff  gui=italic
-highlight GvDate    guifg=#a1a1aa  gui=NONE
-highlight GvMessage guifg=#e4e4e7  gui=NONE
-highlight User1            guifg=#a78bfa  guibg=#18181b  gui=bold
-highlight User2            guifg=#86efac  guibg=#18181b  gui=bold
-highlight User3            guifg=#f87171  guibg=#18181b  gui=bold
-highlight User4            guifg=#e0e7ff  guibg=#18181b  gui=NONE
-highlight User5            guifg=#a1a1aa  guibg=#18181b  gui=italic
-highlight gitmessengerPopupNormal    guibg=#18181b  guifg=#e4e4e7
-highlight gitmessengerEndOfBuffer    guibg=#18181b  guifg=#18181b
-highlight gitmessengerHeader         guifg=#e0e7ff  gui=bold
-highlight gitmessengerHash           guifg=#a78bfa  gui=NONE
-highlight gitmessengerHistory        guifg=#a1a1aa  gui=italic
-highlight SpellBad         guibg=#2e1a1a  gui=undercurl
-highlight SpellCap         guibg=#1a2e1a  gui=undercurl
-highlight SpellRare        guibg=#2a2e1a  gui=undercurl
-highlight SpellLocal       guibg=#1a2a2e  gui=undercurl
+highlight GitGutterAdd          guifg=#70c070  guibg=#0a0a0a  ctermfg=77   ctermbg=0  gui=NONE  cterm=NONE
+highlight GitGutterChange       guifg=#c0a050  guibg=#0a0a0a  ctermfg=179  ctermbg=0  gui=NONE  cterm=NONE
+highlight GitGutterDelete       guifg=#e06060  guibg=#0a0a0a  ctermfg=167  ctermbg=0  gui=NONE  cterm=NONE
+highlight GitGutterChangeDelete guifg=#d08030  guibg=#0a0a0a  ctermfg=173  ctermbg=0  gui=NONE  cterm=NONE
+highlight GitGutterAddLineNr          guifg=#70c070  guibg=#0a0a0a  ctermfg=77   ctermbg=0
+highlight GitGutterChangeLineNr       guifg=#c0a050  guibg=#0a0a0a  ctermfg=179  ctermbg=0
+highlight GitGutterDeleteLineNr       guifg=#e06060  guibg=#0a0a0a  ctermfg=167  ctermbg=0
+highlight GitGutterChangeDeleteLineNr guifg=#d08030  guibg=#0a0a0a  ctermfg=173  ctermbg=0
+highlight GvAdd     guifg=#70c070  ctermfg=77   gui=bold  cterm=bold
+highlight GvDelete  guifg=#e06060  ctermfg=167  gui=bold  cterm=bold
+highlight GvHash    guifg=#8b7fc7  ctermfg=104  gui=NONE  cterm=NONE
+highlight GvAuthor  guifg=#b0b0b0  ctermfg=249  gui=italic  cterm=italic
+highlight GvDate    guifg=#6a6a6a  ctermfg=242  gui=NONE    cterm=NONE
+highlight GvMessage guifg=#d0d0d0  ctermfg=252  gui=NONE    cterm=NONE
+highlight SpellBad   guibg=#2a1a1a  ctermbg=52  gui=undercurl  cterm=undercurl
+highlight SpellCap   guibg=#1a2a1a  ctermbg=22  gui=undercurl  cterm=undercurl
+highlight SpellRare  guibg=#2a2a1a  ctermbg=58  gui=undercurl  cterm=undercurl
+highlight SpellLocal guibg=#1a2a2a  ctermbg=23  gui=undercurl  cterm=undercurl
