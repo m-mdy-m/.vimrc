@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.vim text eol=lf
+*.md text eol=lf
+Makefile text eol=lf
+vimrc text eol=lf
+# Export ignore for archive generation
+.gitattributes export-ignore
+.gitignore export-ignore
+.editorconfig export-ignore

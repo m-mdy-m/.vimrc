@@ -1,3 +1,4 @@
 plugins/*
 vim-plug
 tags
+.psx-project.yml
