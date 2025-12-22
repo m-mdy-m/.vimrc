@@ -3,7 +3,6 @@
 
 set -euo pipefail
 
-# Determine VEX root
 if [[ -n "${VEX_ROOT:-}" ]]; then
     VEX_ROOT="$VEX_ROOT"
 elif [[ -L "${BASH_SOURCE[0]}" ]]; then
@@ -17,11 +16,13 @@ export VEX_ROOT
 
 VIM_DIR="$HOME/.vim"
 VIMRC="$HOME/.vimrc"
+
 show_usage() {
     cat << 'EOF'
 VEX - Vim Ecosystem Extension
 
 Usage: vex [command] [options]
+       vex [file...]
 
 Commands:
   install          Install VEX
@@ -33,31 +34,36 @@ Commands:
   version          Show version
   help             Show this help
 
+File Operations:
+  vex              Open VEX start screen
+  vex file.txt     Open file in VEX
+  vex dir/         Open directory browser
+  vex file1 file2  Open multiple files in tabs
+
 Run 'vex <command> --help' for more information.
 EOF
 }
+
 show_version() {
     "$VEX_ROOT/scripts/version.sh" show
 }
 
-# Run health checks
 run_doctor() {
     log_step "VEX Health Check"
     echo
     
-    # Check Vim
     if has_command vim; then
         log_success "Vim: $(vim --version | head -n1 | cut -d' ' -f1-5)"
     else
         log_error "Vim: not installed"
     fi
     
-    # Check vimrc
     if [[ -L "$VIMRC" ]]; then
         log_success "vimrc: linked"
     else
         log_error "vimrc: not linked"
     fi
+    
     if [[ -f "$VIM_DIR/autoload/plug.vim" ]]; then
         log_success "vim-plug: installed"
     else
@@ -82,31 +88,26 @@ run_doctor() {
     echo
 }
 
-# Install command
 cmd_install() {
     cd "$VEX_ROOT"
     make install "$@"
 }
 
-# Update command
 cmd_update() {
     log_step "Updating VEX"
     
-    # Update VEX
     cd "$VEX_ROOT"
     if [[ -d .git ]]; then
         log_info "Updating VEX..."
         git pull origin main || log_warning "Update failed"
     fi
     
-    # Update plugins
     log_info "Updating plugins..."
     vim +PlugUpdate +qall || log_warning "Plugin update failed"
     
     log_success "Update complete"
 }
 
-# Config management
 cmd_config() {
     case "${1:-}" in
         edit)
@@ -127,7 +128,6 @@ cmd_config() {
     esac
 }
 
-# Plugin management
 cmd_plugin() {
     case "${1:-}" in
         list)
@@ -164,7 +164,6 @@ cmd_plugin() {
     esac
 }
 
-# LSP management
 cmd_lsp() {
     case "${1:-}" in
         install)
@@ -186,9 +185,10 @@ cmd_lsp() {
     esac
 }
 
-# Main dispatcher
 main() {
-    case "${1:-}" in
+    local first_arg="${1:-}"
+    
+    case "$first_arg" in
         install)
             shift
             cmd_install "$@"
@@ -215,14 +215,24 @@ main() {
         version|--version|-v)
             show_version
             ;;
-        help|--help|-h|"")
+        help|--help|-h)
             show_usage
             ;;
+        "")
+            vim
+            ;;
+        -*)
+            vim "$@"
+            ;;
         *)
-            log_error "Unknown command: $1"
-            echo
-            show_usage
-            exit 1
+            if [[ -e "$first_arg" ]] || [[ "$first_arg" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+                vim "$@"
+            else
+                log_error "Unknown command: $first_arg"
+                echo
+                show_usage
+                exit 1
+            fi
             ;;
     esac
 }
