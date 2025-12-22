@@ -1,6 +1,6 @@
 " VEX - Vim Ecosystem Extension
 " Copyright (C) 2025 Genix
-" For Browser Tree We Use 'netrw' 
+" For Browser Tree We Use 'netrw'
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 0
@@ -8,8 +8,6 @@ let g:netrw_altv = 1
 let g:netrw_winsize = 25
 let g:netrw_keepdir = 0
 let g:netrw_localcopydircmd = 'cp -r'
-let g:netrw_list_hide = netrw_gitignore#Hide()
-let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_hide = 1
 
 function! NetrwMapping()
@@ -17,12 +15,12 @@ function! NetrwMapping()
     nmap <buffer> h -^
     nmap <buffer> . gh
     nmap <buffer> P <C-w>z
-    
+
     nmap <buffer> <nowait> o <CR>
     nmap <buffer> v v
     nmap <buffer> t t
     nmap <buffer> s s
-    
+
     nmap <buffer> ff %:w<CR>:buffer #<CR>
     nmap <buffer> fe R
     nmap <buffer> fc mc
@@ -30,11 +28,11 @@ function! NetrwMapping()
     nmap <buffer> fx mm
     nmap <buffer> fX mtmm
     nmap <buffer> f; mx
-    
+
     nmap <buffer> <TAB> mf
     nmap <buffer> <S-TAB> mF
     nmap <buffer> <Leader><TAB> mu
-    
+
     nmap <buffer> <c-r> <Plug>NetrwRefresh
 endfunction
 
@@ -56,7 +54,7 @@ function! ToggleNetrw()
         let i = bufnr("$")
         while (i >= 1)
             if (getbufvar(i, "&filetype") == "netrw")
-                silent exe "bwipeout " . i 
+                silent exe "bwipeout " . i
             endif
             let i-=1
         endwhile
