@@ -1,9 +1,9 @@
-" Install plugins
-call vex#vex#error#SourceIfExists("src/plugins/install.vim")
+" VEX Plugin Management
+" Install and configure plugins
+call vex#error#SourceIfExists('plugins/install.vim')
 "" Plugins Settings
-call vex#vex#error#SourceIfExists("src/plugins/settings/file-manager.vim")
-call vex#vex#error#SourceIfExists("src/plugins/settings/git.vim")
-call vex#vex#error#SourceIfExists("src/plugins/settings/status-ui.vim")
-"" LSP Settings
-call vex#vex#error#SourceIfExists("src/plugins/settings/lsp.vim")
-call vex#vex#error#SourceIfExists("src/plugins/settings/lsp-lang.vim")
+call vex#error#SourceIfExists('plugins/settings/file-manager.vim')
+call vex#error#SourceIfExists('plugins/settings/git.vim')
+call vex#error#SourceIfExists('plugins/settings/status-ui.vim')
+call vex#error#SourceIfExists('plugins/settings/lsp.vim')
+call vex#error#SourceIfExists('plugins/settings/lsp-lang.vim')
