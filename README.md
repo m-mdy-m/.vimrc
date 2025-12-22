@@ -34,57 +34,101 @@ Recommended:
 
 ## Installation
 
-Full installation:
+**Complete installation:**
 ```bash
 make install
 ```
 
-Install specific components:
+**Custom installation:**
 ```bash
-make install-vim        # Vim only
-make install-plugins    # Plugins only
-make install-lsp        # LSP servers only
+make install --minimal       # Core only
+make install --skip-lsp      # Without language servers
+make install --skip-plugins  # Configuration only
+make install --force         # Reinstall
 ```
 
-## Platform Support
-
-Works on Ubuntu, Debian, Arch, Fedora, macOS, and Windows via WSL.
-
-Installation automatically detects your platform and uses the appropriate package manager.
+**Individual components:**
+```bash
+make install-vim      # Vim only
+make install-plugins  # Plugins only
+make install-lsp      # LSP servers only
+```
 
 ## Usage
 
-Start editing:
+**Starting VEX:**
 ```bash
-vim
+vex              # Start with welcome screen
+vex file.txt     # Open file
+vex .            # Open file explorer
+vex file1 file2  # Open multiple files in tabs
 ```
 
-Or use the CLI tool:
+**Management commands:**
 ```bash
-vex                     # Same as vim
-vex doctor              # Health check
-vex update              # Update everything
-vex plugin list         # List plugins
-vex lsp install         # Install LSP servers
+vex doctor       # Health check
+vex update       # Update VEX and plugins
+vex plugin list  # List installed plugins
+vex lsp install  # Install LSP servers
+vex config edit  # Edit configuration
+vex version      # Show version info
 ```
+
+**Inside vim:**
+- `Ctrl+N` - Toggle file explorer
+- `Ctrl+S` - Save file
+- `Ctrl+F` - Find text
+- `F5` - Reload configuration
+- `:VexInfo` - Show VEX details
+- `:help vex` - Open help
 
 ## Documentation
 
-See docs/ directory for detailed guides on installation, configuration, key bindings, and troubleshooting.
+Complete documentation in `docs/` directory:
+
+**Configuration:**
+- [Keymaps](docs/configuration/keymaps.md) - All keyboard shortcuts
+- [Plugins](docs/configuration/plugins.md) - Plugin management
+- [Settings](docs/configuration/settings.md) - Editor settings
+
+**Reference:**
+- [Commands](docs/reference/commands.md) - Shell and vim commands
+
+**Installation:**
+- [Linux](docs/installation/linux.md) - Distribution-specific guides
 
 ## Contributing
 
 Contributions welcome. Follow existing code style, test on multiple platforms, and update documentation for new features.
 
+## Contributing
+
+Contributions welcome. Please:
+
+- Follow existing code style
+- Test on multiple platforms when possible
+- Update documentation for new features
+- Keep changes focused and well-tested
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
 ## License
 
-This project is licensed under the [MIT](LICENSE)
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## Credits
 
-Built with vim-plug, vim-lsp, FZF, vim-airline, vim-fugitive, and other excellent plugins.
+VEX builds on excellent vim plugins:
 
-Complete plugin list in src/plugins/install.vim
+- [vim-plug](https://github.com/junegunn/vim-plug) - Plugin manager
+- [vim-lsp](https://github.com/prabirshrestha/vim-lsp) - LSP client
+- [FZF](https://github.com/junegunn/fzf) - Fuzzy finder
+- [vim-airline](https://github.com/vim-airline/vim-airline) - Status line
+- [vim-gitgutter](https://github.com/airblade/vim-gitgutter) - Git integration
+- [vim-surround](https://github.com/tpope/vim-surround) - Surround operations
+- [vim-easymotion](https://github.com/easymotion/vim-easymotion) - Fast movement
+
+Full plugin list in [src/plugins/install.vim](src/plugins/install.vim).
 
 ## Code Example:
 
