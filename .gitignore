@@ -2,3 +2,5 @@ plugins/*
 vim-plug
 tags
 .psx-project.yml
+VERSION
+undo/
