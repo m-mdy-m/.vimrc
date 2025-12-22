@@ -12,6 +12,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'editorconfig/editorconfig-vim'
 " Status
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " Git
 Plug 'airblade/vim-gitgutter'
 call plug#end()

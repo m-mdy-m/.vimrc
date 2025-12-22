@@ -1,6 +1,10 @@
 " VEX - Vim Ecosystem Extension
 " Copyright (C) 2025 Genix
 " Main Configuration Entry Point
+augroup VexStart
+    autocmd!
+    autocmd VimEnter * call vex#start#Show()
+augroup END
 if exists('<sfile>')
     let g:vex_config_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 else
