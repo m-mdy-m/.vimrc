@@ -1,0 +1,230 @@
+#!/usr/bin/env bash
+# VEX - Vim Ecosystem Extension CLI
+
+set -euo pipefail
+
+# Determine VEX root
+if [[ -n "${VEX_ROOT:-}" ]]; then
+    VEX_ROOT="$VEX_ROOT"
+elif [[ -L "${BASH_SOURCE[0]}" ]]; then
+    VEX_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}" || readlink "${BASH_SOURCE[0]}")")/.." && pwd)"
+else
+    VEX_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+
+export VEX_ROOT
+. "$VEX_ROOT/scripts/common.sh"
+
+VIM_DIR="$HOME/.vim"
+VIMRC="$HOME/.vimrc"
+show_usage() {
+    cat << 'EOF'
+VEX - Vim Ecosystem Extension
+
+Usage: vex [command] [options]
+
+Commands:
+  install          Install VEX
+  update           Update VEX and plugins
+  doctor           Run health checks
+  config           Configuration management
+  plugin           Plugin management
+  lsp              LSP server management
+  version          Show version
+  help             Show this help
+
+Run 'vex <command> --help' for more information.
+EOF
+}
+show_version() {
+    "$VEX_ROOT/scripts/version.sh" show
+}
+
+# Run health checks
+run_doctor() {
+    log_step "VEX Health Check"
+    echo
+    
+    # Check Vim
+    if has_command vim; then
+        log_success "Vim: $(vim --version | head -n1 | cut -d' ' -f1-5)"
+    else
+        log_error "Vim: not installed"
+    fi
+    
+    # Check vimrc
+    if [[ -L "$VIMRC" ]]; then
+        log_success "vimrc: linked"
+    else
+        log_error "vimrc: not linked"
+    fi
+    if [[ -f "$VIM_DIR/autoload/plug.vim" ]]; then
+        log_success "vim-plug: installed"
+    else
+        log_warning "vim-plug: not found"
+    fi
+    
+    if [[ -d "$VIM_DIR/plugged" ]]; then
+        count=$(find "$VIM_DIR/plugged" -maxdepth 1 -type d 2>/dev/null | wc -l)
+        count=$((count - 1))
+        log_success "Plugins: $count installed"
+    else
+        log_warning "Plugins: not found"
+    fi
+    
+    log_info "LSP Servers:"
+    for server in typescript-language-server pyright gopls rust-analyzer; do
+        if has_command "$server"; then
+            log_success "  $server"
+        fi
+    done
+    
+    echo
+}
+
+# Install command
+cmd_install() {
+    cd "$VEX_ROOT"
+    make install "$@"
+}
+
+# Update command
+cmd_update() {
+    log_step "Updating VEX"
+    
+    # Update VEX
+    cd "$VEX_ROOT"
+    if [[ -d .git ]]; then
+        log_info "Updating VEX..."
+        git pull origin main || log_warning "Update failed"
+    fi
+    
+    # Update plugins
+    log_info "Updating plugins..."
+    vim +PlugUpdate +qall || log_warning "Plugin update failed"
+    
+    log_success "Update complete"
+}
+
+# Config management
+cmd_config() {
+    case "${1:-}" in
+        edit)
+            ${EDITOR:-vim} "$VIMRC"
+            ;;
+        reload)
+            vim +source\ \$MYVIMRC +qall
+            log_success "Configuration reloaded"
+            ;;
+        path)
+            echo "VEX root: $VEX_ROOT"
+            echo "Vim config: $VIM_DIR"
+            echo "vimrc: $VIMRC"
+            ;;
+        *)
+            echo "Usage: vex config {edit|reload|path}"
+            ;;
+    esac
+}
+
+# Plugin management
+cmd_plugin() {
+    case "${1:-}" in
+        list)
+            if [[ -d "$VIM_DIR/plugged" ]]; then
+                ls -1 "$VIM_DIR/plugged"
+            else
+                log_warning "No plugins found"
+            fi
+            ;;
+        install)
+            vim +PlugInstall +qall
+            log_success "Plugins installed"
+            ;;
+        update)
+            vim +PlugUpdate +qall
+            log_success "Plugins updated"
+            ;;
+        purge)
+            read -r -p "Really delete ALL plugin directories under $VIM_DIR/plugged ? [type 'YES' to confirm]: " confirm
+            if [[ "$confirm" == "YES" ]]; then
+                if [[ -d "$VIM_DIR/plugged" ]]; then
+                    rm -rf "$VIM_DIR/plugged"/*
+                    log_success "All plugin directories removed (purge performed)."
+                else
+                    log_warning "No plugins found (no $VIM_DIR/plugged directory)."
+                fi
+            else
+                log_info "Purge cancelled."
+            fi
+            ;;
+        *)
+            echo "Usage: vex plugin {list|install|update|purge}"
+            ;;
+    esac
+}
+
+# LSP management
+cmd_lsp() {
+    case "${1:-}" in
+        install)
+            "$VEX_ROOT/scripts/lsp.sh"
+            ;;
+        status)
+            log_info "LSP Server Status:"
+            for server in typescript-language-server pyright gopls rust-analyzer clangd; do
+                if has_command "$server"; then
+                    log_success "$server: installed"
+                else
+                    log_warning "$server: not installed"
+                fi
+            done
+            ;;
+        *)
+            echo "Usage: vex lsp {install|status}"
+            ;;
+    esac
+}
+
+# Main dispatcher
+main() {
+    case "${1:-}" in
+        install)
+            shift
+            cmd_install "$@"
+            ;;
+        update)
+            shift
+            cmd_update "$@"
+            ;;
+        doctor)
+            run_doctor
+            ;;
+        config)
+            shift
+            cmd_config "$@"
+            ;;
+        plugin)
+            shift
+            cmd_plugin "$@"
+            ;;
+        lsp)
+            shift
+            cmd_lsp "$@"
+            ;;
+        version|--version|-v)
+            show_version
+            ;;
+        help|--help|-h|"")
+            show_usage
+            ;;
+        *)
+            log_error "Unknown command: $1"
+            echo
+            show_usage
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
