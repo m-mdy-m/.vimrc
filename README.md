@@ -1,47 +1,93 @@
-# vex — My Personal Vim Configuration
+# VEX - Vim Ecosystem Extension
 
 ![HomePage](./screenshots/home.png)
 
-Welcome to my personal Vim configuration setup! VEX (Vim Ecosystem Extension) is a minimal, Vim setup designed to streamline coding experience. It’s optimized for a clean, dark theme with useful plugins and custom keybindings, making your workflow faster and more intuitive. This configuration is built around my personal needs, but feel free to use or adapt it as you like.
+A modern, modular Vim configuration with LSP support.
 
----
-
-## What’s Inside?
-
-- **Plugins**: Handpicked plugins for improved productivity.
-- **Settings**: Tweaked Vim settings for optimal coding and editing.
-- **Keybindings**: Custom key combinations to save time and reduce effort.
-
-### Quickstart:
+## Quick Start
 
 ```bash
-git clone https://github.com/m-mdy-m/.vimrc.git && cd .vimrc && ./script/setup  # Let the magic happen!
+git clone https://github.com/m-mdy-m/.vimrc.git vex
+cd vex
+make install
 ```
 
-**What the script does**:
+Start vim and everything works.
 
-1. Checks/installs Vim
-2. Links your `.vimrc` to mine
-3. Sets up [vim-plug](https://github.com/junegunn/vim-plug)
-4. Installs plugins automatically
+## Features
 
----
+Modern development environment with intelligent code completion, fuzzy file finding, git integration, and consistent behavior across Linux, macOS, and WSL.
 
-## Structured Config:
+LSP support for TypeScript, Python, Go, and more. 
 
+## Requirements
+
+Minimum:
+- Vim 8.0 or newer
+- Git
+- curl or wget
+
+Recommended:
+- Node.js for JavaScript/TypeScript LSP
+- Python 3 for Python LSP
+- Go for Go LSP
+
+## Installation
+
+Full installation:
+```bash
+make install
 ```
-├── appearance.vim    # Colors & UI tweaks
-├── keys.vim          # Custom shortcuts
-├── plugins/install.vim  # Plugin declarations
-└── plugins/settings.vim # Plugin configurations
+
+Install specific components:
+```bash
+make install-vim        # Vim only
+make install-plugins    # Plugins only
+make install-lsp        # LSP servers only
 ```
+
+## Platform Support
+
+Works on Ubuntu, Debian, Arch, Fedora, macOS, and Windows via WSL.
+
+Installation automatically detects your platform and uses the appropriate package manager.
+
+## Usage
+
+Start editing:
+```bash
+vim
+```
+
+Or use the CLI tool:
+```bash
+vex                     # Same as vim
+vex doctor              # Health check
+vex update              # Update everything
+vex plugin list         # List plugins
+vex lsp install         # Install LSP servers
+```
+
+## Documentation
+
+See docs/ directory for detailed guides on installation, configuration, key bindings, and troubleshooting.
+
+## Contributing
+
+Contributions welcome. Follow existing code style, test on multiple platforms, and update documentation for new features.
+
+## License
+
+This project is licensed under the [MIT](LICENSE)
+
+## Credits
+
+Built with vim-plug, vim-lsp, FZF, vim-airline, vim-fugitive, and other excellent plugins.
+
+Complete plugin list in src/plugins/install.vim
 
 ## Code Example:
 
 Check out how your code will look with this setup!
 
 ![Code](./screenshots/code.png)
-
-## License
-
-This project is licensed under the [MIT](LICENSE)
