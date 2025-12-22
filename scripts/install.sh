@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# VEX Installation Script
 
 set -euo pipefail
 
@@ -13,8 +12,8 @@ VIM_DIR="$HOME/.vim"
 VIMRC="$HOME/.vimrc"
 CONFIG_DIR="$VEX_ROOT/src"
 BACKUP_DIR="$VIM_DIR/backups"
+BIN_DIR="$HOME/.local/bin"
 
-# Parse options
 MINIMAL_INSTALL=false
 SKIP_LSP=false
 SKIP_PLUGINS=false
@@ -45,7 +44,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Banner
 cat << 'EOF'
 
   ╦  ╦ ╔═╗ ═╗ ╦
@@ -56,7 +54,6 @@ cat << 'EOF'
 
 EOF
 
-# Check if already installed
 if [[ -L "$VIMRC" ]] && [[ ! $FORCE_INSTALL == true ]]; then
     target=$(readlink -f "$VIMRC" || readlink "$VIMRC")
     if [[ "$target" == "$CONFIG_DIR/vimrc.vim" ]]; then
@@ -68,8 +65,7 @@ if [[ -L "$VIMRC" ]] && [[ ! $FORCE_INSTALL == true ]]; then
     fi
 fi
 
-# Step 1: Check prerequisites
-log_step "Step 1/7: Checking prerequisites"
+log_step "Step 1/8: Checking prerequisites"
 if ! has_command git; then
     die "git is required but not installed"
 fi
@@ -79,8 +75,7 @@ fi
 log_success "Prerequisites met"
 echo
 
-# Step 2: Install Vim
-log_step "Step 2/7: Installing Vim"
+log_step "Step 2/8: Installing Vim"
 if has_command vim; then
     log_success "Vim already installed: $(vim --version | head -n1)"
 else
@@ -88,8 +83,7 @@ else
 fi
 echo
 
-# Step 3: Backup existing configuration
-log_step "Step 3/7: Backing up existing configuration"
+log_step "Step 3/8: Backing up existing configuration"
 mkdir -p "$BACKUP_DIR"
 
 if [[ -e "$VIMRC" ]]; then
@@ -110,55 +104,67 @@ fi
 log_success "Backup complete"
 echo
 
-# Step 4: Create directories
-log_step "Step 4/7: Creating directory structure"
+log_step "Step 4/8: Creating directory structure"
 dirs=(
-        "$VIM_DIR/autoload"
-        "$VIM_DIR/plugged"
-        "$VIM_DIR/undo"
-        "$BACKUP_DIR"
-    )
+    "$VIM_DIR/autoload"
+    "$VIM_DIR/plugged"
+    "$VIM_DIR/undo"
+    "$BACKUP_DIR"
+    "$BIN_DIR"
+)
 for dir in "${dirs[@]}"; do
-        if [ ! -d "$dir" ]; then
-            mkdir -p "$dir"
-            log_success "$(basename $dir) created"
-        else
-            log_info "$(basename $dir) (exists)"
-        fi
-    done
+    if [ ! -d "$dir" ]; then
+        mkdir -p "$dir"
+        log_success "$(basename $dir) created"
+    else
+        log_info "$(basename $dir) (exists)"
+    fi
+done
 touch "$VIM_DIR/.vex"
 log_success "Directories created"
 echo
 
-# Step 5: Link configuration
-log_step "Step 5/7: Linking configuration"
+log_step "Step 5/8: Linking configuration"
 safe_link "$CONFIG_DIR/vimrc.vim" "$VIMRC"
 log_success "Configuration linked"
 echo
 
-# Step 6: Install plugins
-if $MINIMAL_INSTALL || $SKIP_PLUGINS; then
-    log_step "Step 6/7: Skipping plugin installation"
+log_step "Step 6/8: Installing vex command"
+if [[ -f "$VEX_ROOT/bin/vex" ]]; then
+    safe_link "$VEX_ROOT/bin/vex" "$BIN_DIR/vex"
+    chmod +x "$VEX_ROOT/bin/vex"
+    
+    if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
+        log_warning "Add $BIN_DIR to your PATH"
+        log_info "Add this to your shell rc file:"
+        log_info "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+    fi
+    log_success "vex command installed"
 else
-    log_step "Step 6/7: Installing plugins"
+    log_error "vex binary not found"
+fi
+echo
+
+if $MINIMAL_INSTALL || $SKIP_PLUGINS; then
+    log_step "Step 7/8: Skipping plugin installation"
+else
+    log_step "Step 7/8: Installing plugins"
     "$SCRIPT_DIR/plugins.sh"
 fi
 echo
 
-# Step 7: Install LSP servers
 if $MINIMAL_INSTALL || $SKIP_LSP; then
-    log_step "Step 7/7: Skipping LSP installation"
+    log_step "Step 8/8: Skipping LSP installation"
 else
-    log_step "Step 7/7: Installing LSP servers"
+    log_step "Step 8/8: Installing LSP servers"
     if prompt_yn "Install LSP servers?" "y"; then
         "$SCRIPT_DIR/lsp.sh"
     else
-        log_info "Skipped. Run 'make install-lsp' later"
+        log_info "Skipped. Run 'vex lsp install' later"
     fi
 fi
 echo
 
-# Verify installation
 log_step "Verifying installation"
 if [[ -L "$VIMRC" ]] && has_command vim; then
     log_success "Installation verified"
@@ -171,13 +177,13 @@ cat << EOF
 Installation Complete
 
 Start using VEX:
-  vim
+  vex
 
 Check health:
-  make doctor
+  vex doctor
 
 Update:
-  make update
+  vex update
 
 Documentation:
   :help vex
