@@ -14,5 +14,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Git
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 call plug#end()
