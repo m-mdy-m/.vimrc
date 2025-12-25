@@ -101,3 +101,8 @@ highlight SpellBad   guibg=#2a1a1a  ctermbg=52  gui=undercurl  cterm=undercurl
 highlight SpellCap   guibg=#1a2a1a  ctermbg=22  gui=undercurl  cterm=undercurl
 highlight SpellRare  guibg=#2a2a1a  ctermbg=58  gui=undercurl  cterm=undercurl
 highlight SpellLocal guibg=#1a2a2a  ctermbg=23  gui=undercurl  cterm=undercurl
+"" Netrw
+highlight netrwDir       guifg=#a78bfa  ctermfg=141  gui=bold
+highlight netrwClassify  guifg=#52525b  ctermfg=240  gui=NONE
+highlight netrwExe       guifg=#86efac  ctermfg=121  gui=bold
+highlight netrwSymLink   guifg=#94a3b8  ctermfg=103  gui=italic
