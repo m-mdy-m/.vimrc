@@ -215,48 +215,164 @@ Full FZF documentation: https://github.com/junegunn/fzf.vim
 
 ## Window & Tab Management
 
-### Split Windows
-| Key | Action |
-|-----|--------|
-| `Ctrl+\` | Vertical split |
-| `Ctrl+Shift+\` | Horizontal split |
-| `Ctrl+Shift+W` | Close window |
+### Window Navigation
 
-### Navigate Between Splits
+**VEX provides three different methods - choose the one that works for you:**
+
+#### Method 1: Alt+hjkl
+
 | Key | Action |
 |-----|--------|
-| `Ctrl+Shift+H` | Focus left window |
-| `Ctrl+Shift+J` | Focus down window |
-| `Ctrl+Shift+K` | Focus up window |
-| `Ctrl+Shift+L` | Focus right window |
+| `Alt+h` | Move to **left** window |
+| `Alt+j` | Move to window **below** |
+| `Alt+k` | Move to window **above** |
+| `Alt+l` | Move to **right** window |
+
+#### Method 2: Leader+w+hjkl (Always works 💯)
+
+| Key | Action |
+|-----|--------|
+| `\wh` | Move to **left** window |
+| `\wj` | Move to window **below** |
+| `\wk` | Move to window **above** |
+| `\wl` | Move to **right** window |
+
+#### Method 3: Vim Standard
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+w h` | Move to **left** window |
+| `Ctrl+w j` | Move to window **below** |
+| `Ctrl+w k` | Move to window **above** |
+| `Ctrl+w l` | Move to **right** window |
+
+**Note:** If `Alt` keys don't work in your terminal, use `\w+hjkl` instead. This method works in all terminals.
+
+---
+
+### Split Windows
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+\` | **Vertical split** (side by side) |
+| `Ctrl+Shift+\` | **Horizontal split** (top and bottom) |
+| `\wv` | Vertical split (alternative) |
+| `\ws` | Horizontal split (alternative) |
+| `\wn` | New empty window |
+| `\wN` | New empty vertical window |
+
+**Visual Example:**
+```
+Ctrl+\  (Vertical)       Ctrl+Shift+\ (Horizontal)
+┌─────┬─────┐            ┌──────────┐
+│     │     │            │  Current │
+│  1  │  2  │            ├──────────┤
+│     │     │            │   New    │
+└─────┴─────┘            └──────────┘
+```
+
+---
+
+### Close Windows
+
+| Key | Action |
+|-----|--------|
+| `\wc` | Close current window |
+| `\wq` | Close current window |
+| `\wo` | Close **all other** windows (keep only current) |
+| `:q` | Close window (Vim standard) |
+| `:close` | Close window (Vim standard) |
+| `:only` | Close all other windows (Vim standard) |
+
+---
 
 ### Resize Windows
+
+#### Method 1: Alt+Arrow keys (Recommended)
+
 | Key | Action |
 |-----|--------|
-| `Ctrl+Shift+Left` | Decrease width |
-| `Ctrl+Shift+Right` | Increase width |
-| `Ctrl+Shift+Up` | Decrease height |
-| `Ctrl+Shift+Down` | Increase height |
+| `Alt+Left` | Decrease width |
+| `Alt+Right` | Increase width |
+| `Alt+Up` | Increase height |
+| `Alt+Down` | Decrease height |
+
+#### Method 2: Leader key (Always works)
+
+| Key | Action |
+|-----|--------|
+| `\w<` | Decrease width by 5 |
+| `\w>` | Increase width by 5 |
+| `\w-` | Decrease height by 5 |
+| `\w+` | Increase height by 5 |
+| `\w=` | Make all windows **equal size** |
+| `\w_` | **Maximize** height |
+| `\w\|` | **Maximize** width |
+
+#### Method 3: Vim Standard
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+w <` | Decrease width |
+| `Ctrl+w >` | Increase width |
+| `Ctrl+w -` | Decrease height |
+| `Ctrl+w +` | Increase height |
+| `Ctrl+w =` | Equal size all windows |
+| `Ctrl+w _` | Maximize height |
+| `Ctrl+w \|` | Maximize width |
+
+---
+
+### Move Windows
+
+| Key | Action |
+|-----|--------|
+| `\wH` | Move window to **far left** |
+| `\wJ` | Move window to **bottom** |
+| `\wK` | Move window to **top** |
+| `\wL` | Move window to **far right** |
+| `\wr` | **Rotate** windows downwards |
+| `\wR` | **Rotate** windows upwards |
+| `\wx` | **Exchange** with next window |
+
+**Visual Example of \wH:**
+```
+Before:                After:
+┌─────┬──────┐        ┌──┬──────┐
+│  A  │Active│        │Ac│  A   │
+└─────┴──────┘        └──┴──────┘
+```
+
+### Quick Window Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `\wp` | Go to **previous** window |
+| `\wt` | Go to **top-left** window |
+| `\wb` | Go to **bottom-right** window |
 
 ### Tab Management
+
+**Tabs contain multiple windows. Tab bar is at the top.**
+
 | Key | Action |
 |-----|--------|
-| `Ctrl+T` | New tab |
-| `Ctrl+W` | Close tab |
+| `Ctrl+t` | New tab |
+| `Ctrl+w` | Close current tab |
 | `Ctrl+Tab` | Next tab |
 | `Ctrl+Shift+Tab` | Previous tab |
 | `Alt+1` to `Alt+9` | Jump to tab 1-9 |
 
-### Vim Native Window Commands
-| Command | Action |
-|---------|--------|
-| `:split` | Horizontal split |
-| `:vsplit` | Vertical split |
-| `:new` | New window with empty buffer |
-| `:only` | Close all other windows |
-| `Ctrl+W =` | Equal size all windows |
-| `Ctrl+W _` | Maximize height |
-| `Ctrl+W \|` | Maximize width |
+### Tab Commands
+```vim
+:tabnew           " New tab
+:tabclose         " Close tab
+:tabnext          " Next tab
+:tabprevious      " Previous tab
+:tabfirst         " First tab
+:tablast          " Last tab
+:tabmove [n]      " Move tab to position n
+```
 
 ---
 
