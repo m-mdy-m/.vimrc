@@ -97,3 +97,13 @@ Settings adjust automatically based on your platform. Windows paths use backslas
 WSL environments are detected and treated like Linux. This means Ubuntu on Windows gets the same settings as native Ubuntu.
 
 macOS uses slightly different clipboard behavior. The configuration accounts for this so copying and pasting works the same way across platforms.
+
+## File Browser
+
+FTX provides an async file tree with git integration. It opens as a sidebar showing your project structure with real-time git status indicators.
+
+The browser updates automatically when files change. Git status shows immediately after saving. Mark multiple files for batch operations like opening all in tabs or staging to git.
+
+FTX works entirely with vim's job system. All file operations happen asynchronously without blocking the editor. Large directories load progressively.
+
+Tree state persists across sessions. Expanded directories stay expanded when you reopen vim. The browser syncs to your current file automatically when you switch buffers.

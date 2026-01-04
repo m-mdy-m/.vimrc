@@ -1,4 +1,6 @@
 call plug#begin('~/.vim/plugged')
+" File Explorer
+Plug 'm-mdy-m/ftx.vim'
 " LSP Configuration
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'

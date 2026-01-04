@@ -101,8 +101,13 @@ highlight SpellBad   guibg=#2a1a1a  ctermbg=52  gui=undercurl  cterm=undercurl
 highlight SpellCap   guibg=#1a2a1a  ctermbg=22  gui=undercurl  cterm=undercurl
 highlight SpellRare  guibg=#2a2a1a  ctermbg=58  gui=undercurl  cterm=undercurl
 highlight SpellLocal guibg=#1a2a2a  ctermbg=23  gui=undercurl  cterm=undercurl
-"" Netrw
-highlight netrwDir       guifg=#a78bfa  ctermfg=141  gui=bold
-highlight netrwClassify  guifg=#52525b  ctermfg=240  gui=NONE
-highlight netrwExe       guifg=#86efac  ctermfg=121  gui=bold
-highlight netrwSymLink   guifg=#94a3b8  ctermfg=103  gui=italic
+" FTX File Browser
+highlight FTXDir           guifg=#a78bfa  ctermfg=141  gui=bold
+highlight FTXFile          guifg=#d0d0d0  ctermfg=252  gui=NONE
+highlight FTXDirIcon       guifg=#8b7fc7  ctermfg=104  gui=NONE
+highlight FTXGitStaged     guifg=#70c070  ctermfg=77   gui=bold
+highlight FTXGitModified   guifg=#c0a050  ctermfg=179  gui=bold
+highlight FTXGitUntracked  guifg=#6a6a6a  ctermfg=242  gui=NONE
+highlight FTXGitDeleted    guifg=#e06060  ctermfg=167  gui=bold
+highlight FTXGitConflict   guifg=#d08030  ctermfg=173  gui=bold
+highlight FTXBorder        guifg=#3a3a3a  ctermfg=237  gui=NONE

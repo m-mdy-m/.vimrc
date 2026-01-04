@@ -18,7 +18,9 @@ Start vim and everything works.
 
 Modern development environment with intelligent code completion, fuzzy file finding, git integration, and consistent behavior across Linux, macOS, and WSL.
 
-LSP support for TypeScript, Python, Go, and more. 
+File browser with async operations and git status indicators.
+
+LSP support for TypeScript, Python, Go, and more.
 
 ## Requirements
 
@@ -121,6 +123,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 VEX builds on excellent vim plugins:
 
 - [vim-plug](https://github.com/junegunn/vim-plug) - Plugin manager
+- [ftx.vim](https://github.com/m-mdy-m/ftx.vim) - Async file browser
 - [vim-lsp](https://github.com/prabirshrestha/vim-lsp) - LSP client
 - [FZF](https://github.com/junegunn/fzf) - Fuzzy finder
 - [vim-airline](https://github.com/vim-airline/vim-airline) - Status line

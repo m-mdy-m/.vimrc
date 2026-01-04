@@ -93,77 +93,69 @@
 
 ---
 
-## File Explorer (netrw)
+## File Browser (FTX)
 
-### Toggle Explorer
+### Toggle Browser
 | Key | Action |
 |-----|--------|
-| `Ctrl+N` | Toggle file explorer |
+| `Ctrl+N` | Toggle FTX |
+| `<leader>n` | Toggle FTX |
+| `<leader>nf` | Focus FTX |
+| `<leader>nr` | Refresh FTX |
+| `<leader>nh` | Show FTX help |
 
-### Navigation
+### Inside FTX
 | Key | Action |
 |-----|--------|
-| `l`, `L`, `Enter` | Open directory/file |
-| `h`, `H`, `Backspace` | Go up directory |
-| `.` | Toggle hidden files |
-| `i`, `I` | Cycle through view styles |
+| `o`, `Enter` | Open file / Toggle directory |
+| `t` | Open in new tab |
+| `s` | Open in horizontal split |
+| `v` | Open in vertical split |
+| `-` | Go to parent directory |
+| `~` | Go to home directory |
 
-### File Operations
+### Tree Operations
 | Key | Action |
 |-----|--------|
-| `m`, `%` | Create new file |
-| `M`, `d` | Create new directory |
-| `dd`, `DD`, `D` | Delete file/directory |
-| `rr`, `RR`, `R` | Rename file/directory |
+| `r` | Refresh tree |
+| `R` | Refresh git status |
+| `I` | Toggle hidden files |
+| `O` | Expand all directories |
+| `C` | Collapse all directories |
 
-### Opening Files
+### Multi-file Operations
 | Key | Action |
 |-----|--------|
-| `o`, `O` | Open in current window |
-| `v`, `V` | Open in vertical split |
-| `t`, `T` | Open in new tab |
-| `s`, `S` | Open in horizontal split |
+| `m` | Toggle mark |
+| `M` | Clear all marks |
+| `mo` | Open all marked files |
+| `mg` | Stage all marked files (git) |
 
-### Directory Operations
+### Git Operations
 | Key | Action |
 |-----|--------|
-| `c`, `C` | Change vim's working directory |
-| `cd`, `CD` | Set current directory as working directory |
-
-### Marking Files
-| Key | Action |
-|-----|--------|
-| `Tab` | Mark file |
-| `Shift+Tab` | Unmark file |
-| `\Tab` | Unmark all files |
+| `gb` | Show git blame |
+| `gi` | Show branch info |
 
 ### Other
 | Key | Action |
 |-----|--------|
-| `r`, `R`, `Ctrl+R` | Refresh listing |
-| `?`, `F1` | Show help |
-| `q`, `Q` | Close explorer |
+| `?` | Show help |
+| `cd` | Open terminal in path |
+| `q` | Close FTX |
 
-### Helper Commands
+### FTX Commands
 ```vim
-" Create directories
-:Mkdir dir1 dir2 dir3
-:MkdirP src/{core,utils,events,http}
-
-" Create files
-:Touch file1.js file2.js
-
-" Remove directories
-:Rmdir old_folder
-
-" Examples:
-:Mkdir src/components src/styles
-:MkdirP app/{models,views,controllers}
-:Touch src/index.js src/app.js
+:FTX [path]           " Open FTX
+:FTXToggle            " Toggle FTX
+:FTXRefresh           " Refresh tree
+:FTXFocus             " Focus FTX window
+:FTXHelp              " Show help popup
+:FTXExpandAll         " Expand all directories
+:FTXCollapseAll       " Collapse all directories
 ```
 
-### netrw Built-in Commands
-Full documentation: `:help netrw`
+Full documentation: https://github.com/m-mdy-m/ftx.vim
 
 ---
 
